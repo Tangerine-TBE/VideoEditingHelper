@@ -1,19 +1,22 @@
 package com.twx.module_videoediting.ui.fragment
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.entity.LocalMedia
+import com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
 import com.twx.module_base.base.BaseVmFragment
+import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.toOtherActivity
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.FragmentHomeBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.HomeBottomAdapter
-import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.viewmodel.MainViewModel
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
-import com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
-import com.twx.module_videoediting.utils.GlideEngine
 
 /**
  * @name VideoEditingHelper
@@ -70,22 +73,31 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>() {
 
                 jointAction.setOnClickListener {
                     PictureSelector.create(this@HomeFragment)
-                        .openGallery(PictureConfig.TYPE_VIDEO)
-                        .imageSpanCount(4)// 每行显示个数 int
-                        .maxSelectNum(1)
-                        .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-                        .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
-                        .isCamera(false)// 是否显示拍照按钮 true or false
-                        .isZoomAnim(false)
-                        .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
-
+                            .openGallery(PictureConfig.TYPE_VIDEO)
+                            .imageSpanCount(3)// 每行显示个数 int
+                            .maxSelectNum(1)
+                            .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                            .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
+                            .isCamera(false)// 是否显示拍照按钮 true or false
+                            .isZoomAnim(true)
+                            .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
                 }
 
             }
 
-
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode === PictureConfig.CHOOSE_REQUEST) {
+            // 结果回调
+            val selectList= PictureSelector.obtainMultipleResult(data)
+            selectList.forEach {
+                LogUtils.i("---onActivityResult----$selectList--------$it--------------")
+            }
+        }
     }
 
 }

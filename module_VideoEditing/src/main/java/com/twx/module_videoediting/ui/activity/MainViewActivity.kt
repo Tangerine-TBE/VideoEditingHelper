@@ -1,12 +1,13 @@
 package com.twx.module_videoediting.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.config.PictureConfig
 import com.twx.module_base.base.BaseVmViewActivity
-import com.twx.module_base.utils.LayoutType
-import com.twx.module_base.utils.setHomeNavigationBgColor
-import com.twx.module_base.utils.setHomeThemeBgColor
-import com.twx.module_base.utils.setStatusBarDistance
+import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityHomeBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
@@ -92,4 +93,6 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
             commitAllowingStateLoss()
         }
     }
+
+
 }

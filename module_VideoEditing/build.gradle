@@ -54,7 +54,7 @@ dependencies {
     implementation project(path: ':videojoiner')
     implementation project(path: ':videoediter')
     implementation project(path: ':ugckit')
-    implementation project(path: ':picture_library')
-   // implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
+    //implementation project(path: ':picture_library')
+   implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
 
 }
