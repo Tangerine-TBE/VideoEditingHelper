@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.twx.module_videoediting">
+
+    <application>
+        <activity android:name="com.twx.module_videoediting.ui.activity.MainViewActivity"></activity>
+    </application>
+
+</manifest>

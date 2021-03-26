@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_home_one">#FFA200</color>
+    <color name="color_home_two">#4060FF</color>
+    <color name="color_home_three">#FF74C7</color>
+    <color name="color_home_four">#10C9F9</color>
+
+
+    <color name="color_home_icon_false">#808080</color>
+
+</resources>

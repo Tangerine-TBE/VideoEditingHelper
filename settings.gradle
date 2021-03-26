@@ -1,0 +1,11 @@
+include ':ucrop'
+include ':picture_library'
+include ':videorecorder'
+include ':videojoiner'
+include ':videoediter'
+include ':ugckit'
+include ':beauty'
+include ':module_VideoEditing'
+include ':module_base'
+include ':app'
+rootProject.name = "VideoEditingHelper"
