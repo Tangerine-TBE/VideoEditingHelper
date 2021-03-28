@@ -6,7 +6,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutTitleBarContainerBinding
 
@@ -22,6 +26,8 @@ import com.twx.module_videoediting.databinding.LayoutTitleBarContainerBinding
 class TitleBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
+
+
     private val binding=DataBindingUtil.inflate<LayoutTitleBarContainerBinding>(LayoutInflater.from(context),
         R.layout.layout_title_bar_container,this,true)
 
@@ -29,13 +35,11 @@ class TitleBar @JvmOverloads constructor(
         binding.apply {
             context.obtainStyledAttributes(attrs,R.styleable.TitleBar).apply {
                 titleBarTitle.text=getString(R.styleable.TitleBar_barTitle)?:""
-                titleBarIcon.setColorFilter(getColor(R.styleable.TitleBar_barBackIconColor,Color.BLACK))
                 titleBarIvAction.visibility=if (getBoolean(R.styleable.TitleBar_barHaveIvAction,false)) View.VISIBLE
                 else View.GONE
                 titleBarTvAction.visibility=if (getBoolean(R.styleable.TitleBar_barHaveTvAction,false)) View.VISIBLE
                 else View.GONE
                 titleBarTvAction.text=getString(R.styleable.TitleBar_barTvActionTitle)
-
                 recycle()
             }
         }
@@ -45,13 +49,41 @@ class TitleBar @JvmOverloads constructor(
 
 
     private fun initEvent() {
+        binding.apply {
+            titleBarIcon.setOnClickListener {
+                mListener?.backAction()
+            }
 
+
+            titleBarTvAction.setOnClickListener {
+                mListener?.rightAction()
+            }
+
+
+            titleBarIvAction.setOnClickListener {
+                mListener?.rightAction()
+            }
+        }
     }
 
 
+    fun setThemeChange(state: Boolean) {
+        binding.apply {
+            viewThemeColor(state,titleBarIcon,titleBarTitle)
+        }
+    }
 
-    fun setThemeChange(){
+    private var mListener:OnBarActionListener?=null
+    fun setOnBarActionListener(listener:OnBarActionListener){
+        mListener=listener
+    }
 
+
+    interface OnBarActionListener{
+        fun backAction()
+
+        fun rightAction()
     }
 
 }
+

@@ -1,5 +1,6 @@
 package com.twx.module_videoediting.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import com.twx.module_base.base.BaseViewModel
 
 /**
@@ -11,4 +12,7 @@ import com.twx.module_base.base.BaseViewModel
  * @class describe
  */
 class VideoCutViewModel:BaseViewModel() {
+
+
+
 }

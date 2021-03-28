@@ -15,6 +15,7 @@ import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.FragmentHomeBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.repository.DataProvider
+import com.twx.module_videoediting.ui.activity.VideoCutActivity
 import com.twx.module_videoediting.ui.adapter.recycleview.HomeBottomAdapter
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
@@ -69,6 +70,10 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>() {
             homeTop.apply {
                 editAction.setOnClickListener {
                     toOtherActivity<TCVideoPickerActivity>(activity) {}
+                }
+
+                divisionAction.setOnClickListener {
+                    toOtherActivity<VideoCutActivity>(activity) {}
                 }
 
                 jointAction.setOnClickListener {

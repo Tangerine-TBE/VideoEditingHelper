@@ -15,6 +15,7 @@
 
         <ImageView
             android:id="@+id/titleBarIcon"
+            android:src="@drawable/icon_title_bar_back_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +24,8 @@
 
         <TextView
             android:id="@+id/titleBarTitle"
+            android:textSize="17sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -32,6 +35,9 @@
 
         <TextView
             android:id="@+id/titleBarTvAction"
+            android:background="@drawable/shape_titlebar_tv_action_bg"
+            android:textSize="15sp"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

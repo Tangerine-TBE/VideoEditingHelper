@@ -42,7 +42,7 @@ fun viewThemeColor(state: Boolean=SPUtil.getInstance().getBoolean(Constants.SP_T
         }
 
         if (it is ViewGroup){
-            it.setBackgroundColor(ContextCompat.getColor(it.context, if (state) change else normal))
+            it.setBackgroundColor(ContextCompat.getColor(it.context, if (state) normal else change))
         }
 
     }

@@ -4,13 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="data"
+            type="com.twx.module_videoediting.viewmodel.VideoCutViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/videoCutContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activity.VideoCutActivity">
+    >
+
+        <com.twx.module_videoediting.ui.widget.TitleBar
+            android:id="@+id/cutTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:barTitle="剪辑"
+            app:barHaveTvAction="true"
+            app:barTvActionTitle="导出"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
