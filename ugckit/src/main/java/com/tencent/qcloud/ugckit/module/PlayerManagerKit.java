@@ -25,8 +25,8 @@ public class PlayerManagerKit implements TXVideoEditer.TXVideoPreviewListener {
     private Object mStateObject = new Object();
 
     private PlayerManagerKit() {
-        mProgressListenerList = new ArrayList<OnPreviewListener>();
-        mStateListenerList = new ArrayList<OnPlayStateListener>();
+        mProgressListenerList = new ArrayList<>();
+        mStateListenerList = new ArrayList<>();
         mCurrentState = PlayState.STATE_NONE;
     }
 
@@ -44,7 +44,6 @@ public class PlayerManagerKit implements TXVideoEditer.TXVideoPreviewListener {
             TXVideoEditer editer = VideoEditerSDK.getInstance().getEditer();
             if (editer != null) {
                 addPreviewListener();
-
                 long startTime = VideoEditerSDK.getInstance().getCutterStartTime();
                 long endTime = VideoEditerSDK.getInstance().getCutterEndTime();
                 Log.d(TAG, "[UGCKit][PlayerKit]startPlay startTime:" + startTime + ",endTime:" + endTime);
@@ -56,6 +55,11 @@ public class PlayerManagerKit implements TXVideoEditer.TXVideoPreviewListener {
             isPreviewFinish = false;
         }
     }
+
+
+
+
+
 
     public void startPlayCutTime() {
         Log.i(TAG, "startPlayCutTime");
@@ -167,7 +171,6 @@ public class PlayerManagerKit implements TXVideoEditer.TXVideoPreviewListener {
         Log.d(TAG, "=====onPreviewFinished=====");
         mCurrentState = PlayState.STATE_NONE;
         restartPlay();
-
         notifyPreviewFinish();
     }
 
@@ -204,7 +207,7 @@ public class PlayerManagerKit implements TXVideoEditer.TXVideoPreviewListener {
         isPreviewFinish = false;
     }
 
-    public void addOnPreviewLitener(OnPreviewListener listener) {
+    public void addOnPreviewListener(OnPreviewListener listener) {
         synchronized (mProgressObject) {
             mProgressListenerList.add(listener);
         }

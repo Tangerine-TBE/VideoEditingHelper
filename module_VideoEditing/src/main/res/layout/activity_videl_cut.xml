@@ -19,12 +19,20 @@
         <com.twx.module_videoediting.ui.widget.TitleBar
             android:id="@+id/cutTitleBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             app:barTitle="剪辑"
             app:barHaveTvAction="true"
             app:barTvActionTitle="导出"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <com.twx.module_videoediting.ui.widget.video.cut.TWVideoCutContainer
+            android:id="@+id/mTWVideoCutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cutTitleBar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

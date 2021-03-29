@@ -18,6 +18,8 @@ com/tencent/liteav/demo/videojoiner/swipemenu/SwipeMenuAdapter.java
  com.tencent.liteav.demo.videojoiner.swipemenu.SwipeMenuAdapter
 com/tencent/liteav/demo/videojoiner/swipemenu/SwipeRightHorizontal.java
  com.tencent.liteav.demo.videojoiner.swipemenu.SwipeRightHorizontal
+com/tencent/liteav/demo/videojoiner/DataBindingTriggerClass.java
+ com.tencent.liteav.demo.videojoiner.DataBindingTriggerClass
 com/tencent/liteav/demo/videojoiner/ListViewDecoration.java
  com.tencent.liteav.demo.videojoiner.ListViewDecoration
 com/tencent/liteav/demo/videojoiner/swipemenu/SwipeLeftHorizontal.java

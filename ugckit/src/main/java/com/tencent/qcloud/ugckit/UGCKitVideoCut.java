@@ -2,7 +2,7 @@ package com.tencent.qcloud.ugckit;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import android.text.TextUtils;
@@ -151,7 +151,7 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
     private void loadThumbnail() {
         // 初始化缩略图列表，裁剪缩略图时间间隔3秒钟一张
         getVideoCutLayout().clearThumbnail();
-        final int interval = 3000;
+        final int interval = 1000;
         VideoEditerSDK.getInstance().initThumbnailList(new TXVideoEditer.TXThumbnailListener() {
             @Override
             public void onThumbnail(final int index, long timeMs, final Bitmap bitmap) {
@@ -245,7 +245,7 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
 
     @Override
     public void startPlay() {
-        PlayerManagerKit.getInstance().addOnPreviewLitener(this);
+        PlayerManagerKit.getInstance().addOnPreviewListener(this);
         PlayerManagerKit.getInstance().startPlay();
     }
 

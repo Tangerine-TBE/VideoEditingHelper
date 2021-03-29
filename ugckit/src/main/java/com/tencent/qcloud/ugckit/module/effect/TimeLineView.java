@@ -58,7 +58,7 @@ public class TimeLineView extends RelativeLayout implements ITimeLineView, Video
         mIvSlider = (ImageView) findViewById(R.id.iv_player_slider);
         mVideoProgressView = (VideoProgressView) findViewById(R.id.video_progress_view);
 
-        PlayerManagerKit.getInstance().addOnPreviewLitener(this);
+        PlayerManagerKit.getInstance().addOnPreviewListener(this);
     }
 
     /**

@@ -50,7 +50,7 @@ public class PlayControlLayout extends RelativeLayout implements IPlayControlLay
         mTvCurrent.setTextColor(getResources().getColor(currentTimeColor));
         mTvCurrent.setTextSize(currentTimeTextSize);
 
-        PlayerManagerKit.getInstance().addOnPreviewLitener(this);
+        PlayerManagerKit.getInstance().addOnPreviewListener(this);
         PlayerManagerKit.getInstance().addOnPlayStateLitener(this);
 
         mPlayIcon = UIAttributeUtil.getResResources(getContext(), R.attr.editerPlayIcon, R.drawable.ic_play_normal);

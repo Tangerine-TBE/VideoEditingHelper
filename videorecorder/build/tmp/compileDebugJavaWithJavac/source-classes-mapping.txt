@@ -18,6 +18,8 @@ com/tencent/liteav/demo/videorecord/TCRecordPreviewActivity.java
  com.tencent.liteav.demo.videorecord.TCRecordPreviewActivity$ErrorDialogFragment$1
 com/tencent/liteav/demo/videorecord/BuildConfig.java
  com.tencent.liteav.demo.videorecord.BuildConfig
+com/tencent/liteav/demo/videorecord/DataBindingTriggerClass.java
+ com.tencent.liteav.demo.videorecord.DataBindingTriggerClass
 com/tencent/liteav/demo/videorecord/TCVideoRecordSmartActivity.java
  com.tencent.liteav.demo.videorecord.TCVideoRecordSmartActivity
  com.tencent.liteav.demo.videorecord.TCVideoRecordSmartActivity$1

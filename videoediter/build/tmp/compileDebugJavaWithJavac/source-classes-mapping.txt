@@ -16,6 +16,8 @@ com/tencent/liteav/demo/videoediter/TCVideoCutActivity.java
 com/tencent/liteav/demo/videoediter/TCVideoEditerActivity.java
  com.tencent.liteav.demo.videoediter.TCVideoEditerActivity
  com.tencent.liteav.demo.videoediter.TCVideoEditerActivity$1
+com/tencent/liteav/demo/videoediter/DataBindingTriggerClass.java
+ com.tencent.liteav.demo.videoediter.DataBindingTriggerClass
 com/tencent/liteav/demo/videoediter/TCVideoPickerActivity.java
  com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
  com.tencent.liteav.demo.videoediter.TCVideoPickerActivity$1

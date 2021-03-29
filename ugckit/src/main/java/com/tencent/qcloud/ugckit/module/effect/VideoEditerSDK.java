@@ -13,6 +13,7 @@ import com.tencent.qcloud.ugckit.module.effect.utils.EffectEditer;
 import com.tencent.ugc.TXVideoEditConstants;
 import com.tencent.ugc.TXVideoEditer;
 import com.tencent.ugc.TXVideoInfoReader;
+import com.twx.module_base.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,7 @@ public class VideoEditerSDK {
     public void setTXVideoInfo(TXVideoEditConstants.TXVideoInfo info) {
         Log.d(TAG, "setTXVideoInfo info:" + info);
         mTXVideoInfo = info;
+
     }
 
     public void setVideoPath(String videoPath) {
@@ -247,27 +249,25 @@ public class VideoEditerSDK {
      * @param listener
      * @param interval 缩略图的时间间隔
      */
-    public void initThumbnailList(TXVideoEditer.TXThumbnailListener listener, int interval) {
+    public void initThumbnailList( TXVideoEditer.TXThumbnailListener listener, int interval) {
         if (interval == 0) {
             Log.e(TAG, "interval error:0");
             return;
         }
         int durationS = 0;
-
         TXVideoEditConstants.TXVideoInfo videoInfo = getTXVideoInfo();
         if (videoInfo != null) {
             durationS = (int) (getTXVideoInfo().duration / interval);
         }
         // 每一秒/一张缩略图
         int thumbCount = durationS;
-        Log.d(TAG, "thumbCount:" + thumbCount);
-
+        LogUtils.i("------thumbCount---------------------------------------"+thumbCount);
         if (mTXVideoEditer != null) {
-            mTXVideoEditer.setRenderRotation(0);
-            // FIXBUG：获取缩略图之前需要设置缩略图的开始和结束时间点，SDK内部会根据开始时间和结束时间出缩略图
-            mTXVideoEditer.setCutFromTime(mCutterStartTime, mCutterEndTime);
-            mTXVideoEditer.getThumbnail(thumbCount, IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH, IVideoCutLayout.DEFAULT_THUMBNAIL_HEIGHT, false, listener);
-        }
+                    mTXVideoEditer.setRenderRotation(0);
+                    // FIXBUG：获取缩略图之前需要设置缩略图的开始和结束时间点，SDK内部会根据开始时间和结束时间出缩略图
+                    mTXVideoEditer.setCutFromTime(0,mTXVideoInfo.duration);
+                    mTXVideoEditer.getThumbnail(thumbCount, IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH, IVideoCutLayout.DEFAULT_THUMBNAIL_HEIGHT, true, listener);
+                }
     }
 
     public void setPublishFlag(boolean flag) {

@@ -14,5 +14,12 @@ object Constants {
     const val SP_THEME_STATE="SP_THEME_STATE"
 
 
+    //------------------request code------------
+    const val REQUEST_VIDEO_CUT=511
+
+
+    //------------------to Activity key
+    const val KEY_VIDEO_PATH="KEY_VIDEO_PATH"
+    const val KEY_VIDEO_URI="KEY_VIDEO_URI"
 
 }
