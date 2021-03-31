@@ -9,6 +9,7 @@ import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityVidelCutBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
+import com.twx.module_videoediting.ui.widget.video.cut.IVideoCut
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.twx.module_videoediting.viewmodel.VideoCutViewModel
@@ -16,7 +17,7 @@ import com.twx.module_videoediting.viewmodel.VideoCutViewModel
 class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutViewModel>() {
 
     private val mOnCutListener by lazy {
-        object: IVideoCutKit.OnCutListener{
+        object: IVideoCut.OnCutListener{
             override fun onCutterCompleted(ugcKitResult: UGCKitResult?) {
 
             }
@@ -41,6 +42,7 @@ class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutVie
 
             val videoPath = intent.getStringExtra(Constants.KEY_VIDEO_PATH)
             mTWVideoCutContainer.setVideoPath(videoPath)
+
         }
     }
 

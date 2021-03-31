@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
+import com.bumptech.glide.Glide;
 import com.tencent.qcloud.ugckit.R;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class TCVideoEditerAdapter extends RecyclerView.Adapter<TCVideoEditerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.thumb.setImageBitmap(data.get(position));
+       // holder.thumb.setImageBitmap(data.get(position));
+        Glide.with(mContext).load(data.get(position)).into(holder.thumb);
     }
 
     @Override

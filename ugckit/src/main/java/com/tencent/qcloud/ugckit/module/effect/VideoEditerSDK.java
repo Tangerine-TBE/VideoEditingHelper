@@ -350,6 +350,7 @@ public class VideoEditerSDK {
             this.ptsMs = ptsMs;
             this.bitmap = bitmap;
         }
+
     }
 
 }

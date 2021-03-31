@@ -1,7 +1,5 @@
-package com.twx.module_videoediting.utils
+package com.twx.module_videoediting.utils.video
 
-import android.util.Log
-import com.tencent.liteav.basic.log.TXCLog
 import com.tencent.qcloud.ugckit.module.PlayerManagerKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.qcloud.ugckit.module.effect.utils.PlayState
@@ -26,6 +24,10 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
     private val mVideoEditerSDK by lazy {
         VideoEditerSDK.getInstance()
     }
+    private val mProgressObject = Any()
+    private val mStateObject = Any()
+
+
 
 
     /**
@@ -38,20 +40,39 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
                     addPreviewListener()
                     editer.startPlayFromTime(0, txVideoInfo.duration)
                     mCurrentState = PlayState.STATE_PLAY
-                    notifyStart()
+                    notifyPlayerState(PlayState.STATE_PLAY)
                 }
                 isPreviewFinish = false
             }
         }
     }
 
+    /**
+     * 播放区间视频
+     * @param startTime Long 开始时间
+     * @param endTime Long  结束时间
+     */
+    fun startPlay(startTime: Long, endTime: Long) {
+        mVideoEditerSDK.apply {
+            if (editer != null) {
+                addPreviewListener()
+                editer.startPlayFromTime(startTime, endTime)
+                mCurrentState = PlayState.STATE_PLAY
+            }
+            isPreviewFinish = false
+        }
 
+    }
+
+    /**
+     * 开始预览剪辑视频
+     */
     fun startPlayCutTime() {
         mVideoEditerSDK.apply {
             addPreviewListener()
             if (editer != null) {
                 editer.startPlayFromTime(0, txVideoInfo.duration)
-                notifyStart()
+                 notifyPlayerState(PlayState.STATE_PLAY)
             }
             mCurrentState = PlayState.STATE_PLAY
         }
@@ -66,7 +87,8 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
             if (mCurrentState == PlayState.STATE_RESUME || mCurrentState == PlayState.STATE_PLAY || mCurrentState == PlayState.STATE_PREVIEW_AT_TIME || mCurrentState == PlayState.STATE_PAUSE) {
                 editer.stopPlay()
                 removePreviewListener()
-                notifyStop()
+                notifyPlayerState(PlayState.STATE_STOP)
+
             }
             mCurrentState = PlayState.STATE_STOP
         }
@@ -79,7 +101,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
                 startPlay()
             } else {
                 editer.resumePlay()
-                notifyResume()
+                notifyPlayerState(PlayState.STATE_RESUME)
             }
             mCurrentState = PlayState.STATE_RESUME
         }
@@ -90,13 +112,16 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
         mVideoEditerSDK.apply {
             if (mCurrentState == PlayState.STATE_RESUME || mCurrentState == PlayState.STATE_PLAY) {
                 editer.pausePlay()
-                notifyPause()
+                notifyPlayerState(PlayState.STATE_PAUSE)
             }
             mCurrentState = PlayState.STATE_PAUSE
         }
 
     }
 
+    /**
+     * 重新预览视频
+     */
     fun restartPlay() {
         stopPlay()
         startPlay()
@@ -118,23 +143,38 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
 
     }
 
+    /**
+     * 添加预览监听
+     */
     fun addPreviewListener() {
         mVideoEditerSDK.editer.setTXVideoPreviewListener(this)
     }
 
+    /**
+     * 移除预览监听
+     */
     fun removePreviewListener() {
         mVideoEditerSDK.editer.setTXVideoPreviewListener(null)
     }
 
+
+    /**
+     * 播放进度
+     * @param time Int
+     */
    override fun onPreviewProgress(time: Int) {
         // 转化为ms
         notifyPreviewProgress(time / 1000)
     }
 
+    /**
+     * 播放完成
+     */
     override fun onPreviewFinished() {
         isPreviewFinish = true
         mCurrentState = PlayState.STATE_NONE
-        restartPlay()
+        notifyPlayerState(PlayState.STATE_NONE)
+      //  restartPlay()
         notifyPreviewFinish()
     }
 
@@ -159,87 +199,86 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
 
     }
 
-    fun startPlay(startTime: Long, endTime: Long) {
-        mVideoEditerSDK.apply {
-            if (editer != null) {
-                addPreviewListener()
-                editer.startPlayFromTime(startTime, endTime)
-                mCurrentState = PlayState.STATE_PLAY
-            }
-            isPreviewFinish = false
-        }
-
-    }
 
     fun addOnPreviewListener(listener: OnPreviewListener) {
-    mProgressListenerList.add(listener)
+        synchronized(mProgressObject) { mProgressListenerList.add(listener) }
     }
 
-    fun removeOnPreviewListener(listener:OnPreviewListener) {
-       mProgressListenerList.remove(listener)
+    fun removeOnPreviewListener(listener: OnPreviewListener) {
+        synchronized(mProgressObject) { mProgressListenerList.remove(listener) }
     }
+
 
     fun removeAllPreviewListener() {
-     mProgressListenerList.clear()
+        synchronized(mProgressObject) { mProgressListenerList.clear() }
     }
 
-    fun notifyPreviewProgress(time: Int) {
+
+    private  fun notifyPreviewProgress(time: Int) {
+        synchronized(mProgressObject) {
             mProgressListenerList.forEach {
                 it.onPreviewProgress(time)
+            }
         }
     }
 
-    fun notifyPreviewFinish() {
+   private fun notifyPreviewFinish() {
+        synchronized(mProgressObject) {
             mProgressListenerList.forEach {
                 it.onPreviewFinish()
             }
+        }
     }
 
+
+    /**
+     * 添加播放状态监听
+     * @param listener OnPlayStateListener
+     */
     fun addOnPlayStateListener(listener: OnPlayStateListener) {
-      mStateListenerList.add(listener)
+        synchronized(mStateObject) { mStateListenerList.add(listener) }
     }
 
-    fun removeOnPlayStateListener(listener: PlayerManager.OnPlayStateListener) {
-        mStateListenerList.remove(listener)
+    /**
+     * 移除播放状态监听
+     * @param listener OnPlayStateListener
+     */
+    fun removeOnPlayStateListener(listener: OnPlayStateListener) {
+        synchronized(mStateObject) { mStateListenerList.remove(listener) }
     }
 
+    /**
+     * 移除所有播放状态监听
+     */
     fun removeAllPlayStateListener() {
-      mStateListenerList.clear()
+        synchronized(mStateObject) { mStateListenerList.clear() }
     }
 
-    fun notifyStart() {
+    /**
+     * 开始播放通知
+     */
+   private  fun notifyPlayerState(state:Int) {
+        synchronized(mStateObject) {
             mStateListenerList.forEach {
-                it.onPlayStateStart()
+                it.onPlayState(state)
             }
+        }
     }
 
-    fun notifyStop() {
-            mStateListenerList.forEach {
-                it.onPlayStateStop()
-            }
-    }
 
-    fun notifyResume() {
-            mStateListenerList.forEach {
-                it.onPlayStateResume()
-            }
-    }
 
-    fun notifyPause() {
-            mStateListenerList.forEach {
-                it.onPlayStatePause()
-            }
-    }
 
+    /**
+     * 获取当前播放状态
+     * @return Int
+     */
     fun getCurrentState(): Int {
         return mCurrentState
     }
 
     interface OnPlayStateListener {
-        fun onPlayStateStart()
-        fun onPlayStateResume()
-        fun onPlayStatePause()
-        fun onPlayStateStop()
+        fun onPlayState(state:Int)
+
     }
 
     interface OnPreviewListener {

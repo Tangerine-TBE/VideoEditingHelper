@@ -4,9 +4,10 @@ import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
+import com.tencent.liteav.demo.videoediter.TCVideoCutActivity
 import com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
+import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.twx.module_base.base.BaseVmFragment
-import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
@@ -72,7 +73,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>() {
                 }
 
                 divisionAction.setOnClickListener {
-                    toOtherActivity<VideoCutActivity>(activity) {}
+                   // toOtherActivity<VideoCutActivity>(activity) {}
                 }
 
                 jointAction.setOnClickListener {
@@ -104,10 +105,11 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>() {
         PictureSelector.obtainMultipleResult(data)?.let {
             if (it.size>0){
                 when(requestCode){
-                    Constants.REQUEST_VIDEO_CUT->{
-                        toOtherActivity<VideoCutActivity>(activity) {
+                    Constants.REQUEST_VIDEO_CUT -> {
+                           toOtherActivity<VideoCutActivity>(activity) {
                             putExtra(Constants.KEY_VIDEO_PATH,it[0].path)
                         }
+
                     }
                 }
             }

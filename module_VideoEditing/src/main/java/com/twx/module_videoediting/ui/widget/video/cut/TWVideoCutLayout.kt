@@ -17,7 +17,7 @@ import com.tencent.ugc.TXVideoEditConstants.TXVideoInfo
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.MyVideoCutKitBinding
 import com.twx.module_videoediting.ui.widget.video.BaseVideoUi
-import com.twx.module_videoediting.utils.PlayerManager
+import com.twx.module_videoediting.utils.video.PlayerManager
 
 class TWVideoCutLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
