@@ -105,6 +105,74 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
     }
 
     @Override
+    public void setOnCutListener(@Nullable final OnCutListener listener) {
+        if (listener == null) {
+            ProcessKit.getInstance().setOnUpdateUIListener(null);
+            VideoGenerateKit.getInstance().setOnUpdateUIListener(null);
+            return;
+        }
+        boolean editFlag = JumpActivityMgr.getInstance().getEditFlagFromCut();
+        // 设置生成的监听器，用来更新控件
+        if (editFlag) {
+            // 裁剪后进入编辑
+            ProcessKit.getInstance().setOnUpdateUIListener(new OnUpdateUIListener() {
+                @Override
+                public void onUIProgress(float progress) {
+                    mProgressFragmentUtil.updateGenerateProgress((int) (progress * 100));
+                }
+
+                @Override
+                public void onUIComplete(int retCode, String descMsg) {
+                    mProgressFragmentUtil.dismissLoadingProgress();
+
+                    if (listener != null) {
+                        UGCKitResult ugcKitResult = new UGCKitResult();
+                        ugcKitResult.errorCode = retCode;
+                        ugcKitResult.descMsg = descMsg;
+                        listener.onCutterCompleted(ugcKitResult);
+                    }
+                }
+
+                @Override
+                public void onUICancel() {
+                    if (listener != null) {
+                        listener.onCutterCanceled();
+                    }
+                }
+            });
+        } else {
+            // 裁剪后输出视频
+            VideoGenerateKit.getInstance().setOnUpdateUIListener(new OnUpdateUIListener() {
+                @Override
+                public void onUIProgress(float progress) {
+                    mProgressFragmentUtil.updateGenerateProgress((int) (progress * 100));
+                }
+
+                @Override
+                public void onUIComplete(int retCode, String descMsg) {
+                    mProgressFragmentUtil.dismissLoadingProgress();
+
+                    if (listener != null) {
+                        UGCKitResult ugcKitResult = new UGCKitResult();
+                        ugcKitResult.errorCode = retCode;
+                        ugcKitResult.descMsg = descMsg;
+                        ugcKitResult.outputPath = VideoGenerateKit.getInstance().getVideoOutputPath();
+                        ugcKitResult.coverPath = VideoGenerateKit.getInstance().getCoverPath();
+                        listener.onCutterCompleted(ugcKitResult);
+                    }
+                }
+
+                @Override
+                public void onUICancel() {
+                    if (listener != null) {
+                        listener.onCutterCanceled();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
     public void setVideoPath(final String videoPath) {
         TXCLog.i(TAG,"[UGCKit][VideoCut]setVideoPath:" + videoPath);
         if (TextUtils.isEmpty(videoPath)) {
@@ -175,73 +243,6 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
         }, interval);
     }
 
-    @Override
-    public void setOnCutListener(@Nullable final OnCutListener listener) {
-        if (listener == null) {
-            ProcessKit.getInstance().setOnUpdateUIListener(null);
-            VideoGenerateKit.getInstance().setOnUpdateUIListener(null);
-            return;
-        }
-        boolean editFlag = JumpActivityMgr.getInstance().getEditFlagFromCut();
-        // 设置生成的监听器，用来更新控件
-        if (editFlag) {
-            // 裁剪后进入编辑
-            ProcessKit.getInstance().setOnUpdateUIListener(new OnUpdateUIListener() {
-                @Override
-                public void onUIProgress(float progress) {
-                    mProgressFragmentUtil.updateGenerateProgress((int) (progress * 100));
-                }
-
-                @Override
-                public void onUIComplete(int retCode, String descMsg) {
-                    mProgressFragmentUtil.dismissLoadingProgress();
-
-                    if (listener != null) {
-                        UGCKitResult ugcKitResult = new UGCKitResult();
-                        ugcKitResult.errorCode = retCode;
-                        ugcKitResult.descMsg = descMsg;
-                        listener.onCutterCompleted(ugcKitResult);
-                    }
-                }
-
-                @Override
-                public void onUICancel() {
-                    if (listener != null) {
-                        listener.onCutterCanceled();
-                    }
-                }
-            });
-        } else {
-            // 裁剪后输出视频
-            VideoGenerateKit.getInstance().setOnUpdateUIListener(new OnUpdateUIListener() {
-                @Override
-                public void onUIProgress(float progress) {
-                    mProgressFragmentUtil.updateGenerateProgress((int) (progress * 100));
-                }
-
-                @Override
-                public void onUIComplete(int retCode, String descMsg) {
-                    mProgressFragmentUtil.dismissLoadingProgress();
-
-                    if (listener != null) {
-                        UGCKitResult ugcKitResult = new UGCKitResult();
-                        ugcKitResult.errorCode = retCode;
-                        ugcKitResult.descMsg = descMsg;
-                        ugcKitResult.outputPath = VideoGenerateKit.getInstance().getVideoOutputPath();
-                        ugcKitResult.coverPath = VideoGenerateKit.getInstance().getCoverPath();
-                        listener.onCutterCompleted(ugcKitResult);
-                    }
-                }
-
-                @Override
-                public void onUICancel() {
-                    if (listener != null) {
-                        listener.onCutterCanceled();
-                    }
-                }
-            });
-        }
-    }
 
     @Override
     public void startPlay() {

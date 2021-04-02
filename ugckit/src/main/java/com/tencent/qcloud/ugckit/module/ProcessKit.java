@@ -11,6 +11,7 @@ import com.tencent.qcloud.ugckit.module.effect.utils.PlayState;
 import com.tencent.rtmp.TXLog;
 import com.tencent.ugc.TXVideoEditConstants;
 import com.tencent.ugc.TXVideoEditer;
+import com.twx.module_base.utils.LogUtils;
 
 /**
  * 视频预处理
@@ -45,6 +46,11 @@ public class ProcessKit extends BaseGenerateKit implements TXVideoEditer.TXVideo
         long cutterEndTime = VideoEditerSDK.getInstance().getCutterEndTime();
 
         int thumbnailCount = (int) (cutterEndTime - cutterStartTime) / 1000;
+
+
+        LogUtils.i("startProcess----------"+cutterStartTime+"----------"+cutterEndTime+"-----------------"+thumbnailCount);
+
+
 
         TXVideoEditConstants.TXThumbnail thumbnail = new TXVideoEditConstants.TXThumbnail();
         thumbnail.count = thumbnailCount;

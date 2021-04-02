@@ -20,6 +20,7 @@ import com.tencent.qcloud.ugckit.component.timeline.VideoProgressController;
 import com.tencent.qcloud.ugckit.component.timeline.VideoProgressView;
 import com.tencent.qcloud.ugckit.module.effect.time.TimeEffect;
 import com.tencent.qcloud.ugckit.module.effect.utils.PlayState;
+import com.twx.module_base.utils.LogUtils;
 
 import java.util.List;
 
@@ -70,6 +71,7 @@ public class TimeLineView extends RelativeLayout implements ITimeLineView, Video
         mActivity.getWindowManager().getDefaultDisplay().getSize(point);
         int screenWidth = point.x;
 
+        LogUtils.i("----initVideoProgressLayout------------------------------"+screenWidth);
         List<Bitmap> thumbnailList = VideoEditerSDK.getInstance().getAllThumbnails();
         mVideoProgressView.setViewWidth(screenWidth);
         mVideoProgressView.setThumbnailData(thumbnailList);

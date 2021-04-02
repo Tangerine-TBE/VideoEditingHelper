@@ -43,7 +43,6 @@ public class VideoEditerSDK {
      */
     private final List<TXVideoPreviewListenerWrapper> mPreviewWrapperList;
     private boolean mIsReverse;
-
     private long mCutterDuration;                                   // 裁剪的总时长
     private long mCutterStartTime;                                  // 裁剪开始的时间
     private long mCutterEndTime;                                    // 裁剪结束的时间
@@ -92,6 +91,9 @@ public class VideoEditerSDK {
         return mTXVideoInfo;
     }
 
+    /**
+     * 释放全部资源
+     */
     public void clear() {
         if (mTXVideoEditer != null) {
             mTXVideoEditer.setTXVideoPreviewListener(null);
@@ -112,6 +114,10 @@ public class VideoEditerSDK {
         mIsReverse = false;
     }
 
+
+    /**
+     * 释放编辑者
+     */
     public void releaseSDK() {
         if (mTXVideoEditer != null) {
             mTXVideoEditer.release();
@@ -119,7 +125,7 @@ public class VideoEditerSDK {
     }
 
     /**
-     * 裁剪后的时间
+     * 设置裁剪后的时长
      *
      * @param newVideoDuration
      */
@@ -128,7 +134,7 @@ public class VideoEditerSDK {
     }
 
     /**
-     * 获取裁剪后的时间
+     * 获取裁剪后的时长
      *
      * @return
      */
@@ -142,11 +148,35 @@ public class VideoEditerSDK {
         mCutterEndTime = endTime;
         mCutterDuration = endTime - startTime;
     }
+    /**
+     * 设置剪辑开始的时间
+     * @return
+     */
+    public void setCutterStartTime(long cutterStartTime) {
+        mCutterStartTime = cutterStartTime;
+        mCutterDuration = mCutterEndTime - mCutterStartTime;
+    }
+    /**
+     * 获设置辑结束的时间
+     * @return
+     */
+    public void setCutterEndTime(long cutterEndTime) {
+        mCutterEndTime = cutterEndTime;
+        mCutterDuration = mCutterEndTime - mCutterStartTime;
+    }
 
+    /**
+     * 获取剪辑开始的时间
+     * @return
+     */
     public long getCutterStartTime() {
         return mCutterStartTime;
     }
 
+    /**
+     * 获取剪辑结束的时间
+     * @return
+     */
     public long getCutterEndTime() {
         return mCutterEndTime;
     }
@@ -342,7 +372,7 @@ public class VideoEditerSDK {
         return mThumbnailList == null ? 0 : mThumbnailList.size();
     }
 
-    private class ThumbnailBitmapInfo {
+    public class ThumbnailBitmapInfo {
         public long ptsMs;
         public Bitmap bitmap;
 

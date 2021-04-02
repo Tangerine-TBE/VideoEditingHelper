@@ -8,11 +8,12 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <com.twx.module_videoediting.ui.widget.video.TWVideoPlayerView
+        <com.twx.module_videoediting.ui.widget.video.ganeral.TWVideoPlayerView
             android:id="@+id/mVideoPlayerView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -30,13 +31,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mVideoPlayerView" />
 
-        <com.twx.module_videoediting.ui.widget.video.cut.TWVideoCutLayout
+    <include
+        android:id="@+id/cutControl"
+        layout="@layout/layout_cut_view_control"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerControl" />
+
+
+       <!-- <com.twx.module_videoediting.ui.widget.video.cut.TWVideoCutLayout
             android:id="@+id/mVideoCutLayout"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playerControl" />
+            app:layout_constraintTop_toBottomOf="@+id/cutControl" />-->
+
+        <com.twx.module_videoediting.ui.widget.video.cut.CutView
+            android:id="@+id/mCutViewLayout"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cutControl"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

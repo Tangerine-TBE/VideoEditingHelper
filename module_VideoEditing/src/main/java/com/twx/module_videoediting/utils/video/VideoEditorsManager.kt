@@ -1,18 +1,14 @@
 package com.twx.module_videoediting.utils.video
 
 import android.graphics.Bitmap
-import android.util.Log
 import com.tencent.qcloud.ugckit.module.cut.IVideoCutLayout
-import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.qcloud.ugckit.module.effect.utils.DraftEditer
 import com.tencent.qcloud.ugckit.module.effect.utils.EffectEditer
-import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoEditConstants.TXVideoInfo
 import com.tencent.ugc.TXVideoEditer
 import com.tencent.ugc.TXVideoEditer.TXThumbnailListener
 import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseApplication
-import com.twx.module_base.utils.LogUtils
 
 /**
  * @name VideoEditingHelper
@@ -22,7 +18,7 @@ import com.twx.module_base.utils.LogUtils
  * @time 2021/3/31 14:05:02
  * @class describe
  */
-object VideoEditerManager {
+object VideoEditorsManager {
 
     private  var mCutterDuration=0L // 裁剪的总时长
     private  var mCutterStartTime =0L// 裁剪开始的时间
@@ -125,10 +121,36 @@ object VideoEditerManager {
         mCutterEndTime = endTime
         mCutterDuration = endTime - startTime
     }
+
+    /**
+     * 设置剪辑开始的时间
+     * @return
+     */
+    fun setCutterStartTime(cutterStartTime: Long) {
+        mCutterStartTime = cutterStartTime
+        mCutterDuration = mCutterEndTime - mCutterStartTime
+    }
+
+    /**
+     * 获设置辑结束的时间
+     * @return
+     */
+    fun setCutterEndTime(cutterEndTime: Long) {
+        mCutterEndTime = cutterEndTime
+        mCutterDuration = mCutterEndTime - mCutterStartTime
+    }
+
+    /**
+     * 获取剪辑开始的时间
+     * @return
+     */
     fun getCutterStartTime(): Long {
         return mCutterStartTime
     }
-
+    /**
+     * 获取剪辑结束的时间
+     * @return
+     */
     fun getCutterEndTime(): Long {
         return mCutterEndTime
     }
@@ -230,7 +252,7 @@ object VideoEditerManager {
                 setRenderRotation(0)
                 // FIXBUG：获取缩略图之前需要设置缩略图的开始和结束时间点，SDK内部会根据开始时间和结束时间出缩略图
                 setCutFromTime(0, it.duration)
-                getThumbnail( (it.duration/ interval).toInt(), IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH, IVideoCutLayout.DEFAULT_THUMBNAIL_HEIGHT, true, listener)
+                getThumbnail((it.duration / interval).toInt(), IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH, IVideoCutLayout.DEFAULT_THUMBNAIL_HEIGHT, true, listener)
             }
         }
     }

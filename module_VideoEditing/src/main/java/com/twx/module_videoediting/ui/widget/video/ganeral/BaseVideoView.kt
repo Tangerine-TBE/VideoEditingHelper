@@ -1,4 +1,4 @@
-package com.twx.module_videoediting.ui.widget.video
+package com.twx.module_videoediting.ui.widget.video.ganeral
 
 import android.content.Context
 import android.util.AttributeSet

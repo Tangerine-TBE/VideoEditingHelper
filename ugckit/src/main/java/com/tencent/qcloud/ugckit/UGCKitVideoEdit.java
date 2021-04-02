@@ -266,7 +266,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
             public void onUIComplete(int retCode, String descMsg) {
                 mProgressFragmentUtil.dismissLoadingProgress();
 
-                LogReport.getInstance().reportVideoEdit(retCode);
+              //  LogReport.getInstance().reportVideoEdit(retCode);
 
                 final UGCKitResult ugcKitResult = new UGCKitResult();
                 ugcKitResult.outputPath = VideoGenerateKit.getInstance().getVideoOutputPath();
@@ -297,7 +297,7 @@ public class UGCKitVideoEdit extends AbsVideoEditUI {
         });
         PlayerManagerKit.getInstance().stopPlay();
 
-        VideoGenerateKit.getInstance().addTailWaterMark();
+     //   VideoGenerateKit.getInstance().addTailWaterMark();
         VideoGenerateKit.getInstance().startGenerate();
     }
 

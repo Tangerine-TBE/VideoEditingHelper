@@ -9,4 +9,6 @@
 
     <color name="color_home_icon_false">#808080</color>
 
+    <color name="color_control_bt">@color/color_home_two</color>
+
 </resources>

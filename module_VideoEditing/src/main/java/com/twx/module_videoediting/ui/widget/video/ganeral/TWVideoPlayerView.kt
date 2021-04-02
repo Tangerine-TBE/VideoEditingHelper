@@ -1,9 +1,8 @@
-package com.twx.module_videoediting.ui.widget.video
+package com.twx.module_videoediting.ui.widget.video.ganeral
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.ugc.TXVideoEditConstants
@@ -21,7 +20,7 @@ import com.twx.module_videoediting.databinding.LayoutVideoContainerBinding
  */
 class TWVideoPlayerView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : BaseVideoUi(context, attrs, defStyleAttr) {
     private val mView=DataBindingUtil.inflate<LayoutVideoContainerBinding>(LayoutInflater.from(context), R.layout.layout_video_container, this, true)
     /**
      * 初始化预览播放器
@@ -32,6 +31,9 @@ class TWVideoPlayerView @JvmOverloads constructor(
         param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE
         val videoEditer = VideoEditerSDK.getInstance().editer
         videoEditer?.initWithPreview(param)
+
+       // VideoEditorsManager.getEditer()?.initWithPreview(param)
+
     }
 
 

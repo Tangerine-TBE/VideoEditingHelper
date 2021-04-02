@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,11 +11,10 @@ import com.tencent.liteav.basic.log.TXCLog
 import com.tencent.qcloud.ugckit.component.slider.RangeSlider.OnRangeChangeListener
 import com.tencent.qcloud.ugckit.module.effect.time.TCVideoEditerAdapter
 import com.tencent.qcloud.ugckit.module.effect.utils.Edit.OnCutChangeListener
-import com.tencent.rtmp.TXLog
 import com.tencent.ugc.TXVideoEditConstants.TXVideoInfo
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.MyItemEditViewBinding
-import com.twx.module_videoediting.ui.widget.video.BaseVideoUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
 
 /**
  * 裁剪View

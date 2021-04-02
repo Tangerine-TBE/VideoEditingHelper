@@ -5,18 +5,15 @@ import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RelativeLayout
 import androidx.databinding.DataBindingUtil
-import com.tencent.liteav.basic.log.TXCLog
 import com.tencent.qcloud.ugckit.module.cut.IVideoCutLayout
 import com.tencent.qcloud.ugckit.module.cut.IVideoCutLayout.OnRotateVideoListener
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.qcloud.ugckit.module.effect.utils.Edit.OnCutChangeListener
-import com.tencent.rtmp.TXLog
 import com.tencent.ugc.TXVideoEditConstants.TXVideoInfo
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.MyVideoCutKitBinding
-import com.twx.module_videoediting.ui.widget.video.BaseVideoUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
 import com.twx.module_videoediting.utils.video.PlayerManager
 
 class TWVideoCutLayout @JvmOverloads constructor(

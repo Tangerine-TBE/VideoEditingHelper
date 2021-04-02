@@ -105,9 +105,6 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
                 case TXVideoEditConstants.VIDEO_COMPRESSED_540P:
                     editer.generateVideo(TXVideoEditConstants.VIDEO_COMPRESSED_540P, mVideoOutputPath);
                     break;
-                case TXVideoEditConstants.VIDEO_COMPRESSED_720P:
-                    editer.generateVideo(TXVideoEditConstants.VIDEO_COMPRESSED_720P, mVideoOutputPath);
-                    break;
                 default:
                     editer.generateVideo(TXVideoEditConstants.VIDEO_COMPRESSED_720P, mVideoOutputPath);
                     break;
@@ -143,6 +140,31 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
         }
     }
 
+    @Override
+    public void onGenerateComplete(@NonNull final TXVideoEditConstants.TXGenerateResult result) {
+        mCurrentState = PlayState.STATE_NONE;
+        if (result.retCode == TXVideoEditConstants.GENERATE_RESULT_OK) {
+            if (mCoverGenerate) {
+                Log.d(TAG, "onGenerateComplete outputPath:" + mVideoOutputPath);
+                // 获取哪个视频的封面
+                CoverUtil.getInstance().setInputPath(mVideoOutputPath);
+                // 创建新的封面
+                CoverUtil.getInstance().createThumbFile(new CoverUtil.ICoverListener() {
+                    @Override
+                    public void onCoverPath(String coverPath) {
+                        mCoverPath = coverPath;
+                        Log.d(TAG, "onGenerateComplete coverPath:" + coverPath);
+                        saveAndUpdate(result);
+                        release();
+                    }
+                });
+            } else {
+                saveAndUpdate(result);
+                release();
+            }
+        }
+    }
+
     /**
      * 添加片尾水印
      */
@@ -169,30 +191,7 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
         }
     }
 
-    @Override
-    public void onGenerateComplete(@NonNull final TXVideoEditConstants.TXGenerateResult result) {
-        mCurrentState = PlayState.STATE_NONE;
-        if (result.retCode == TXVideoEditConstants.GENERATE_RESULT_OK) {
-            if (mCoverGenerate) {
-                Log.d(TAG, "onGenerateComplete outputPath:" + mVideoOutputPath);
-                // 获取哪个视频的封面
-                CoverUtil.getInstance().setInputPath(mVideoOutputPath);
-                // 创建新的封面
-                CoverUtil.getInstance().createThumbFile(new CoverUtil.ICoverListener() {
-                    @Override
-                    public void onCoverPath(String coverPath) {
-                        mCoverPath = coverPath;
-                        Log.d(TAG, "onGenerateComplete coverPath:" + coverPath);
-                        saveAndUpdate(result);
-                        release();
-                    }
-                });
-            } else {
-                saveAndUpdate(result);
-                release();
-            }
-        }
-    }
+
 
     private void release() {
         // SDK释放资源

@@ -1,7 +1,8 @@
 package com.twx.module_videoediting.ui.activity
 
+import android.content.Intent
+import com.tencent.liteav.demo.videoediter.TCVideoEditerActivity
 import com.tencent.qcloud.ugckit.basic.UGCKitResult
-import com.tencent.qcloud.ugckit.module.cut.IVideoCutKit
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.LayoutType
 import com.twx.module_base.utils.setStatusBarDistance
@@ -16,13 +17,24 @@ import com.twx.module_videoediting.viewmodel.VideoCutViewModel
 
 class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutViewModel>() {
 
+    private fun startEditActivity() {
+        val intent = Intent(this, TCVideoEditerActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private val mOnCutListener by lazy {
         object: IVideoCut.OnCutListener{
             override fun onCutterCompleted(ugcKitResult: UGCKitResult?) {
+                if (ugcKitResult?.errorCode == 0) {
+                    startEditActivity()
+                }
+            }
+            override fun onCutterCanceled() {
 
             }
 
-            override fun onCutterCanceled() {
+            override fun onCutterProgress(progress: Float) {
 
             }
 
@@ -62,7 +74,9 @@ class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutVie
 
     override fun initEvent() {
         binding.apply {
-            cutTitleBar.setBarEventAction(this@VideoCutActivity) {}
+            cutTitleBar.setBarEventAction(this@VideoCutActivity) {
+                mTWVideoCutContainer.startExportVideo()
+            }
         }
     }
 
