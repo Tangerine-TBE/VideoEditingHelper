@@ -4,6 +4,7 @@ import com.tencent.qcloud.ugckit.module.PlayerManagerKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.qcloud.ugckit.module.effect.utils.PlayState
 import com.tencent.ugc.TXVideoEditer
+import com.twx.module_base.utils.LogUtils
 import java.util.*
 
 /**
@@ -28,8 +29,6 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
     private val mStateObject = Any()
 
 
-
-
     /**
      * 开始视频预览
      */
@@ -52,12 +51,13 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
      * @param startTime Long 开始时间
      * @param endTime Long  结束时间
      */
-    fun startPlay(startTime: Long, endTime: Long) {
+    private fun startPlay(startTime: Long, endTime: Long) {
         mVideoEditerSDK.apply {
             if (editer != null) {
                 addPreviewListener()
                 editer.startPlayFromTime(startTime, endTime)
                 mCurrentState = PlayState.STATE_PLAY
+                notifyPlayerState(PlayState.STATE_PLAY)
             }
             isPreviewFinish = false
         }
@@ -88,7 +88,6 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
                 editer.stopPlay()
                 removePreviewListener()
                 notifyPlayerState(PlayState.STATE_STOP)
-
             }
             mCurrentState = PlayState.STATE_STOP
         }
@@ -138,22 +137,22 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
             isPreviewFinish = false
             editer.previewAtTime(timeMs)
             mPreviewAtTime = timeMs
+            LogUtils.i("------previewAtTime-------playmanager----------$timeMs------")
             mCurrentState = PlayState.STATE_PREVIEW_AT_TIME
         }
-
     }
 
     /**
      * 添加预览监听
      */
-    fun addPreviewListener() {
+    private fun addPreviewListener() {
         mVideoEditerSDK.editer.setTXVideoPreviewListener(this)
     }
 
     /**
      * 移除预览监听
      */
-    fun removePreviewListener() {
+    private fun removePreviewListener() {
         mVideoEditerSDK.editer.setTXVideoPreviewListener(null)
     }
 
@@ -187,12 +186,19 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
             } else if (mCurrentState == PlayState.STATE_PAUSE) {
                 resumePlay()
             } else if (mCurrentState == PlayState.STATE_PREVIEW_AT_TIME) {
-                if ((mPreviewAtTime >= cutterEndTime || mPreviewAtTime <= cutterStartTime) && !isMotionFilter) {
+              /*  if ((mPreviewAtTime >= cutterEndTime || mPreviewAtTime <= cutterStartTime) && !isMotionFilter) {
                     startPlay(cutterStartTime, cutterEndTime)
                 } else if (!VideoEditerSDK.getInstance().isReverse) {
                     startPlay(mPreviewAtTime, cutterEndTime)
                 } else {
                     startPlay(cutterStartTime, mPreviewAtTime)
+                }*/
+                val totalDuration = txVideoInfo.duration
+                LogUtils.i("--playVideo---$mPreviewAtTime-------$totalDuration----------")
+                if (mPreviewAtTime >=totalDuration) {
+                    startPlay(0, totalDuration)
+                } else {
+                    startPlay(mPreviewAtTime, totalDuration)
                 }
             }
         }
@@ -265,9 +271,6 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
         }
     }
 
-
-
-
     /**
      * 获取当前播放状态
      * @return Int
@@ -278,7 +281,6 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
 
     interface OnPlayStateListener {
         fun onPlayState(state:Int)
-
     }
 
     interface OnPreviewListener {

@@ -5,6 +5,17 @@ com/tencent/liteav/demo/videoediter/TCEditPreviewActivity.java
  com.tencent.liteav.demo.videoediter.TCEditPreviewActivity$1
  com.tencent.liteav.demo.videoediter.TCEditPreviewActivity$ErrorDialogFragment
  com.tencent.liteav.demo.videoediter.TCEditPreviewActivity$ErrorDialogFragment$1
+com/tencent/liteav/demo/videoediter/DataBindingTriggerClass.java
+ com.tencent.liteav.demo.videoediter.DataBindingTriggerClass
+com/tencent/liteav/demo/videoediter/common/TCVideoEditerListAdapter.java
+ com.tencent.liteav.demo.videoediter.common.TCVideoEditerListAdapter
+ com.tencent.liteav.demo.videoediter.common.TCVideoEditerListAdapter$1
+ com.tencent.liteav.demo.videoediter.common.TCVideoEditerListAdapter$ViewHolder
+com/tencent/liteav/demo/videoediter/TCVideoPickerActivity.java
+ com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
+ com.tencent.liteav.demo.videoediter.TCVideoPickerActivity$1
+ com.tencent.liteav.demo.videoediter.TCVideoPickerActivity$2
+ com.tencent.liteav.demo.videoediter.TCVideoPickerActivity$3
 com/tencent/liteav/demo/videoediter/TCPictureJoinActivity.java
  com.tencent.liteav.demo.videoediter.TCPictureJoinActivity
  com.tencent.liteav.demo.videoediter.TCPictureJoinActivity$1
@@ -16,17 +27,6 @@ com/tencent/liteav/demo/videoediter/TCVideoCutActivity.java
 com/tencent/liteav/demo/videoediter/TCVideoEditerActivity.java
  com.tencent.liteav.demo.videoediter.TCVideoEditerActivity
  com.tencent.liteav.demo.videoediter.TCVideoEditerActivity$1
-com/tencent/liteav/demo/videoediter/DataBindingTriggerClass.java
- com.tencent.liteav.demo.videoediter.DataBindingTriggerClass
-com/tencent/liteav/demo/videoediter/TCVideoPickerActivity.java
- com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
- com.tencent.liteav.demo.videoediter.TCVideoPickerActivity$1
- com.tencent.liteav.demo.videoediter.TCVideoPickerActivity$2
- com.tencent.liteav.demo.videoediter.TCVideoPickerActivity$3
-com/tencent/liteav/demo/videoediter/common/TCVideoEditerListAdapter.java
- com.tencent.liteav.demo.videoediter.common.TCVideoEditerListAdapter
- com.tencent.liteav.demo.videoediter.common.TCVideoEditerListAdapter$1
- com.tencent.liteav.demo.videoediter.common.TCVideoEditerListAdapter$ViewHolder
 com/tencent/liteav/demo/videoediter/TCVideoEffectActivity.java
  com.tencent.liteav.demo.videoediter.TCVideoEffectActivity
  com.tencent.liteav.demo.videoediter.TCVideoEffectActivity$1

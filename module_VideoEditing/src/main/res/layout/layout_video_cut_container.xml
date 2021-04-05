@@ -41,23 +41,18 @@
         app:layout_constraintTop_toBottomOf="@+id/playerControl" />
 
 
-       <!-- <com.twx.module_videoediting.ui.widget.video.cut.TWVideoCutLayout
-            android:id="@+id/mVideoCutLayout"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cutControl" />-->
+
 
         <com.twx.module_videoediting.ui.widget.video.cut.CutView
             android:id="@+id/mCutViewLayout"
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cutControl"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

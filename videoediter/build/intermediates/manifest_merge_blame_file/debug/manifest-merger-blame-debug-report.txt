@@ -6,102 +6,102 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+8-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+9-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:7:5-55:19
+11-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:7:5-55:19
 12        <activity
-12-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:8:9-10:52
+12-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:8:9-10:52
 13            android:name="com.tencent.liteav.demo.videoediter.TCVideoPickerActivity"
-13-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:9:13-50
+13-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:9:13-50
 14            android:screenOrientation="portrait" />
-14-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:10:13-49
+14-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:10:13-49
 15        <activity
-15-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:12:9-23:20
+15-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:12:9-23:20
 16            android:name="com.tencent.liteav.demo.videoediter.TCVideoEditerActivity"
-16-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:13:13-50
+16-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:13:13-50
 17            android:launchMode="singleTop"
-17-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:14:13-43
+17-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:14:13-43
 18            android:screenOrientation="portrait"
-18-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:15:13-49
+18-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:15:13-49
 19            android:theme="@style/EditerActivityTheme" >
-19-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:16:13-55
+19-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:16:13-55
 20            <intent-filter>
-20-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:17:13-22:29
+20-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:17:13-22:29
 21                <action android:name="com.tencent.liteav.demo.videoediter" />
-21-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:18:17-78
-21-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:18:25-75
+21-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:18:17-78
+21-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:18:25-75
 22                <action android:name="android.intent.action.MAIN" />
-22-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:17-69
-22-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:25-66
+22-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:19:17-69
+22-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:19:25-66
 23
 24                <category android:name="android.intent.category.DEFAULT" />
-24-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:17-76
-24-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:27-73
+24-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:21:17-76
+24-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:21:27-73
 25            </intent-filter>
 26        </activity>
 27        <activity
-27-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:24:9-35:20
+27-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:24:9-35:20
 28            android:name="com.tencent.liteav.demo.videoediter.TCVideoCutActivity"
-28-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:25:13-47
+28-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:25:13-47
 29            android:launchMode="singleTop"
-29-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:27:13-43
+29-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:27:13-43
 30            android:screenOrientation="portrait"
-30-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:26:13-49
+30-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:26:13-49
 31            android:theme="@style/EditerActivityTheme" >
-31-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:28:13-55
+31-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:28:13-55
 32            <intent-filter>
-32-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:29:13-34:29
+32-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:29:13-34:29
 33                <action android:name="com.tencent.liteav.demo.videocut" />
-33-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:30:17-75
-33-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:30:25-72
+33-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:30:17-75
+33-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:30:25-72
 34                <action android:name="android.intent.action.MAIN" />
-34-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:17-69
-34-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:25-66
+34-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:19:17-69
+34-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:19:25-66
 35
 36                <category android:name="android.intent.category.DEFAULT" />
-36-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:17-76
-36-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:27-73
+36-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:21:17-76
+36-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:21:27-73
 37            </intent-filter>
 38        </activity>
 39        <activity
-39-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:36:9-39:58
+39-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:36:9-39:58
 40            android:name="com.tencent.liteav.demo.videoediter.TCVideoEffectActivity"
-40-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:37:13-50
+40-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:37:13-50
 41            android:screenOrientation="portrait"
-41-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:38:13-49
+41-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:38:13-49
 42            android:theme="@style/EditerActivityTheme" />
-42-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:39:13-55
+42-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:39:13-55
 43        <activity
-43-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:41:9-51:20
+43-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:41:9-51:20
 44            android:name="com.tencent.liteav.demo.videoediter.TCPictureJoinActivity"
-44-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:42:13-50
+44-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:42:13-50
 45            android:screenOrientation="portrait"
-45-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:43:13-49
+45-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:43:13-49
 46            android:theme="@style/PictureTransitionActivityStyle" >
-46-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:44:13-66
+46-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:44:13-66
 47            <intent-filter>
-47-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:45:13-50:29
+47-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:45:13-50:29
 48                <action android:name="com.tencent.liteav.demo.picturejoin" />
-48-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:46:17-78
-48-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:46:25-75
+48-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:46:17-78
+48-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:46:25-75
 49                <action android:name="android.intent.action.MAIN" />
-49-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:17-69
-49-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:25-66
+49-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:19:17-69
+49-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:19:25-66
 50
 51                <category android:name="android.intent.category.DEFAULT" />
-51-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:17-76
-51-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:27-73
+51-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:21:17-76
+51-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:21:27-73
 52            </intent-filter>
 53        </activity>
 54        <activity
-54-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:52:9-54:61
+54-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:52:9-54:61
 55            android:name="com.tencent.liteav.demo.videoediter.TCEditPreviewActivity"
-55-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:53:13-50
+55-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:53:13-50
 56            android:screenOrientation="portrait" />
-56-->C:\Users\Administrator\Desktop\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:54:13-49
+56-->C:\Users\wjm666666\Desktop\video-clip\videoediter\src\main\AndroidManifest.xml:54:13-49
 57    </application>
 58
 59</manifest>

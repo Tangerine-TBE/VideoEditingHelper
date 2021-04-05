@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tencent.liteav.basic.log.TXCLog;
+import com.twx.module_base.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -403,7 +404,9 @@ public class VideoProgressController {
         float rate = (float) mCurrentTimeMs / mTotalDurationMs;
         float scrollBy = rate * getThumbnailPicListDisplayWidth() - mCurrentScroll;
         mRecyclerView.scrollBy((int) scrollBy, 0);
+        LogUtils.i("---"+rate+"----"+currentTimeMs+"----------"+mTotalDurationMs+"-----"+rate * mThumbnailPicListDisplayWidth+"-----------"+mCurrentScroll+"---------"+scrollBy);
     }
+
 
     public long getCurrentTimeMs() {
         return mCurrentTimeMs;
@@ -427,6 +430,7 @@ public class VideoProgressController {
             mThumbnailNum = mVideoProgressView.getThumbnailCount();
             mThumbnailPicListDisplayWidth = mThumbnailNum * mVideoProgressView.getSingleThumbnailWidth();
         }
+
         return mThumbnailPicListDisplayWidth;
     }
 

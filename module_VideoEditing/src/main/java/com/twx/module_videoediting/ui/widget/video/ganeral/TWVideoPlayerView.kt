@@ -32,8 +32,6 @@ class TWVideoPlayerView @JvmOverloads constructor(
         val videoEditer = VideoEditerSDK.getInstance().editer
         videoEditer?.initWithPreview(param)
 
-       // VideoEditorsManager.getEditer()?.initWithPreview(param)
-
     }
 
 

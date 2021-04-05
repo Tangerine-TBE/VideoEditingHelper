@@ -293,11 +293,11 @@ public class VideoEditerSDK {
         int thumbCount = durationS;
         LogUtils.i("------thumbCount---------------------------------------"+thumbCount);
         if (mTXVideoEditer != null) {
-                    mTXVideoEditer.setRenderRotation(0);
-                    // FIXBUG：获取缩略图之前需要设置缩略图的开始和结束时间点，SDK内部会根据开始时间和结束时间出缩略图
-                    mTXVideoEditer.setCutFromTime(0,mTXVideoInfo.duration);
-                    mTXVideoEditer.getThumbnail(thumbCount, IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH, IVideoCutLayout.DEFAULT_THUMBNAIL_HEIGHT, true, listener);
-                }
+            mTXVideoEditer.setRenderRotation(0);
+            // FIXBUG：获取缩略图之前需要设置缩略图的开始和结束时间点，SDK内部会根据开始时间和结束时间出缩略图
+            mTXVideoEditer.setCutFromTime(0,mTXVideoInfo.duration);
+            mTXVideoEditer.getThumbnail(thumbCount, IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH, IVideoCutLayout.DEFAULT_THUMBNAIL_HEIGHT, false, listener);
+        }
     }
 
     public void setPublishFlag(boolean flag) {

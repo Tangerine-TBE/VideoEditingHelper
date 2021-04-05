@@ -14,6 +14,7 @@ import com.tencent.qcloud.ugckit.utils.DateTimeUtil;
 import com.tencent.qcloud.ugckit.UGCKitConstants;
 import com.tencent.qcloud.ugckit.utils.UIAttributeUtil;
 import com.tencent.qcloud.ugckit.R;
+import com.twx.module_base.utils.LogUtils;
 
 public class PlayControlLayout extends RelativeLayout implements IPlayControlLayout, View.OnClickListener, PlayerManagerKit.OnPreviewListener, PlayerManagerKit.OnPlayStateListener {
     private static final String TAG = "PlayControlLayout";
@@ -67,6 +68,7 @@ public class PlayControlLayout extends RelativeLayout implements IPlayControlLay
 
     @Override
     public void onPreviewProgress(int timeMs) {
+        LogUtils.i("-------onPreviewProgress-----------test------------------"+timeMs);
         mTvCurrent.setText(DateTimeUtil.duration(timeMs));
     }
 

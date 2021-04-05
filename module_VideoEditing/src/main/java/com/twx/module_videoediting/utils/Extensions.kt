@@ -1,11 +1,12 @@
 package com.twx.module_videoediting.utils
 
 import android.app.Activity
+import com.tencent.qcloud.ugckit.utils.DateTimeUtil
 import com.twx.module_videoediting.ui.widget.TitleBar
 
 
-fun TitleBar.setBarEventAction(activity: Activity?,block:()->Unit){
-    setOnBarActionListener(object :TitleBar.OnBarActionListener{
+fun TitleBar.setBarEventAction(activity: Activity?, block: () -> Unit){
+    setOnBarActionListener(object : TitleBar.OnBarActionListener {
         override fun backAction() {
             activity?.finish()
         }
@@ -35,7 +36,21 @@ fun formatVideoTime(timeTemp: Long): String {
     }
 }
 
-fun videoTimeInterval(duration:Long):Int{
+
+fun formatDuration(durationMs: Long): String {
+    val duration = durationMs / 1000
+    val h = duration / 3600
+    val m = (duration - h * 3600) / 60
+    val s = duration - (h * 3600 + m * 60)
+    return if (h == 0L) {
+        DateTimeUtil.asTwoDigit(m) + ":" + DateTimeUtil.asTwoDigit(s)
+    } else {
+        DateTimeUtil.asTwoDigit(h) + ":" + DateTimeUtil.asTwoDigit(m) + ":" + DateTimeUtil.asTwoDigit(s)
+    }
+}
+
+
+fun videoTimeInterval(duration: Long):Int{
     val time = duration / 1000/ 30
     return if (duration / 1000<20) {
             1000

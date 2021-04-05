@@ -8,9 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tamsiree.rxkit.RxDeviceTool
 import com.twx.module_base.base.BaseApplication
+import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemVideoCutContainerBinding
 import com.twx.module_videoediting.domain.ThumbnailInfo
+import com.twx.module_videoediting.utils.formatDuration
 
 /**
  * @name VideoEditingHelper
@@ -30,7 +32,7 @@ class ThumbnailCutAdapter : RecyclerView.Adapter<ThumbnailCutAdapter.MyHolder>()
 
         fun setItemData(thumbnailBitmapInfo: ThumbnailInfo, position: Int) {
             itemBinding?.apply {
-                time.text = thumbnailBitmapInfo.timeMs.toString()
+                time.text = "${formatDuration(thumbnailBitmapInfo.timeMs)}"
                 thumbnail.setImageBitmap(thumbnailBitmapInfo.thumbnail)
             }
         }
@@ -67,11 +69,9 @@ class ThumbnailCutAdapter : RecyclerView.Adapter<ThumbnailCutAdapter.MyHolder>()
         }
     }
 
-    fun getThumbnailCount() = dataList.size
-
 
     fun getSingleThumbnailWidth(): Float {
-        return BaseApplication.application.resources.getDimension(com.tencent.qcloud.ugckit.R.dimen.video_thumbnail_width)
+        return BaseApplication.application.resources.getDimension(R.dimen.video_cut_thumbnail_with)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -90,6 +90,7 @@ class ThumbnailCutAdapter : RecyclerView.Adapter<ThumbnailCutAdapter.MyHolder>()
 
     fun setData(position: Int, data: ThumbnailInfo) {
         dataList.add(data)
+        LogUtils.i("--setData----$position---------------${data.timeMs}-------")
         notifyItemInserted(position)
     }
 

@@ -12,27 +12,44 @@ import com.twx.module_videoediting.domain.ThumbnailInfo
  */
 interface ICutView {
 
-   //-------------recycleView--------------------------
+    //-------------recycleView--------------------------
     /**
      * 添加缩略图
      * @param position Int
      * @param data ThumbnailInfo
      */
-   fun addThumbnail(position: Int, data: ThumbnailInfo)
+    fun addThumbnail(position: Int, data: ThumbnailInfo)
+
     /**
      * 清除缩略图
      */
-   fun clearThumbnail()
+    fun clearThumbnail()
+
     /**
      * 获取缩略图列表的长度，需要在设置完数据之后调用，否则返回0
      * @return Float
      */
-   fun getAllThumbnailListWidth():Float
+    fun setAllThumbnailListWidth(number: Int): Float
 
     /**
      * 设置随视频进度自动滑动
      * @param currentTime Long
      */
-   fun setCurrentTime(currentTime:Long)
+    fun setCurrentTime(currentTime: Long)
+
+    /**
+     * 设置总时长
+     * @param totalTime Long
+     */
+    fun setTotalDuration(totalTime: Long)
+
+
+    fun setVideoProgressSeekListener(listener:VideoProgressSeekListener)
+
+    interface VideoProgressSeekListener{
+        fun onVideoProgressSeek(currentTimeMs: Long)
+
+        fun onVideoProgressSeekFinish(currentTimeMs: Long)
+    }
 
 }

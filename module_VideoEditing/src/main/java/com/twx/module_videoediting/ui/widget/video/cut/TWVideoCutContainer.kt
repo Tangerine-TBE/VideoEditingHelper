@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.core.util.TimeUtils.formatDuration
 import androidx.databinding.DataBindingUtil
 import com.tencent.qcloud.ugckit.UGCKit
 import com.tencent.qcloud.ugckit.UGCKitImpl
@@ -15,6 +16,7 @@ import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.qcloud.ugckit.module.effect.utils.PlayState
+import com.tencent.qcloud.ugckit.utils.DateTimeUtil
 import com.tencent.qcloud.ugckit.utils.DialogUtil
 import com.tencent.qcloud.ugckit.utils.TelephonyUtil
 import com.tencent.qcloud.ugckit.utils.ToastUtil
@@ -25,11 +27,12 @@ import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutVideoCutContainerBinding
 import com.twx.module_videoediting.domain.ThumbnailInfo
 import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
-import com.twx.module_videoediting.utils.formatVideoTime
+import com.twx.module_videoediting.utils.formatDuration
 import com.twx.module_videoediting.utils.video.PlayerManager
 import com.twx.module_videoediting.utils.videoTimeInterval
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @name VideoEditingHelper
@@ -41,7 +44,7 @@ import kotlinx.coroutines.launch
  */
 class TWVideoCutContainer @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr), IVideoCut, PlayerManager.OnPreviewListener, PlayerManager.OnPlayStateListener {
+) : BaseVideoUi(context, attrs, defStyleAttr), IVideoCut, PlayerManager.OnPreviewListener, PlayerManager.OnPlayStateListener, ICutView.VideoProgressSeekListener {
     private val binding = DataBindingUtil.inflate<LayoutVideoCutContainerBinding>(LayoutInflater.from(context), R.layout.layout_video_cut_container, this, true)
     private var mDuration = ""
     private var mCurrentTime = 0L
@@ -49,37 +52,26 @@ class TWVideoCutContainer @JvmOverloads constructor(
         VideoEditerSDK.getInstance()
     }
 
-
     init {
         mVideoEditer.apply {
             releaseSDK()
             clear()
             initSDK()
         }
-
-        /*  VideoEditorsManager.apply {
-              releaseSDK()
-              clear()
-              initSDK()
-          }
-  */
-
-
         initEvent()
     }
 
-
+    /**
+     * 事件监听
+     */
     private fun initEvent() {
         binding.apply {
+            mCutViewLayout.setVideoProgressSeekListener(this@TWVideoCutContainer)
+
             // 播放动作
             playerControl.apply {
                 videoPlayAction.setOnClickListener {
-                    when (PlayerManager.getCurrentState()) {
-                        PlayState.STATE_PLAY, PlayState.STATE_RESUME -> pausePlay()
-                        PlayState.STATE_PAUSE -> resumePlay()
-                        PlayState.STATE_STOP -> startPlay()
-                        PlayState.STATE_NONE -> startPlay()
-                    }
+                    PlayerManager.playVideo(false)
                 }
             }
 
@@ -112,16 +104,13 @@ class TWVideoCutContainer @JvmOverloads constructor(
             ToastUtil.toastShortMessage(resources.getString(R.string.tc_video_cutter_activity_oncreate_an_unknown_error_occurred_the_path_cannot_be_empty))
             return
         }
-
-
         mVideoEditer.let {
             binding.apply {
                 it.setVideoPath(videoPath)
-                //  VideoEditorsManager.setVideoPath(videoPath)
-                // 初始化播放器界面[必须在setPictureList/setVideoPath设置数据源之后]
-                mVideoPlayerView.initPlayerLayout()
                 // 加载视频基本信息
                 loadVideoInfo(videoPath)
+                // 初始化播放器界面[必须在setPictureList/setVideoPath设置数据源之后]
+                mVideoPlayerView.initPlayerLayout()
                 //添加播放状态监听
                 PlayerManager.addOnPlayStateListener(this@TWVideoCutContainer)
                 PlayerManager.addOnPreviewListener(this@TWVideoCutContainer)
@@ -129,60 +118,6 @@ class TWVideoCutContainer @JvmOverloads constructor(
                 it.setCutterStartTime(0L, it.txVideoInfo.duration)
 
                 showCutTime(it)
-
-            }
-        }
-    }
-
-    //设置开始结束剪辑时间
-    private fun LayoutVideoCutContainerBinding.showCutTime(it: VideoEditerSDK) {
-        cutControl.apply {
-            beginTime.text = formatVideoTime(it.cutterStartTime / 1000)
-            endTime.text = formatVideoTime(it.cutterEndTime / 1000)
-            timeInterval.text = formatVideoTime(it.geCutterDuration() / 1000)
-        }
-    }
-
-    private fun loadVideoInfo(videoPath: String?) {
-        // 加载视频信息
-        val info = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
-        if (info == null) {
-            DialogUtil.showDialog(UGCKitImpl.getAppContext(), resources.getString(R.string.tc_video_cutter_activity_video_main_handler_edit_failed), resources.getString(R.string.ugckit_does_not_support_android_version_below_4_3), null)
-        } else {
-            mVideoEditer.txVideoInfo = info
-            // 初始化缩略图列表，裁剪缩略图时间间隔秒钟一张
-            val interval = videoTimeInterval(info.duration)
-            binding.mCutViewLayout.setCount((info.duration/interval).toInt())
-          /*  binding.mVideoCutLayout.apply {
-                setVideoInfo(info)
-                setOnRotateVideoListener { rotation -> VideoEditerSDK.getInstance().editer.setRenderRotation(rotation) }
-            }*/
-            loadThumbnail(interval)
-            LogUtils.i("-------loadVideoInfo-------------------${mVideoEditer.thumbnailSize}---")
-
-            //总时长
-            mDuration = formatVideoTime(info.duration / 1000)
-        }
-    }
-
-
-    private fun loadThumbnail(interval: Int) {
-        mVideoEditer.let {
-           // binding.mVideoCutLayout.clearThumbnail()
-            binding.mCutViewLayout.clearThumbnail()
-            mScope.launch(Dispatchers.IO) {
-                it.initThumbnailList({ index, timeMs, bitmap ->
-                    mScope.launch(Dispatchers.Main) {
-                      //  binding.mVideoCutLayout.addThumbnail(index, bitmap)
-                        binding.mCutViewLayout.addThumbnail(index, ThumbnailInfo(timeMs,bitmap))
-                    }
-                    /* if (it.txVideoInfo != null) {
-                         val size = (it.txVideoInfo.duration / interval).toInt()
-                         if (index == size - 1) { // Note: index从0开始增长
-                             //  mComplete = true
-                         }
-                     }*/
-                }, interval)
             }
         }
     }
@@ -193,21 +128,56 @@ class TWVideoCutContainer @JvmOverloads constructor(
 
     override fun stopPlay() {
         PlayerManager.stopPlay()
-        val editFlag = JumpActivityMgr.getInstance().editFlagFromCut
-        if (editFlag) {
-            ProcessKit.getInstance().stopProcess()
-        } else {
-            VideoGenerateKit.getInstance().stopGenerate()
+    }
+
+    //设置开始结束剪辑时间
+    private fun LayoutVideoCutContainerBinding.showCutTime(it: VideoEditerSDK) {
+        cutControl.apply {
+            beginTime.text = formatDuration(it.cutterStartTime )
+            endTime.text = formatDuration(it.cutterEndTime )
+            timeInterval.text = formatDuration(it.geCutterDuration())
         }
     }
 
-    override fun pausePlay() {
-        PlayerManager.pausePlay()
+    /**
+     * 设置视频信息
+     * @param videoPath String?
+     */
+    private fun loadVideoInfo(videoPath: String?) {
+        // 加载视频信息
+        val info = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
+        if (info == null) {
+            DialogUtil.showDialog(UGCKitImpl.getAppContext(), resources.getString(R.string.tc_video_cutter_activity_video_main_handler_edit_failed), resources.getString(R.string.ugckit_does_not_support_android_version_below_4_3), null)
+        } else {
+            mVideoEditer.txVideoInfo = info
+            // 初始化缩略图列表，裁剪缩略图时间间隔秒钟一张
+            val interval = videoTimeInterval(info.duration)
+            binding.mCutViewLayout.setTotalDuration(info.duration)
+            binding.mCutViewLayout.setAllThumbnailListWidth((info.duration/interval).toInt())
+            loadThumbnail(interval)
+            //总时长
+            mDuration = formatDuration(info.duration)
+        }
     }
 
-    override fun resumePlay() {
-        PlayerManager.resumePlay()
+    /**
+     * 加载缩略图
+     * @param interval Int
+     */
+    private fun loadThumbnail(interval: Int) {
+        mVideoEditer.let {
+            binding.mCutViewLayout.clearThumbnail()
+            mScope.launch(Dispatchers.IO) {
+                it.initThumbnailList({ index, timeMs, bitmap ->
+                    mScope.launch(Dispatchers.Main) {
+                        LogUtils.i("--loadThumbnail---$index--$timeMs---------------------")
+                        binding.mCutViewLayout.addThumbnail(index, ThumbnailInfo(timeMs,bitmap))
+                    }
+                }, interval)
+            }
+        }
     }
+
 
 
     override fun release() {
@@ -305,13 +275,19 @@ class TWVideoCutContainer @JvmOverloads constructor(
     }
 
     override fun onPreviewProgress(time: Int) {
+        LogUtils.i("----time--------onPreviewProgress-------$time------------")
         mCurrentTime = time.toLong()
-        binding.playerControl.videoTime.text = "${formatVideoTime(time.toLong() / 1000)}/$mDuration"
+        binding.playerControl.videoTime.text = "${formatDuration(time.toLong())}/$mDuration"
+
+        val currentState = PlayerManager.getCurrentState()
+        if (currentState == PlayState.STATE_PLAY || currentState == PlayState.STATE_RESUME) {
+            binding.mCutViewLayout.setCurrentTime(time.toLong())
+        }
+
     }
 
     override fun onPreviewFinish() {
-        // 循环播放
-        // PlayerManager.getInstance().startPlay()
+
     }
 
     override fun onPlayState(state: Int) {
@@ -327,6 +303,14 @@ class TWVideoCutContainer @JvmOverloads constructor(
 
             }
         }
+    }
+
+    override fun onVideoProgressSeek(currentTimeMs: Long) {
+        PlayerManager.previewAtTime(currentTimeMs)
+    }
+
+    override fun onVideoProgressSeekFinish(currentTimeMs: Long) {
+        PlayerManager.previewAtTime(currentTimeMs)
     }
 
 }

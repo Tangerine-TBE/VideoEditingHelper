@@ -87,11 +87,13 @@ public class TimeLineView extends RelativeLayout implements ITimeLineView, Video
     @Override
     public void onVideoProgressSeek(long currentTimeMs) {
         PlayerManagerKit.getInstance().previewAtTime(currentTimeMs);
+        LogUtils.i("-----onVideoProgressSeek-------test--------"+currentTimeMs);
     }
 
     @Override
     public void onVideoProgressSeekFinish(long currentTimeMs) {
         PlayerManagerKit.getInstance().previewAtTime(currentTimeMs);
+        LogUtils.i("-----onVideoProgressSeekFinish-----test----------"+currentTimeMs);
     }
 
     public VideoProgressController getVideoProgressController() {

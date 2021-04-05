@@ -40,16 +40,6 @@ interface IVideoCut {
     fun stopPlay()
 
     /**
-     * 暂停播放视频
-     */
-    fun pausePlay()
-
-    /**
-     * 继续播放视频
-     */
-    fun resumePlay()
-
-    /**
      * 释放资源
      */
     fun release()
