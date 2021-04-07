@@ -6,6 +6,7 @@ import com.tencent.qcloud.ugckit.basic.UGCKitResult
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.LayoutType
 import com.twx.module_base.utils.setStatusBarDistance
+import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityVidelCutBinding
@@ -51,10 +52,9 @@ class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutVie
         binding.apply {
             data=viewModel
             setStatusBarDistance(this@VideoCutActivity, cutTitleBar, LayoutType.CONSTRAINTLAYOUT)
-
             val videoPath = intent.getStringExtra(Constants.KEY_VIDEO_PATH)
             mTWVideoCutContainer.setVideoPath(videoPath)
-
+            lifecycle.addObserver(mTWVideoCutContainer)
         }
     }
 
@@ -75,31 +75,19 @@ class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutVie
     override fun initEvent() {
         binding.apply {
             cutTitleBar.setBarEventAction(this@VideoCutActivity) {
-                mTWVideoCutContainer.startExportVideo()
+              //  mTWVideoCutContainer.startExportVideo()
+                toOtherActivity<ExportActivity>(this@VideoCutActivity,true){}
             }
         }
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        binding.apply {
-            mTWVideoCutContainer.setOnCutListener(mOnCutListener)
-            mTWVideoCutContainer.startPlay()
-        }
-    }
 
-    override fun onPause() {
-        super.onPause()
-        binding.apply {
-            mTWVideoCutContainer.stopPlay()
-            //FIXBUG:生成进度条使用的同一个，不要在onStop中清空Listener，【onStop在下个界面onStart之后调用，会被清空】
-            mTWVideoCutContainer.setOnCutListener(null)
-        }
-    }
-
-    override fun release() {
+/*    override fun release() {
         binding.mTWVideoCutContainer.release()
-    }
+
+
+
+    }*/
 }
 

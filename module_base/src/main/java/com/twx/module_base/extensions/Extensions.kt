@@ -58,3 +58,17 @@ fun Dialog.noFinishShow(activity: Activity?){
 
 }
 
+fun videoTimeInterval(duration: Long):Int{
+    val time = duration / 1000/ 30
+    return if (duration / 1000<20) {
+        1000
+    } else {
+        if (time > 0) {
+            time.toInt()*2000
+        } else {
+            2000
+        }
+    }
+
+}
+

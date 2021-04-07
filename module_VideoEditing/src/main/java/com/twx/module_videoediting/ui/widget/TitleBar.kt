@@ -40,6 +40,12 @@ class TitleBar @JvmOverloads constructor(
                 titleBarTvAction.visibility=if (getBoolean(R.styleable.TitleBar_barHaveTvAction,false)) View.VISIBLE
                 else View.GONE
                 titleBarTvAction.text=getString(R.styleable.TitleBar_barTvActionTitle)
+
+                val resourceId = getResourceId(R.styleable.TitleBar_barIvActionIcon, -1)
+                if (resourceId!=-1)  titleBarIvAction.setImageResource(resourceId)
+
+
+
                 recycle()
             }
         }

@@ -62,7 +62,5 @@ fun videoTimeInterval(duration: Long):Int{
         }
     }
 
-
-
 }
 

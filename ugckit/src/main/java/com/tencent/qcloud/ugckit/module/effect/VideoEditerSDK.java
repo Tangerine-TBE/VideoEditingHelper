@@ -1,8 +1,10 @@
 package com.tencent.qcloud.ugckit.module.effect;
 
 import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 
 import com.tencent.qcloud.ugckit.UGCKit;
@@ -13,6 +15,7 @@ import com.tencent.qcloud.ugckit.module.effect.utils.EffectEditer;
 import com.tencent.ugc.TXVideoEditConstants;
 import com.tencent.ugc.TXVideoEditer;
 import com.tencent.ugc.TXVideoInfoReader;
+import com.twx.module_base.extensions.ExtensionsKt;
 import com.twx.module_base.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -46,6 +49,12 @@ public class VideoEditerSDK {
     private long mCutterDuration;                                   // 裁剪的总时长
     private long mCutterStartTime;                                  // 裁剪开始的时间
     private long mCutterEndTime;                                    // 裁剪结束的时间
+
+    public int getThumbnailCount() {
+        return mThumbnailCount;
+    }
+
+    private int mThumbnailCount;//缩略图个数
     private TXVideoEditConstants.TXVideoInfo mTXVideoInfo;
     private String mVideoPath;
     private boolean mPublishFlag;
@@ -78,9 +87,20 @@ public class VideoEditerSDK {
         mTXVideoEditer.setVideoPath(mVideoPath);
     }
 
+
+    public void setVideoPathInfo(String videoPathInfo){
+        mVideoPath=videoPathInfo;
+        mTXVideoEditer.setVideoPath(mVideoPath);
+        mTXVideoInfo = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(mVideoPath);
+        setCutterStartTime(0,mTXVideoInfo.duration);
+        mThumbnailCount= (int) (mTXVideoInfo.duration/ExtensionsKt.videoTimeInterval(mTXVideoInfo.duration));
+    }
+
+
     /**
      * 获取视频的信息
      * FIXBUG：不能判断是否为空，如果更换频路径，
+     *
      * @return
      */
     public TXVideoEditConstants.TXVideoInfo getTXVideoInfo() {
@@ -103,6 +123,7 @@ public class VideoEditerSDK {
         mCutterDuration = 0;
         mCutterStartTime = 0;
         mCutterEndTime = 0;
+        mThumbnailCount=0;
 
         mThumbnailList.clear();
         DraftEditer.getInstance().clear();
@@ -148,16 +169,20 @@ public class VideoEditerSDK {
         mCutterEndTime = endTime;
         mCutterDuration = endTime - startTime;
     }
+
     /**
      * 设置剪辑开始的时间
+     *
      * @return
      */
     public void setCutterStartTime(long cutterStartTime) {
         mCutterStartTime = cutterStartTime;
         mCutterDuration = mCutterEndTime - mCutterStartTime;
     }
+
     /**
      * 获设置辑结束的时间
+     *
      * @return
      */
     public void setCutterEndTime(long cutterEndTime) {
@@ -167,6 +192,7 @@ public class VideoEditerSDK {
 
     /**
      * 获取剪辑开始的时间
+     *
      * @return
      */
     public long getCutterStartTime() {
@@ -175,6 +201,7 @@ public class VideoEditerSDK {
 
     /**
      * 获取剪辑结束的时间
+     *
      * @return
      */
     public long getCutterEndTime() {
@@ -279,7 +306,7 @@ public class VideoEditerSDK {
      * @param listener
      * @param interval 缩略图的时间间隔
      */
-    public void initThumbnailList( TXVideoEditer.TXThumbnailListener listener, int interval) {
+    public void initThumbnailList(TXVideoEditer.TXThumbnailListener listener, int interval) {
         if (interval == 0) {
             Log.e(TAG, "interval error:0");
             return;
@@ -291,11 +318,11 @@ public class VideoEditerSDK {
         }
         // 每一秒/一张缩略图
         int thumbCount = durationS;
-        LogUtils.i("------thumbCount---------------------------------------"+thumbCount);
+        LogUtils.i("------thumbCount---------------------------------------" + thumbCount);
         if (mTXVideoEditer != null) {
             mTXVideoEditer.setRenderRotation(0);
             // FIXBUG：获取缩略图之前需要设置缩略图的开始和结束时间点，SDK内部会根据开始时间和结束时间出缩略图
-            mTXVideoEditer.setCutFromTime(0,mTXVideoInfo.duration);
+            mTXVideoEditer.setCutFromTime(0, mTXVideoInfo.duration);
             mTXVideoEditer.getThumbnail(thumbCount, IVideoCutLayout.DEFAULT_THUMBNAIL_WIDTH, IVideoCutLayout.DEFAULT_THUMBNAIL_HEIGHT, false, listener);
         }
     }
@@ -356,6 +383,9 @@ public class VideoEditerSDK {
     public List<Bitmap> getAllThumbnails() {
         return getThumbnailList(0, mTXVideoInfo.duration);
     }
+
+
+    public List<ThumbnailBitmapInfo> getAllThumbnailList(){ return mThumbnailList; }
 
     public void addThumbnailBitmap(long timeMs, Bitmap bitmap) {
         mThumbnailList.add(new ThumbnailBitmapInfo(timeMs, bitmap));

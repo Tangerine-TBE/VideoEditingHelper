@@ -3,7 +3,11 @@
     package="com.twx.module_videoediting">
 
     <application>
-        <activity android:name=".ui.activity.VideoCutActivity"    android:theme="@style/EditerActivityTheme"></activity>
+        <activity android:name=".ui.activity.ReverseActivity"></activity>
+        <activity android:name=".ui.activity.ExportActivity" />
+        <activity
+            android:name=".ui.activity.VideoCutActivity"
+            android:theme="@style/EditerActivityTheme" />
         <activity
             android:name=".ui.activity.MainViewActivity"
             android:launchMode="singleTask" />

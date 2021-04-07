@@ -1328,6 +1328,7 @@ int color color_home_bg 0x0
 int color color_home_bottom_false 0x0
 int color color_home_text 0x0
 int color color_input_dialog_background 0x0
+int color color_red 0x0
 int color cut_line_color 0x0
 int color dark_dream_press 0x0
 int color dark_illusion 0x0

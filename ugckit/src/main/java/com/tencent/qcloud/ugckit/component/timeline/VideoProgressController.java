@@ -404,7 +404,7 @@ public class VideoProgressController {
         float rate = (float) mCurrentTimeMs / mTotalDurationMs;
         float scrollBy = rate * getThumbnailPicListDisplayWidth() - mCurrentScroll;
         mRecyclerView.scrollBy((int) scrollBy, 0);
-        LogUtils.i("---"+rate+"----"+currentTimeMs+"----------"+mTotalDurationMs+"-----"+rate * mThumbnailPicListDisplayWidth+"-----------"+mCurrentScroll+"---------"+scrollBy);
+        LogUtils.i("-setCurrentTimeMs--"+rate+"----"+currentTimeMs+"----------"+mTotalDurationMs+"-----"+rate * mThumbnailPicListDisplayWidth+"-----------"+mCurrentScroll+"---------"+scrollBy);
     }
 
 

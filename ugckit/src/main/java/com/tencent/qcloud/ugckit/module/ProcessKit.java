@@ -41,22 +41,14 @@ public class ProcessKit extends BaseGenerateKit implements TXVideoEditer.TXVideo
      */
     public void startProcess() {
         VideoEditerSDK.getInstance().clearThumbnails();
-
         long cutterStartTime = VideoEditerSDK.getInstance().getCutterStartTime();
         long cutterEndTime = VideoEditerSDK.getInstance().getCutterEndTime();
-
         int thumbnailCount = (int) (cutterEndTime - cutterStartTime) / 1000;
-
-
         LogUtils.i("startProcess----------"+cutterStartTime+"----------"+cutterEndTime+"-----------------"+thumbnailCount);
-
-
-
         TXVideoEditConstants.TXThumbnail thumbnail = new TXVideoEditConstants.TXThumbnail();
         thumbnail.count = thumbnailCount;
         thumbnail.width = 100;
         thumbnail.height = 100;
-
         TXVideoEditer editer = VideoEditerSDK.getInstance().getEditer();
         if (editer != null) {
             TXCLog.i(TAG, "[UGCKit][VideoProcess]generate thumbnail start time:" + cutterStartTime + ",end time:" + cutterEndTime + ",thumbnail count:" + thumbnailCount);
@@ -67,6 +59,27 @@ public class ProcessKit extends BaseGenerateKit implements TXVideoEditer.TXVideo
             TXCLog.i(TAG, "[UGCKit][VideoProcess]generate video start time:" + cutterStartTime + ",end time:" + cutterEndTime);
             editer.processVideo();
         }
+    }
+
+
+    public void startTwProcess(){
+        VideoEditerSDK videoEditor = VideoEditerSDK.getInstance();
+        videoEditor.clearThumbnails();
+        long cutterStartTime = videoEditor.getCutterStartTime();
+        long cutterEndTime =videoEditor.getCutterEndTime();
+        TXVideoEditConstants.TXThumbnail thumbnail = new TXVideoEditConstants.TXThumbnail();
+        thumbnail.count = videoEditor.getThumbnailCount();
+        thumbnail.width = 100;
+        thumbnail.height = 100;
+        TXVideoEditer editer = videoEditor.getEditer();
+        if (editer != null) {
+            editer.setThumbnail(thumbnail);
+            editer.setThumbnailListener(this);
+            editer.setVideoProcessListener(this);
+            editer.setCutFromTime(cutterStartTime, cutterEndTime);
+            editer.processVideo();
+        }
+        LogUtils.i("startProcess----------"+cutterStartTime+"----------"+cutterEndTime+"-----------------"+thumbnail.count);
     }
 
     /**
@@ -109,6 +122,7 @@ public class ProcessKit extends BaseGenerateKit implements TXVideoEditer.TXVideo
     @Override
     public void onThumbnail(int index, long timeMs, Bitmap bitmap) {
         TXLog.d(TAG, "onThumbnail index:" + index + ",timeMs:" + timeMs);
+        LogUtils.i("---onThumbnail------------------"+index);
         VideoEditerSDK.getInstance().addThumbnailBitmap(timeMs, bitmap);
     }
 

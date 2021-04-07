@@ -1027,6 +1027,7 @@ color colorRed
 color color_home_bg
 color color_home_bottom_false
 color color_home_text
+color color_red
 color design_bottom_navigation_shadow_color
 color design_box_stroke_color
 color design_dark_default_color_background

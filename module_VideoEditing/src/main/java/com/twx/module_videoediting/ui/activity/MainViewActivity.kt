@@ -1,11 +1,8 @@
 package com.twx.module_videoediting.ui.activity
 
-import android.app.Activity
-import android.content.Intent
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
@@ -57,6 +54,9 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                     mBottomNavigationView.setHomeNavigationBgColor(it)
                     mNavigationAdapter.setThemeChangeState(it)
                 })
+
+
+
             }
 
         }
@@ -72,6 +72,8 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                     2->showFragment(mSetFragment)
                 }
             }
+
+
 
         }
     }
@@ -94,5 +96,16 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
         }
     }
 
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode==KeyEvent.KEYCODE_BACK){
+            if (!viewModel.getMakeState()){
+                return false
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+
+
+    }
 
 }

@@ -29,20 +29,20 @@ interface IVideoCut {
      */
     fun setVideoPath(videoPath: String?)
 
-    /**
+/*    *//**
      * 开始播放视频
-     */
+     *//*
     fun startPlay()
 
-    /**
+    *//**
      * 停止播放视频
-     */
-    fun stopPlay()
+     *//*
+    fun stopPlay()*/
 
-    /**
+/*    *//**
      * 释放资源
-     */
-    fun release()
+     *//*
+    fun release()*/
 
     /**
      * 设置视频裁剪的监听器

@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.DiyVideoCutViewBinding
@@ -57,11 +58,7 @@ class CutView @JvmOverloads constructor(
                     mVideoProgressSeekListener?.onVideoProgressSeek(currentTimeUs)
                         LogUtils.i("-time--onScrolled-------- $mCurrentScroll ---$mTotalDurationMs----- $dx ---------- $mCurrentTimeMs --")
                 }
-                mCurrentTimeMs = if (rate > 0.99) {
-                    mTotalDurationMs
-                } else {
-                    currentTimeUs
-                }
+                mCurrentTimeMs = currentTimeUs
             }
         }
     }
@@ -99,8 +96,14 @@ class CutView @JvmOverloads constructor(
 
 
     override fun addThumbnail(position: Int, data: ThumbnailInfo){
-        mThumbnailCutAdapter.setData(position, data)
+       // mThumbnailCutAdapter.setData(position, data)
     }
+
+    fun setThumbnailList(list:MutableList<VideoEditerSDK.ThumbnailBitmapInfo>){
+        mThumbnailCutAdapter.setThumbnailList(list)
+    }
+
+
 
     override  fun clearThumbnail(){
         mThumbnailCutAdapter.clearData()
@@ -110,11 +113,9 @@ class CutView @JvmOverloads constructor(
     override fun setCurrentTime(currentTime: Long) {
         mCurrentTimeMs = currentTime
         var rate = mCurrentTimeMs.toFloat()/ mTotalDurationMs
-        if (rate>0.99){
-            rate=1f
-        }
         val scrollBy = rate * mThumbnailPicListDisplayWidth - mCurrentScroll
         binding.thumbnailContainer.scrollBy(scrollBy.toInt(), 0)
+        LogUtils.i("--setCurrentTime-------------  $currentTime  $mTotalDurationMs   $rate    ${mThumbnailPicListDisplayWidth*rate}     $mCurrentScroll     $scrollBy   ")
     }
 
 

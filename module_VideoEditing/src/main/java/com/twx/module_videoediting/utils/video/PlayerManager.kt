@@ -51,7 +51,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
      * @param startTime Long 开始时间
      * @param endTime Long  结束时间
      */
-    private fun startPlay(startTime: Long, endTime: Long) {
+     fun startPlay(startTime: Long, endTime: Long) {
         mVideoEditerSDK.apply {
             if (editer != null) {
                 addPreviewListener()
@@ -197,8 +197,10 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
                 LogUtils.i("--playVideo---$mPreviewAtTime-------$totalDuration----------")
                 if (mPreviewAtTime >=totalDuration) {
                     startPlay(0, totalDuration)
-                } else {
+                }else if (!isReverse)
                     startPlay(mPreviewAtTime, totalDuration)
+                else {
+                    startPlay(0, mPreviewAtTime)
                 }
             }
         }

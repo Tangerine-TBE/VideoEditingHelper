@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tamsiree.rxkit.RxDeviceTool
+import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
@@ -26,14 +27,14 @@ class ThumbnailCutAdapter : RecyclerView.Adapter<ThumbnailCutAdapter.MyHolder>()
     private val TYPE_HEADER = 1
     private val TYPE_FOOTER = 2
     private val TYPE_THUMBNAIL = 3
-    private val dataList: MutableList<ThumbnailInfo> = ArrayList()
+    private val dataList: MutableList<VideoEditerSDK.ThumbnailBitmapInfo> = ArrayList()
 
     class MyHolder(itemView: View, val itemBinding: ItemVideoCutContainerBinding? = null) : RecyclerView.ViewHolder(itemView) {
 
-        fun setItemData(thumbnailBitmapInfo: ThumbnailInfo, position: Int) {
+        fun setItemData(thumbnailBitmapInfo: VideoEditerSDK.ThumbnailBitmapInfo, position: Int) {
             itemBinding?.apply {
-                time.text = "${formatDuration(thumbnailBitmapInfo.timeMs)}"
-                thumbnail.setImageBitmap(thumbnailBitmapInfo.thumbnail)
+                time.text = "${formatDuration(thumbnailBitmapInfo.ptsMs)}"
+                thumbnail.setImageBitmap(thumbnailBitmapInfo.bitmap)
             }
         }
     }
@@ -88,10 +89,16 @@ class ThumbnailCutAdapter : RecyclerView.Adapter<ThumbnailCutAdapter.MyHolder>()
         }
     }
 
-    fun setData(position: Int, data: ThumbnailInfo) {
+/*    fun setData(position: Int, data: ThumbnailInfo) {
         dataList.add(data)
         LogUtils.i("--setData----$position---------------${data.timeMs}-------")
         notifyItemInserted(position)
+    }*/
+
+    fun setThumbnailList(list:MutableList<VideoEditerSDK.ThumbnailBitmapInfo>){
+        dataList.clear()
+        dataList.addAll(list)
+        notifyDataSetChanged()
     }
 
 

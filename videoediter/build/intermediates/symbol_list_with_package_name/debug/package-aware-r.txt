@@ -1329,6 +1329,7 @@ color color_home_bg
 color color_home_bottom_false
 color color_home_text
 color color_input_dialog_background
+color color_red
 color cut_line_color
 color dark_dream_press
 color dark_illusion

@@ -3,12 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="theme_color">#29FFE9</color>
-    <color name="theme_bg_color">#081B39</color>
+    <color name="theme_color">#4060FF</color>
+    <color name="theme_bg_color">#4060FF</color>
     <color name="themeColor">@color/theme_color</color>
     <color name="item_theme_color">#F8F8F8</color>
     <color name="white_40">#66FFFFFF</color>
     <color name="color_home_text">#4060FF</color>
     <color name="color_home_bg">#F8F8F8</color>
     <color name="color_home_bottom_false">#30FFFFFF</color>
+    <color name="color_red">#FF0000</color>
 </resources>
