@@ -15,7 +15,7 @@ object Constants {
 
 
     //------------------request code------------
-    const val REQUEST_VIDEO_CUT=511
+    const val REQUEST_VIDEO_CODE=511
 
 
     //------------------to Activity key

@@ -24,10 +24,12 @@ open class BaseVideoUi @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr),LifecycleObserver {
     protected val mVideoEditorHelper by lazy {
         VideoEditerSDK.getInstance()
+
     }
 
     protected val mJob = Job()
     protected var mScope = CoroutineScope(mJob)
+
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

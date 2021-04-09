@@ -43,9 +43,15 @@ import kotlinx.coroutines.withContext
  * @class describe
  */
 class TWVideoCutContainer @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr), IVideoCut, PlayerManager.OnPreviewListener, PlayerManager.OnPlayStateListener, ICutView.VideoProgressSeekListener {
-    private val binding = DataBindingUtil.inflate<LayoutVideoCutContainerBinding>(LayoutInflater.from(context), R.layout.layout_video_cut_container, this, true)
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : BaseVideoUi(context, attrs, defStyleAttr), IVideoCut, PlayerManager.OnPreviewListener,
+    PlayerManager.OnPlayStateListener, ICutView.VideoProgressSeekListener {
+    private val binding = DataBindingUtil.inflate<LayoutVideoCutContainerBinding>(
+        LayoutInflater.from(context),
+        R.layout.layout_video_cut_container,
+        this,
+        true
+    )
     private var mDuration = ""
     private var mCurrentTime = 0L
 
@@ -56,7 +62,7 @@ class TWVideoCutContainer @JvmOverloads constructor(
     /**
      * 事件监听
      */
-    private fun initEvent() {
+     fun initEvent() {
         binding.apply {
             mCutViewLayout.setVideoProgressSeekListener(this@TWVideoCutContainer)
 
@@ -92,15 +98,15 @@ class TWVideoCutContainer @JvmOverloads constructor(
 
 
     override fun setVideoPath(videoPath: String?) {
-       /* if (TextUtils.isEmpty(videoPath)) {
-            ToastUtil.toastShortMessage(resources.getString(R.string.tc_video_cutter_activity_oncreate_an_unknown_error_occurred_the_path_cannot_be_empty))
-            return
-        }*/
+        /* if (TextUtils.isEmpty(videoPath)) {
+             ToastUtil.toastShortMessage(resources.getString(R.string.tc_video_cutter_activity_oncreate_an_unknown_error_occurred_the_path_cannot_be_empty))
+             return
+         }*/
         mVideoEditorHelper.let {
             binding.apply {
-               // it.setVideoPath(videoPath)
+                // it.setVideoPath(videoPath)
                 // 加载视频基本信息
-             //   loadVideoInfo(videoPath)
+                //   loadVideoInfo(videoPath)
                 loadVideoInfo(videoPath)
                 // 初始化播放器界面[必须在setPictureList/setVideoPath设置数据源之后]
                 mVideoPlayerView.initPlayerLayout()
@@ -111,7 +117,7 @@ class TWVideoCutContainer @JvmOverloads constructor(
                 PlayerManager.addOnPlayStateListener(this@TWVideoCutContainer)
                 PlayerManager.addOnPreviewListener(this@TWVideoCutContainer)
                 //设置开始的剪辑时间
-           //     it.setCutterStartTime(0L, it.txVideoInfo.duration)
+                //     it.setCutterStartTime(0L, it.txVideoInfo.duration)
 
                 showCutTime(it)
             }
@@ -119,12 +125,11 @@ class TWVideoCutContainer @JvmOverloads constructor(
     }
 
 
-
     //设置开始结束剪辑时间
     private fun LayoutVideoCutContainerBinding.showCutTime(it: VideoEditerSDK) {
         cutControl.apply {
-            beginTime.text = formatDuration(it.cutterStartTime )
-            endTime.text = formatDuration(it.cutterEndTime )
+            beginTime.text = formatDuration(it.cutterStartTime)
+            endTime.text = formatDuration(it.cutterEndTime)
             timeInterval.text = formatDuration(it.geCutterDuration())
         }
     }
@@ -135,16 +140,21 @@ class TWVideoCutContainer @JvmOverloads constructor(
      */
     private fun loadVideoInfo(videoPath: String?) {
         // 加载视频信息
-      //  val info = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
+        //  val info = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(videoPath)
         val info = mVideoEditorHelper.txVideoInfo
         if (info == null) {
-            DialogUtil.showDialog(UGCKitImpl.getAppContext(), resources.getString(R.string.tc_video_cutter_activity_video_main_handler_edit_failed), resources.getString(R.string.ugckit_does_not_support_android_version_below_4_3), null)
+            DialogUtil.showDialog(
+                UGCKitImpl.getAppContext(),
+                resources.getString(R.string.tc_video_cutter_activity_video_main_handler_edit_failed),
+                resources.getString(R.string.ugckit_does_not_support_android_version_below_4_3),
+                null
+            )
         } else {
-         //   mVideoEditer.txVideoInfo = info
+            //   mVideoEditer.txVideoInfo = info
             // 初始化缩略图列表，裁剪缩略图时间间隔秒钟一张
             val interval = videoTimeInterval(info.duration)
             binding.mCutViewLayout.setTotalDuration(info.duration)
-            binding.mCutViewLayout.setAllThumbnailListWidth((info.duration/interval).toInt())
+            binding.mCutViewLayout.setAllThumbnailListWidth((info.duration / interval).toInt())
             loadThumbnail(interval)
             //总时长
             mDuration = formatDuration(info.duration)
@@ -159,14 +169,14 @@ class TWVideoCutContainer @JvmOverloads constructor(
         mVideoEditorHelper.let {
             binding.mCutViewLayout.setThumbnailList(it.allThumbnailList)
 
-         /*   mScope.launch(Dispatchers.IO) {
-                it.initThumbnailList({ index, timeMs, bitmap ->
-                    mScope.launch(Dispatchers.Main) {
-                        LogUtils.i("--loadThumbnail---$index--$timeMs---------------------")
-                        binding.mCutViewLayout.addThumbnail(index, ThumbnailInfo(timeMs,bitmap))
-                    }
-                }, interval)
-            }*/
+            /*   mScope.launch(Dispatchers.IO) {
+                   it.initThumbnailList({ index, timeMs, bitmap ->
+                       mScope.launch(Dispatchers.Main) {
+                           LogUtils.i("--loadThumbnail---$index--$timeMs---------------------")
+                           binding.mCutViewLayout.addThumbnail(index, ThumbnailInfo(timeMs,bitmap))
+                       }
+                   }, interval)
+               }*/
         }
     }
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/musicContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.MusicActivity">
+
+
+        <com.twx.module_videoediting.ui.widget.TitleBar
+            android:id="@+id/musicTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            app:barTitle="配乐"
+            app:barHaveIvAction="true"
+            app:barIvActionIcon="@drawable/ic_baseline_cancel_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.twx.module_videoediting.ui.widget.video.music.TWVideoMusicContainer
+            android:id="@+id/mTWVideoMusicContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/musicTitleBar"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

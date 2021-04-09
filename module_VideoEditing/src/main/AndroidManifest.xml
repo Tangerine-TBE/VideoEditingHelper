@@ -3,7 +3,8 @@
     package="com.twx.module_videoediting">
 
     <application>
-        <activity android:name=".ui.activity.ReverseActivity"></activity>
+        <activity android:name=".ui.activity.MusicActivity"></activity>
+        <activity android:name=".ui.activity.ReverseActivity" />
         <activity android:name=".ui.activity.ExportActivity" />
         <activity
             android:name=".ui.activity.VideoCutActivity"

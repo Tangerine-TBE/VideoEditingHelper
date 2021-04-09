@@ -40,11 +40,11 @@ class TWVideoReverseContainer @JvmOverloads constructor(
         //添加播放状态监听
         PlayerManager.addOnPlayStateListener(this)
         PlayerManager.addOnPreviewListener(this)
-
+        initEvent()
     }
 
     private var isUser=false
-    private fun initEvent() {
+     fun initEvent() {
         binding.apply {
             makeReverse.setOnClickListener {
                 changeReverse()

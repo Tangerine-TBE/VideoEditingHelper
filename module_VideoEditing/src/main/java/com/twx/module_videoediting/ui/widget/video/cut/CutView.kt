@@ -74,7 +74,7 @@ class CutView @JvmOverloads constructor(
         }
     }
 
-    private fun initEvent() {
+     fun initEvent() {
         binding.thumbnailContainer.setOnTouchListener { v, event ->
             val eventId: Int = event.action
             when (eventId) {

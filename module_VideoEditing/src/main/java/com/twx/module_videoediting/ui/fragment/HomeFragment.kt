@@ -17,6 +17,7 @@ import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.FragmentHomeBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.repository.DataProvider
+import com.twx.module_videoediting.ui.activity.MusicActivity
 import com.twx.module_videoediting.ui.activity.ReverseActivity
 import com.twx.module_videoediting.ui.activity.VideoCutActivity
 import com.twx.module_videoediting.ui.adapter.recycleview.HomeBottomAdapter
@@ -96,8 +97,8 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         binding.apply {
             homeTop.apply {
                 editAction.setOnClickListener {
-                    openMediaSelect()
-                    openAction=ACTION_CUT
+                    openMediaSelect(ACTION_CUT)
+
                 }
 
                 divisionAction.setOnClickListener {
@@ -112,12 +113,9 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
         mHomeBottomAdapter.setOnItemClickListener { adapter, view, position ->
             when(position){
-                1->{
-                    openMediaSelect()
-                    openAction=ACTION_REVERSE
-                }
+                1-> openMediaSelect(ACTION_REVERSE)
                 2->{}
-                0->{}
+                0->openMediaSelect(ACTION_MUSIC)
                 3->{}
             }
 
@@ -134,7 +132,8 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
     }
 
-    private fun openMediaSelect() {
+    private fun openMediaSelect(action:Int) {
+        openAction=action
         PictureSelector.create(this@HomeFragment)
                 .openGallery(PictureConfig.TYPE_VIDEO)
                 .imageSpanCount(3)// 每行显示个数 int
@@ -143,7 +142,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
                 .isCamera(false)// 是否显示拍照按钮 true or false
                 .isZoomAnim(true)
-                .forResult(Constants.REQUEST_VIDEO_CUT);//结果回调onActivityResult code
+                .forResult(action);//结果回调onActivityResult code
     }
 
 
@@ -152,9 +151,15 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         // 结果回调
         PictureSelector.obtainMultipleResult(data)?.let {
             if (it.size>0){
+                val path = it[0].path
                 when(requestCode){
-                    Constants.REQUEST_VIDEO_CUT -> {
-                        preVideo(it[0].path)
+                   ACTION_CUT, ACTION_REVERSE-> {
+                        preVideo(path)
+                    }
+                    ACTION_MUSIC->{
+                     toOtherActivity<MusicActivity>(activity){
+                         putExtra(Constants.KEY_VIDEO_PATH,path)
+                     }
                     }
                 }
             }
