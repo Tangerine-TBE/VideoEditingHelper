@@ -3,6 +3,7 @@ package com.twx.module_base.base
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.twx.module_base.utils.MyActivityManager
@@ -65,7 +66,18 @@ open class BaseActivity:FragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         MyActivityManager.removeActivity(this)
+
         release()
+    }
+
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        keyAction(keyCode,event)
+        return super.onKeyDown(keyCode, event)
+    }
+
+    open fun keyAction(keyCode: Int, event: KeyEvent?) {
+
     }
 
 

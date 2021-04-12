@@ -12,15 +12,6 @@ import com.tencent.qcloud.ugckit.basic.UGCKitResult
  */
 interface IVideoCut {
 
-    /**
-     * 确定导出视频
-     */
-    fun startExportVideo()
-    /**
-     * 取消导出视频
-     */
-    fun stopExportVideo()
-
 
     /**
      * 设置视频裁剪的源路径
@@ -53,7 +44,7 @@ interface IVideoCut {
         /**
          * 视频裁剪操作完成
          */
-        fun onCutterCompleted(ugcKitResult: UGCKitResult?)
+        fun onCutterCompleted(ugcKitResult: UGCKitResult)
 
         /**
          * 视频裁剪操作取消

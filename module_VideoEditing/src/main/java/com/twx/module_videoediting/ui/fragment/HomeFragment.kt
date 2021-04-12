@@ -6,7 +6,6 @@ import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
 import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener
-import com.tencent.qcloud.ugckit.basic.UGCKitResult
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.twx.module_base.base.BaseVmFragment
@@ -21,7 +20,7 @@ import com.twx.module_videoediting.ui.activity.MusicActivity
 import com.twx.module_videoediting.ui.activity.ReverseActivity
 import com.twx.module_videoediting.ui.activity.VideoCutActivity
 import com.twx.module_videoediting.ui.adapter.recycleview.HomeBottomAdapter
-import com.twx.module_videoediting.ui.popup.LoadingPopup
+import com.twx.module_base.widget.popup.LoadingPopup
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
@@ -60,7 +59,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         binding.apply {
             bottomContainer.apply {
                 layoutManager = LinearLayoutManager(activity)
-                mHomeBottomAdapter.setList(DataProvider.bottomLis)
+                mHomeBottomAdapter.setList(DataProvider.bottomList)
                 adapter = mHomeBottomAdapter
             }
         }
@@ -121,11 +120,8 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
         }
 
-
-
         mLoadingPopup.cancelMake {
            mProcessHelper.stopProcess()
-            mLoadingPopup.dismiss()
             viewModel.setMakeState(true)
         }
 
@@ -189,9 +185,6 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
     }
 
     override fun onUIComplete(retCode: Int, descMsg: String?) {
-        val ugcKitResult = UGCKitResult()
-        ugcKitResult.errorCode = retCode
-        ugcKitResult.descMsg = descMsg
         mLoadingPopup.dismiss()
         toEditPage()
         viewModel.setMakeState(true)

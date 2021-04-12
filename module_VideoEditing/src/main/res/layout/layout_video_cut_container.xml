@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
 
-        <com.twx.module_videoediting.ui.widget.video.ganeral.TWVideoPlayerView
+        <com.twx.module_videoediting.ui.widget.video.ganeral.TWVideoEditPlayerView
             android:id="@+id/mVideoPlayerView"
             android:layout_width="match_parent"
             android:layout_height="300dp"

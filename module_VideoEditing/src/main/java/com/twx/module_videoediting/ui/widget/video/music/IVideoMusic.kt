@@ -1,5 +1,7 @@
 package com.twx.module_videoediting.ui.widget.video.music
 
+import com.tencent.qcloud.ugckit.module.record.MusicInfo
+
 /**
  * @name VideoEditingHelper
  * @class name：com.twx.module_videoediting.ui.widget.video.music
@@ -14,6 +16,6 @@ interface IVideoMusic {
     fun setVideoInfo(videoPath:String)
 
 
-    fun setMusicInfo(musicPath:String,musicName:String)
+    fun setMusicInfo(musicInfo: MusicInfo)
 
 }

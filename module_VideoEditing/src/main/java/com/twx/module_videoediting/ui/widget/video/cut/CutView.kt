@@ -13,7 +13,8 @@ import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.DiyVideoCutViewBinding
 import com.twx.module_videoediting.domain.ThumbnailInfo
 import com.twx.module_videoediting.ui.adapter.recycleview.video.cut.ThumbnailCutAdapter
-import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
 
 /**
  * @name VideoEditingHelper
@@ -25,7 +26,7 @@ import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
  */
 class CutView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr),ICutView {
+) : BaseUi(context, attrs, defStyleAttr),ICutView {
     private val binding= DataBindingUtil.inflate<DiyVideoCutViewBinding>(LayoutInflater.from(context), R.layout.diy_video_cut_view, this, true)
     private val mThumbnailCutAdapter by lazy { ThumbnailCutAdapter() }
     private var mTotalDurationMs = 0L

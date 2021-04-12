@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.tencent.qcloud.ugckit.module.effect.bgm.view.IEditMusicPannel
 import com.tencent.qcloud.ugckit.module.effect.utils.DraftEditer
@@ -11,8 +12,7 @@ import com.tencent.qcloud.ugckit.module.record.MusicInfo
 import com.tencent.qcloud.ugckit.utils.DialogUtil
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutVideoMusiceContainerBinding
-import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
-import com.twx.module_videoediting.utils.video.PlayerManager
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
 import java.io.IOException
 
 /**
@@ -23,9 +23,9 @@ import java.io.IOException
  * @time 2021/4/9 16:19:53
  * @class describe
  */
-class TWVideoMusicContainer @JvmOverloads constructor(
+class TWVideoEditMusicContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr),IVideoMusic, PlayerManager.OnPreviewListener {
+) : BaseVideoEditUi(context, attrs, defStyleAttr),IVideoMusic {
     private var onClickMusic:()->Unit={}
     private val binding = DataBindingUtil.inflate<LayoutVideoMusiceContainerBinding>(
         LayoutInflater.from(context),
@@ -33,15 +33,23 @@ class TWVideoMusicContainer @JvmOverloads constructor(
         this,
         true
     )
+
+    private val videoEditor by lazy {
+        mVideoEditorHelper.editer
+    }
+
     init {
-        PlayerManager.addOnPreviewListener(this)
         mVideoEditorHelper.apply {
             releaseSDK()
             clear()
             initSDK()
         }
         initEvent()
+
+      //  binding.mVideoPlayerView.hideControl()
     }
+
+
 
      fun initEvent() {
          binding.apply {
@@ -52,31 +60,30 @@ class TWVideoMusicContainer @JvmOverloads constructor(
 
              mEditMusicView.setOnMusicChangeListener(object:IEditMusicPannel.MusicChangeListener{
                  override fun onMicVolumeChanged(volume: Float) {
-
+                     videoEditor.setVideoVolume(volume)
                  }
 
                  override fun onMusicVolumChanged(volume: Float) {
-
+                     videoEditor.setBGMVolume(volume)
                  }
 
                  override fun onMusicTimeChanged(startTime: Long, endTime: Long) {
-
+                     videoEditor.setBGMStartTime(startTime,endTime)
                  }
 
                  override fun onMusicReplace() {
-
+                     onClickMusic()
                  }
 
                  override fun onMusicDelete() {
+                     videoEditor.setBGM(null)
 
+                     videoEditor.startPlayFromTime(0L,mVideoEditorHelper.txVideoInfo.duration)
                  }
              })
-
-
          }
-
-
     }
+
 
     fun setSelectMusic(block: () -> Unit){
         onClickMusic=block
@@ -87,9 +94,8 @@ class TWVideoMusicContainer @JvmOverloads constructor(
         binding.mVideoPlayerView.initPlayerLayout()
     }
 
-    override fun setMusicInfo(musicPath: String, musicName: String) {
-        mVideoEditorHelper.editer.let {
-            val musicInfo = MusicInfo()
+    override fun setMusicInfo(musicInfo: MusicInfo) {
+        videoEditor.let {
             val result =it.setBGM(musicInfo.path)
             if (result != 0) {
                 DialogUtil.showDialog(
@@ -120,27 +126,21 @@ class TWVideoMusicContainer @JvmOverloads constructor(
             musicInfo.startTime = 0
             musicInfo.endTime = musicInfo.duration
 
+            binding.mEditMusicView.setMusicInfo(musicInfo)
 
         }
 
     }
 
 
+   fun getPlayerView()=binding.mVideoPlayerView
 
-    override fun onPreviewProgress(time: Int) {
-
+    fun showMusicEditor(){
+       binding.apply {
+           mEditMusicView.visibility=View.VISIBLE
+           selectMusic.visibility=View.GONE
+       }
     }
 
-    override fun onPreviewFinish() {
-       PlayerManager.restartPlay()
-    }
-
-
-
-
-    override fun release() {
-        super.release()
-        PlayerManager.removeOnPreviewListener(this)
-    }
 
 }

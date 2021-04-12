@@ -1,10 +1,13 @@
 package com.twx.module_base.base
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.twx.module_base.utils.SPUtil
+import com.twx.module_base.widget.popup.LoadingPopup
 
 /**
  * @name Wifi_Manager
@@ -15,6 +18,12 @@ import androidx.lifecycle.ViewModelProvider
  * @class describe
  */
 abstract class BaseVmViewActivity<T:ViewDataBinding,Vm:ViewModel>:BaseActivity() {
+
+    protected val loadingPopup by lazy {
+        LoadingPopup(this).apply { setTitle("视频导出中...") }
+    }
+
+
 
     protected lateinit var viewModel:Vm
     protected lateinit var binding: T
@@ -49,6 +58,12 @@ abstract class BaseVmViewActivity<T:ViewDataBinding,Vm:ViewModel>:BaseActivity()
     }
 
     abstract fun getLayoutView(): Int
+
+
+    override fun release() {
+        super.release()
+        loadingPopup.dismiss()
+    }
 
 
 }

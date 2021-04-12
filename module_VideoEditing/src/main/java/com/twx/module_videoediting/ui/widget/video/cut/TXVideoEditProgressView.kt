@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tencent.qcloud.ugckit.component.timeline.ThumbnailAdapter
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.TwLayoutVideoProgressBinding
-import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
 
 /**
  * @name VideoEditingHelper
@@ -21,9 +22,9 @@ import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
  * @time 2021/4/2 10:59:22
  * @class describe
  */
-class TXVideoProgressView @JvmOverloads constructor(
+class TXVideoEditProgressView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr) {
+) : BaseUi(context, attrs, defStyleAttr) {
     private var mViewWidth = 0
     private var mThumbnailList: List<Bitmap> = ArrayList()
     private var mThumbnailAdapter: ThumbnailAdapter? = null

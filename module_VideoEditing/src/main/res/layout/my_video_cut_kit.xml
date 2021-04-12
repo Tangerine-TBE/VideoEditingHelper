@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.twx.module_videoediting.ui.widget.video.cut.TWVideoCutView
+        <com.twx.module_videoediting.ui.widget.video.cut.TWVideoEditCutView
             android:id="@+id/video_edit_view"
             android:layout_width="match_parent"
             android:layout_height="50dp"

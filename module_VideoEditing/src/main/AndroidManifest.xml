@@ -5,7 +5,7 @@
     <application>
         <activity android:name=".ui.activity.MusicActivity"></activity>
         <activity android:name=".ui.activity.ReverseActivity" />
-        <activity android:name=".ui.activity.ExportActivity" />
+        <activity android:name=".ui.activity.ExportActivity" android:launchMode="singleTop"/>
         <activity
             android:name=".ui.activity.VideoCutActivity"
             android:theme="@style/EditerActivityTheme" />

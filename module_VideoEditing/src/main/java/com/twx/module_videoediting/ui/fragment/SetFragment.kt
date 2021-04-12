@@ -34,7 +34,7 @@ class SetFragment : BaseVmFragment<FragmentSetBinding, MainViewModel>() {
         binding.apply {
             setContainer.apply {
                 layoutManager = LinearLayoutManager(activity)
-                mSetAdapter.setList(DataProvider.setLis)
+                mSetAdapter.setList(DataProvider.setList)
                 adapter=mSetAdapter
             }
 

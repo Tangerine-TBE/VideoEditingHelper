@@ -10,22 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.twx.module_videoediting.ui.widget.video.ganeral.TWVideoPlayerView
+        <com.twx.module_videoediting.ui.widget.video.ganeral.VideoEditPlayerControl
             android:id="@+id/mVideoPlayerView"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reverseTitleBar" />
-
-        <include
-            android:id="@+id/reverseControl"
-            layout="@layout/layout_video_reverse_control"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mVideoPlayerView" />
+            app:layout_constraintTop_toBottomOf="@+id/reverseTitleBar" />
 
 
         <TextView
@@ -44,7 +35,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reverseControl" />
+            app:layout_constraintTop_toBottomOf="@+id/mVideoPlayerView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,7 +34,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.twx.module_videoediting.ui.widget.LoadingView
+            <com.twx.module_base.widget.LoadingView
                 android:id="@+id/loadingView"
                 android:layout_width="56dp"
                 android:layout_height="56dp"

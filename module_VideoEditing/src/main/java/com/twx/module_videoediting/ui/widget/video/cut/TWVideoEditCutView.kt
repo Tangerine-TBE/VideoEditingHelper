@@ -14,14 +14,15 @@ import com.tencent.qcloud.ugckit.module.effect.utils.Edit.OnCutChangeListener
 import com.tencent.ugc.TXVideoEditConstants.TXVideoInfo
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.MyItemEditViewBinding
-import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
 
 /**
  * 裁剪View
  */
-class TWVideoCutView @JvmOverloads constructor(
+class TWVideoEditCutView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr), OnRangeChangeListener
+) : BaseUi(context, attrs, defStyleAttr), OnRangeChangeListener
   {
     private val TAG = "VideoCutView"
     private var mCurrentScroll = 0f
@@ -101,7 +102,7 @@ class TWVideoCutView @JvmOverloads constructor(
 
     init{
         binding.apply {
-            rangeSlider.setRangeChangeListener(this@TWVideoCutView)
+            rangeSlider.setRangeChangeListener(this@TWVideoEditCutView)
             val manager = LinearLayoutManager(context)
             manager.orientation = LinearLayoutManager.HORIZONTAL
             recyclerView.layoutManager = manager

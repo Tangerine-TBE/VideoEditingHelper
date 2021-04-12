@@ -2324,6 +2324,7 @@ drawable ic_aspect_169
 drawable ic_aspect_34
 drawable ic_aspect_43
 drawable ic_aspect_916
+drawable ic_baseline_cancel_24
 drawable ic_beautiful_normal
 drawable ic_beautiful_press
 drawable ic_beauty_bigeye
@@ -2598,6 +2599,7 @@ drawable shape_motion_spirit_press
 drawable shape_motion_split_press
 drawable shape_motion_win_shadow_press
 drawable shape_picker_bg
+drawable shape_popup_loading_view_bg
 drawable shape_round_black_tr_15dp
 drawable shape_round_gray_15dp
 drawable shape_round_green_15dp
@@ -2831,6 +2833,7 @@ id bubble_rv_style
 id bubble_setting_view
 id button
 id buttonPanel
+id cancelMake
 id cancel_action
 id cancel_button
 id cb_edit
@@ -3048,6 +3051,8 @@ id load_more_load_end_view
 id load_more_load_fail_view
 id load_more_loading_view
 id loading
+id loadingTitle
+id loadingView
 id loading_progress
 id loading_text
 id mask
@@ -3624,6 +3629,7 @@ layout picker_layout
 layout picture_list_layout
 layout picture_pick_layout
 layout play_control_view
+layout popup_loading_window
 layout publish_video_layout
 layout record_bottom_layout
 layout record_button

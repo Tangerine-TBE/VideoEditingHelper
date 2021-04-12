@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.twx.module_videoediting.ui.widget.video.ganeral.TWVideoPlayerView
+        <com.twx.module_videoediting.ui.widget.video.ganeral.VideoEditPlayerControl
             android:id="@+id/mVideoPlayerView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reverseTitleBar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -39,10 +39,12 @@
 
         <com.twx.module_videoediting.ui.widget.video.music.EditMusicView
             android:id="@+id/mEditMusicView"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/mVideoPlayerView"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             />
 
 

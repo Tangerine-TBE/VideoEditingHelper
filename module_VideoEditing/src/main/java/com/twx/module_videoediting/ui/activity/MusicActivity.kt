@@ -3,15 +3,14 @@ package com.twx.module_videoediting.ui.activity
 import android.content.Intent
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
+import com.tencent.qcloud.ugckit.module.record.MusicInfo
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.LayoutType
 import com.twx.module_base.utils.setStatusBarDistance
-import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityMusicBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
-import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.viewmodel.MusicViewModel
 
@@ -28,9 +27,13 @@ class MusicActivity : BaseVmViewActivity<ActivityMusicBinding,MusicViewModel>(){
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
                 mTWVideoMusicContainer.setVideoInfo(it)
             }
+            lifecycle.addObserver(mTWVideoMusicContainer.getPlayerView())
 
-            lifecycle.addObserver(mTWVideoMusicContainer)
+
+
         }
+
+
     }
 
     override fun observerData() {
@@ -73,7 +76,13 @@ class MusicActivity : BaseVmViewActivity<ActivityMusicBinding,MusicViewModel>(){
             if (it.size>0){
                 val media = it[0]
                 if (requestCode==Constants.REQUEST_VIDEO_CODE){
-                    binding.mTWVideoMusicContainer.setMusicInfo(media.path,"")
+                    val musicInfo = MusicInfo().apply {
+                        name = ""
+                        path = media.path
+                        duration = media.duration
+                    }
+                    binding.mTWVideoMusicContainer.setMusicInfo(musicInfo)
+                    binding.mTWVideoMusicContainer.showMusicEditor()
                 }
             }
         }

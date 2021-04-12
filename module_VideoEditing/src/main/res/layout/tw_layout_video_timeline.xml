@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.twx.module_videoediting.ui.widget.video.cut.TXVideoProgressView
+        <com.twx.module_videoediting.ui.widget.video.cut.TXVideoEditProgressView
             android:id="@+id/video_progress_view"
             android:layout_width="match_parent"
             android:layout_height="34dp"

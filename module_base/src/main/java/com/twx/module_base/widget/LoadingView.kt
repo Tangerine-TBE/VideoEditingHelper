@@ -1,18 +1,13 @@
-package com.twx.module_videoediting.ui.widget
+package com.twx.module_base.widget
 
-import android.R.attr.centerX
-import android.R.attr.centerY
-import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.core.graphics.withTranslation
+import com.twx.module_base.base.BaseView
 import com.twx.module_base.utils.SizeUtils
-import com.twx.module_videoediting.base.BaseView
 
 
 /**

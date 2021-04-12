@@ -38,7 +38,7 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
             setStatusBarDistance(this@MainViewActivity,pageContainer,LayoutType.CONSTRAINTLAYOUT)
             mBottomNavigationView.apply {
                 layoutManager=GridLayoutManager(this@MainViewActivity,3)
-                mNavigationAdapter.setList(DataProvider.navigationLis)
+                mNavigationAdapter.setList(DataProvider.navigationList)
                 adapter=mNavigationAdapter
             }
             showFragment(mHomeFragment)

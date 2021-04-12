@@ -6,7 +6,8 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000">
@@ -14,9 +15,7 @@
         <RelativeLayout
             android:id="@+id/rl_bgm_operation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/layout_bottom"
-            android:layout_alignParentRight="true">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_music_icon"
@@ -62,7 +61,6 @@
             android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
@@ -154,5 +152,5 @@
             </RelativeLayout>
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

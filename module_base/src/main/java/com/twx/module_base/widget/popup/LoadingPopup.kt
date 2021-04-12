@@ -1,10 +1,11 @@
-package com.twx.module_videoediting.ui.popup
+package com.twx.module_base.widget.popup
 
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import com.twx.module_base.R
 import com.twx.module_base.base.BasePopup
-import com.twx.module_videoediting.R
-import com.twx.module_videoediting.databinding.PopupLoadingWindowBinding
+import com.twx.module_base.databinding.PopupLoadingWindowBinding
+
 
 /**
  * @name VideoEditingHelper
@@ -23,7 +24,6 @@ class LoadingPopup(activity: FragmentActivity?):BasePopup<PopupLoadingWindowBind
 
 
 
-
     fun setProgress(progress:Int){
         mView.loadingView.setProgress(progress)
     }
@@ -35,6 +35,7 @@ class LoadingPopup(activity: FragmentActivity?):BasePopup<PopupLoadingWindowBind
     fun cancelMake(block:()->Unit){
         mView.cancelMake.setOnClickListener {
             block()
+            dismiss()
         }
     }
 

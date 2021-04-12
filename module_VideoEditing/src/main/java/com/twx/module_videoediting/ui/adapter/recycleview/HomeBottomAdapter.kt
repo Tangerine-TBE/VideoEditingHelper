@@ -2,6 +2,7 @@ package com.twx.module_videoediting.ui.adapter.recycleview
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.twx.module_base.utils.SPUtil
 import com.twx.module_base.utils.setBgDrawableStyle
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemBottomContainerBinding

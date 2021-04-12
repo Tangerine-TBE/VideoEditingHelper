@@ -4,10 +4,7 @@ import android.content.Intent
 import com.tencent.liteav.demo.videoediter.TCVideoEditerActivity
 import com.tencent.qcloud.ugckit.basic.UGCKitResult
 import com.twx.module_base.base.BaseVmViewActivity
-import com.twx.module_base.utils.LayoutType
-import com.twx.module_base.utils.setStatusBarDistance
-import com.twx.module_base.utils.toOtherActivity
-import com.twx.module_base.utils.viewThemeColor
+import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityVidelCutBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
@@ -18,27 +15,24 @@ import com.twx.module_videoediting.viewmodel.VideoCutViewModel
 
 class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutViewModel>() {
 
-    private fun startEditActivity() {
-        val intent = Intent(this, TCVideoEditerActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
 
     private val mOnCutListener by lazy {
         object: IVideoCut.OnCutListener{
-            override fun onCutterCompleted(ugcKitResult: UGCKitResult?) {
-                if (ugcKitResult?.errorCode == 0) {
-                    startEditActivity()
+            override fun onCutterCompleted(ugcKitResult: UGCKitResult) {
+                if (ugcKitResult.errorCode == 0) {
+                    LogUtils.i("-------onCutterCompleted----------------${ugcKitResult.outputPath}--")
+                    toOtherActivity<ExportActivity>(this@VideoCutActivity,true){
+                        putExtra(Constants.KEY_VIDEO_PATH,ugcKitResult.outputPath)
+                    }
                 }
             }
             override fun onCutterCanceled() {
 
             }
-
             override fun onCutterProgress(progress: Float) {
-
+                LogUtils.i("-----onCutterProgress---${Thread.currentThread().name}----------${(progress * 100).toInt()}-------------")
+                loadingPopup.setProgress((progress*100).toInt())
             }
-
         }
     }
 
@@ -74,20 +68,22 @@ class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutVie
 
     override fun initEvent() {
         binding.apply {
+            mTWVideoCutContainer.setOnCutListener(mOnCutListener)
             cutTitleBar.setBarEventAction(this@VideoCutActivity) {
-              //  mTWVideoCutContainer.startExportVideo()
-                toOtherActivity<ExportActivity>(this@VideoCutActivity,true){}
+                mTWVideoCutContainer.startExportVideo()
+                loadingPopup.showPopupView(videoCutContainer)
             }
+
+            loadingPopup.cancelMake {
+                mTWVideoCutContainer.stopExportVideo()
+            }
+
         }
     }
 
 
 
-/*    override fun release() {
-        binding.mTWVideoCutContainer.release()
 
 
-
-    }*/
 }
 

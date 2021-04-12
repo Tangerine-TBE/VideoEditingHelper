@@ -12,7 +12,8 @@ import com.tencent.qcloud.ugckit.module.record.MusicInfo
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.TwLayoutEditMusicBinding
-import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
 
 /**
  * @name VideoEditingHelper
@@ -24,7 +25,7 @@ import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
  */
 class EditMusicView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr), IEditMusicPannel, SeekBar.OnSeekBarChangeListener,
+) : BaseUi(context, attrs, defStyleAttr), IEditMusicPannel, SeekBar.OnSeekBarChangeListener,
     RangeSlider.OnRangeChangeListener {
     private var mMicVolume = 100
     private var mBGMVolume = 100
@@ -88,9 +89,9 @@ class EditMusicView @JvmOverloads constructor(
             resources.getString(com.tencent.qcloud.ugckit.R.string.bgm_start_position),
             DateTimeUtil.millsecondToMinuteSecond(leftTime.toInt())
         )
-        if (mMusicChangeListener != null) {
-            mMusicChangeListener!!.onMusicTimeChanged(leftTime, rightTime)
-        }
+
+        mMusicChangeListener?.onMusicTimeChanged(leftTime, rightTime)
+
 
         binding.tvBgmStartTime.text = String.format(
             resources.getString(com.tencent.qcloud.ugckit.R.string.bgm_start_position),

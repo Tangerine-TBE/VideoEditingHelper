@@ -18,9 +18,9 @@ import com.twx.module_videoediting.databinding.LayoutVideoContainerBinding
  * @time 2021/3/29 9:47:53
  * @class describe
  */
-class TWVideoPlayerView @JvmOverloads constructor(
+class TWVideoEditPlayerView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr) {
+) : BaseUi(context, attrs, defStyleAttr) {
     private val mView=DataBindingUtil.inflate<LayoutVideoContainerBinding>(LayoutInflater.from(context), R.layout.layout_video_container, this, true)
     /**
      * 初始化预览播放器

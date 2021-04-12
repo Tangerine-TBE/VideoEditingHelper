@@ -13,20 +13,21 @@ import com.tencent.qcloud.ugckit.module.effect.utils.Edit.OnCutChangeListener
 import com.tencent.ugc.TXVideoEditConstants.TXVideoInfo
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.MyVideoCutKitBinding
-import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
 import com.twx.module_videoediting.utils.video.PlayerManager
 
-class TWVideoCutLayout @JvmOverloads constructor(
+class TWVideoEditCutLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoUi(context, attrs, defStyleAttr), IVideoCutLayout, View.OnClickListener, OnCutChangeListener {
+) : BaseUi(context, attrs, defStyleAttr), IVideoCutLayout, View.OnClickListener, OnCutChangeListener {
     private var mRotation = 0
     private var mOnRotateVideoListener: OnRotateVideoListener? = null
     private val binding=DataBindingUtil.inflate<MyVideoCutKitBinding>(LayoutInflater.from(context),R.layout.my_video_cut_kit,this,true)
 
     init {
         binding.apply {
-            ivRotate.setOnClickListener(this@TWVideoCutLayout)
-            videoEditView.setCutChangeListener(this@TWVideoCutLayout)
+            ivRotate.setOnClickListener(this@TWVideoEditCutLayout)
+            videoEditView.setCutChangeListener(this@TWVideoEditCutLayout)
         }
 
     }

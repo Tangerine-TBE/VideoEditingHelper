@@ -1,4 +1,4 @@
-package com.twx.module_videoediting.base
+package com.twx.module_base.base
 
 import android.content.Context
 import android.util.AttributeSet
