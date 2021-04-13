@@ -6,42 +6,42 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml
+8-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml
+9-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:7:5-23:19
+11-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:7:5-23:19
 12        <activity
-12-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:8:9-12:58
+12-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:8:9-12:58
 13            android:name="com.tencent.liteav.demo.videorecord.TCVideoRecordActivity"
-13-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:9:13-50
+13-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:9:13-50
 14            android:configChanges="keyboardHidden|orientation|screenSize"
-14-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:10:13-74
+14-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:10:13-74
 15            android:launchMode="singleTask"
-15-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:11:13-44
+15-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:11:13-44
 16            android:theme="@style/RecordActivityTheme" />
-16-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:12:13-55
+16-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:12:13-55
 17        <activity
-17-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:13:9-15:77
+17-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:13:9-15:77
 18            android:name="com.tencent.liteav.demo.videorecord.TCVideoRecordSmartActivity"
-18-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:14:13-55
+18-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:14:13-55
 19            android:configChanges="keyboardHidden|orientation|screenSize" />
-19-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:15:13-74
+19-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:15:13-74
 20        <activity
-20-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:16:9-19:52
+20-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:16:9-19:52
 21            android:name="com.tencent.liteav.demo.videorecord.TCVideoSettingActivity"
-21-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:17:13-51
+21-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:17:13-51
 22            android:configChanges="keyboardHidden|orientation|screenSize"
-22-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:18:13-74
+22-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:18:13-74
 23            android:screenOrientation="portrait" />
-23-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:19:13-49
+23-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:19:13-49
 24        <activity
-24-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:20:9-22:52
+24-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:20:9-22:52
 25            android:name="com.tencent.liteav.demo.videorecord.TCRecordPreviewActivity"
-25-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:21:13-52
+25-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:21:13-52
 26            android:screenOrientation="portrait" />
-26-->C:\Users\Administrator\Desktop\VideoEditingHelper\videorecorder\src\main\AndroidManifest.xml:22:13-49
+26-->C:\Users\wjm666666\Desktop\video-clip\videorecorder\src\main\AndroidManifest.xml:22:13-49
 27    </application>
 28
 29</manifest>

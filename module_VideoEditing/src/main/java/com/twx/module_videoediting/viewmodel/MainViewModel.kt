@@ -58,17 +58,19 @@ class MainViewModel:BaseViewModel() {
     }
 
     fun deleteMediaFile(mediaList:MutableList<MediaInformation>,deleteList:MutableList<MediaInformation>) {
+        val list = ArrayList<MediaInformation>()
+        list.addAll(deleteList)
         viewModelScope.launch(Dispatchers.IO) {
-            deleteList.forEach {
+            list.forEach {
                 FileUtils.deleteMedia(Uri.parse(it.uri))
                 FileUtils.deleteFile(File(it.path))
             }
-
         }
-        LogUtils.i("---deleteMediaFile-----${mediaList.size}------${deleteList.size}----------")
         if (mediaList.removeAll(deleteList)) {
             currentVideoList.value=mediaList
         }
+
+        LogUtils.i("---deleteMediaFile-----${mediaList.size}------${deleteList.size}----------")
 
     }
 

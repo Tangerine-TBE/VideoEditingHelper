@@ -78,10 +78,10 @@ fun outPutVideo(loadingPopup:LoadingPopup,activity: Activity?)=
         override fun onCutterCompleted(ugcKitResult: UGCKitResult) {
             if (ugcKitResult.errorCode == 0) {
                 LogUtils.i("-------onCutterCompleted----------------${ugcKitResult.outputPath}--")
-                loadingPopup.dismiss()
                 toOtherActivity<ExportActivity>(activity,true){
                     putExtra(Constants.KEY_VIDEO_PATH,ugcKitResult.outputPath)
                 }
+                loadingPopup.dismiss()
                 MakeBackLiveData.setMakeState(true)
             }
         }
