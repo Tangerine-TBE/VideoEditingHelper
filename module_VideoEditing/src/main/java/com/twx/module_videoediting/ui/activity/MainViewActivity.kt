@@ -8,6 +8,7 @@ import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityHomeBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
+import com.twx.module_videoediting.livedata.VideoFileLiveData
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.NavigationAdapter
 import com.twx.module_videoediting.ui.fragment.FileFragment
@@ -43,6 +44,8 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
             }
             showFragment(mHomeFragment)
         }
+
+
     }
 
     override fun observerData() {
@@ -54,9 +57,6 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                     mBottomNavigationView.setHomeNavigationBgColor(it)
                     mNavigationAdapter.setThemeChangeState(it)
                 })
-
-
-
             }
 
         }
@@ -72,9 +72,6 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                     2->showFragment(mSetFragment)
                 }
             }
-
-
-
         }
     }
 
@@ -96,16 +93,15 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
         }
     }
 
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        super.onKeyDown(keyCode, event)
         if (keyCode==KeyEvent.KEYCODE_BACK){
-            if (!viewModel.getMakeState()){
+            if (viewModel.getEditAction_()) {
+                viewModel.setEditAction(false)
                 return false
             }
         }
         return super.onKeyDown(keyCode, event)
-
-
     }
 
 }

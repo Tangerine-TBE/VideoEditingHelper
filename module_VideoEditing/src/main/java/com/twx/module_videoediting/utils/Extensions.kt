@@ -1,8 +1,17 @@
 package com.twx.module_videoediting.utils
 
 import android.app.Activity
+import com.tencent.qcloud.ugckit.basic.UGCKitResult
+import com.tencent.qcloud.ugckit.module.ProcessKit
+import com.tencent.qcloud.ugckit.module.VideoGenerateKit
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
+import com.twx.module_base.utils.LogUtils
+import com.twx.module_base.utils.toOtherActivity
+import com.twx.module_base.widget.popup.LoadingPopup
+import com.twx.module_base.livedata.MakeBackLiveData
+import com.twx.module_videoediting.ui.activity.ExportActivity
 import com.twx.module_videoediting.ui.widget.TitleBar
+import com.twx.module_videoediting.ui.widget.video.cut.IVideoCut
 
 
 fun TitleBar.setBarEventAction(activity: Activity?, block: () -> Unit){
@@ -61,6 +70,38 @@ fun videoTimeInterval(duration: Long):Int{
             2000
         }
     }
+}
 
+//输出视频
+fun outPutVideo(loadingPopup:LoadingPopup,activity: Activity?)=
+    object: IVideoCut.OnCutListener{
+        override fun onCutterCompleted(ugcKitResult: UGCKitResult) {
+            if (ugcKitResult.errorCode == 0) {
+                LogUtils.i("-------onCutterCompleted----------------${ugcKitResult.outputPath}--")
+                loadingPopup.dismiss()
+                toOtherActivity<ExportActivity>(activity,true){
+                    putExtra(Constants.KEY_VIDEO_PATH,ugcKitResult.outputPath)
+                }
+                MakeBackLiveData.setMakeState(true)
+            }
+        }
+        override fun onCutterCanceled() {
+            MakeBackLiveData.setMakeState(true)
+        }
+        override fun onCutterProgress(progress: Float) {
+            LogUtils.i("-----onCutterProgress---${Thread.currentThread().name}----------${(progress * 100).toInt()}-------------")
+            loadingPopup.setProgress((progress*100).toInt())
+            MakeBackLiveData.setMakeState(false)
+        }
+}
+
+//取消制作
+fun cancelMake(isProcess:Boolean) {
+    if (isProcess) {
+        ProcessKit.getInstance().stopProcess()
+    } else {
+        VideoGenerateKit.getInstance().stopGenerate()
+    }
+    MakeBackLiveData.setMakeState(true)
 }
 

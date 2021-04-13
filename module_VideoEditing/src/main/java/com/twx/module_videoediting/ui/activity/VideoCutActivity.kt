@@ -10,31 +10,15 @@ import com.twx.module_videoediting.databinding.ActivityVidelCutBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.ui.widget.video.cut.IVideoCut
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.cancelMake
+import com.twx.module_videoediting.utils.outPutVideo
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.twx.module_videoediting.viewmodel.VideoCutViewModel
 
 class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutViewModel>() {
 
 
-    private val mOnCutListener by lazy {
-        object: IVideoCut.OnCutListener{
-            override fun onCutterCompleted(ugcKitResult: UGCKitResult) {
-                if (ugcKitResult.errorCode == 0) {
-                    LogUtils.i("-------onCutterCompleted----------------${ugcKitResult.outputPath}--")
-                    toOtherActivity<ExportActivity>(this@VideoCutActivity,true){
-                        putExtra(Constants.KEY_VIDEO_PATH,ugcKitResult.outputPath)
-                    }
-                }
-            }
-            override fun onCutterCanceled() {
 
-            }
-            override fun onCutterProgress(progress: Float) {
-                LogUtils.i("-----onCutterProgress---${Thread.currentThread().name}----------${(progress * 100).toInt()}-------------")
-                loadingPopup.setProgress((progress*100).toInt())
-            }
-        }
-    }
 
     override fun getViewModelClass(): Class<VideoCutViewModel> {
         return VideoCutViewModel::class.java
@@ -68,14 +52,14 @@ class VideoCutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutVie
 
     override fun initEvent() {
         binding.apply {
-            mTWVideoCutContainer.setOnCutListener(mOnCutListener)
+            mTWVideoCutContainer.setOnCutListener(outPutVideo(loadingPopup,this@VideoCutActivity))
             cutTitleBar.setBarEventAction(this@VideoCutActivity) {
                 mTWVideoCutContainer.startExportVideo()
                 loadingPopup.showPopupView(videoCutContainer)
             }
 
             loadingPopup.cancelMake {
-                mTWVideoCutContainer.stopExportVideo()
+                cancelMake(false)
             }
 
         }

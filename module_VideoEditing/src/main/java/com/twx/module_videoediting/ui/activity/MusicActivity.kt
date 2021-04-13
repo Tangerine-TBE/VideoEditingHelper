@@ -28,12 +28,7 @@ class MusicActivity : BaseVmViewActivity<ActivityMusicBinding,MusicViewModel>(){
                 mTWVideoMusicContainer.setVideoInfo(it)
             }
             lifecycle.addObserver(mTWVideoMusicContainer.getPlayerView())
-
-
-
         }
-
-
     }
 
     override fun observerData() {

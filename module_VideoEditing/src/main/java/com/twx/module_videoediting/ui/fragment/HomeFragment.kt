@@ -9,6 +9,7 @@ import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.twx.module_base.base.BaseVmFragment
+import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.utils.viewThemeColor
@@ -22,6 +23,7 @@ import com.twx.module_videoediting.ui.activity.VideoCutActivity
 import com.twx.module_videoediting.ui.adapter.recycleview.HomeBottomAdapter
 import com.twx.module_base.widget.popup.LoadingPopup
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.cancelMake
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
 /**
@@ -121,8 +123,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         }
 
         mLoadingPopup.cancelMake {
-           mProcessHelper.stopProcess()
-            viewModel.setMakeState(true)
+            cancelMake(true)
         }
 
 
@@ -180,18 +181,18 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
     override fun onUIProgress(progress: Float) {
         mLoadingPopup.setProgress((progress*100).toInt())
-        viewModel.setMakeState(false)
+        MakeBackLiveData.setMakeState(false)
         LogUtils.i("-----setOnCutListener---${Thread.currentThread().name}----------${(progress * 100).toInt()}-------------")
     }
 
     override fun onUIComplete(retCode: Int, descMsg: String?) {
         mLoadingPopup.dismiss()
         toEditPage()
-        viewModel.setMakeState(true)
+        MakeBackLiveData.setMakeState(true)
     }
 
     override fun onUICancel() {
-        viewModel.setMakeState(true)
+        MakeBackLiveData.setMakeState(true)
     }
 
 

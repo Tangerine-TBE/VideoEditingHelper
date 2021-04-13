@@ -41,6 +41,11 @@ public class UGCKitConstants {
 
     public static final String DEFAULT_MEDIA_PACK_FOLDER = "liteav";      // UGC编辑器输出目录
 
+    public static final String DEFAULT_MEDIA_OUT_PATH = "Twx_Video_File";      // TWX编辑器输出目录
+
+
+
+
     // bgm activity request code and intent extra
     public static final int ACTIVITY_MUSIC_REQUEST_CODE = 1;
     public static final String MUSIC_POSITION = "bgm_position";

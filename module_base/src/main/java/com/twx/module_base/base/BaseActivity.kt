@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.FragmentActivity
+import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.MyActivityManager
 import com.twx.module_base.utils.MyStatusBarUtil
 import com.twx.module_base.utils.SPUtil
@@ -72,13 +73,12 @@ open class BaseActivity:FragmentActivity() {
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        keyAction(keyCode,event)
+        if (keyCode==KeyEvent.KEYCODE_BACK){
+            if (!MakeBackLiveData.getMakeState()){
+                return false
+            }
+        }
         return super.onKeyDown(keyCode, event)
     }
-
-    open fun keyAction(keyCode: Int, event: KeyEvent?) {
-
-    }
-
 
 }
