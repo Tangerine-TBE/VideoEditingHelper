@@ -71,7 +71,7 @@
     <string name="delete_bgm_or_not">确定清除已添加的背景音乐？</string>
     <string name="confirm_delete">确定清除</string>
 
-    <string name="bgm_start_position">当前从%1$s开始</string>
+    <string name="bgm_start_position">背景音乐从%1$s开始</string>
 
     <string name="no_content">暂无内容哦~</string>
     <string name="none">无</string>

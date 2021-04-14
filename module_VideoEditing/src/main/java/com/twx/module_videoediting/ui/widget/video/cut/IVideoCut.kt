@@ -13,12 +13,12 @@ import com.tencent.qcloud.ugckit.basic.UGCKitResult
 interface IVideoCut {
 
 
-    /**
+/*    *//**
      * 设置视频裁剪的源路径
      *
      * @param videoPath 视频裁剪的源路径
-     */
-    fun setVideoPath(videoPath: String?)
+     *//*
+    fun setVideoPath(videoPath: String?)*/
 
 /*    *//**
      * 开始播放视频
@@ -58,19 +58,4 @@ interface IVideoCut {
 
     }
 
-    /**
-     * 是否进行视频编辑
-     *
-     * @param enable {@code true} 进行视频特效编辑<br>
-     *               {@code false} 直接输出裁剪完视频<br>
-     *               默认为true
-     */
-    fun setVideoEditFlag(enable: Boolean)
-
-    /**
-     * 仅当调用 [.setVideoEditFlag] 参数为 `false` 时，有效
-     *
-     * @return 裁剪完的视频路径
-     */
-    fun getVideoOutputPath(): String?
 }

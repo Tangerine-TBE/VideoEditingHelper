@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <import type="android.view.View" />
     </data>
 
-    <FrameLayout
-        android:id="@+id/mVideoContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <LinearLayout
 
-    </FrameLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/mVideoPlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <include
+            android:id="@+id/playerControl"
+            layout="@layout/layout_player_view_control"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mVideoPlayerView" />
+
+    </LinearLayout>
 </layout>

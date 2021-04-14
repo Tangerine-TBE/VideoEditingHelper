@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.twx.module_base.utils.formatTime
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemVideoFileContainerBinding
 import com.twx.module_videoediting.domain.MediaInformation
@@ -64,7 +65,7 @@ class VideoFileAdapter : RecyclerView.Adapter<VideoFileAdapter.MyHolder>() {
                     videoName.text = "${it.name}"
                     videoName.isSelected=true
                     videoDate.text = "${it.date}"
-                    videoDuration.text = "时长：${it.duration}"
+                    videoDuration.text = "时长：${"${formatTime(it.duration / 1000)}"}"
                 }
 
 
@@ -77,7 +78,7 @@ class VideoFileAdapter : RecyclerView.Adapter<VideoFileAdapter.MyHolder>() {
                     videoSelect.setImageResource(R.mipmap.icon_video_select)
                 } else {
                     mSelectItemList.remove(media)
-                    videoSelect.setImageResource(R.mipmap.icon_item_bili)
+                    videoSelect.setImageResource(R.mipmap.icon_video_normal)
                 }
 
 
@@ -85,7 +86,7 @@ class VideoFileAdapter : RecyclerView.Adapter<VideoFileAdapter.MyHolder>() {
                     if (mEditAction) {
                         if (mSelectItemList.contains(media)) {
                             mSelectItemList.remove(media)
-                            videoSelect.setImageResource(R.mipmap.icon_item_bili)
+                            videoSelect.setImageResource(R.mipmap.icon_video_normal)
                         } else {
                             mSelectItemList.add(media)
                             videoSelect.setImageResource(R.mipmap.icon_video_select)

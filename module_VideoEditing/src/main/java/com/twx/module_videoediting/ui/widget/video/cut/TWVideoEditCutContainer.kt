@@ -33,16 +33,13 @@ import com.twx.module_videoediting.utils.videoTimeInterval
  */
 class TWVideoEditCutContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoEditUi(context, attrs, defStyleAttr), IVideoCut, PlayerManager.OnPreviewListener,
-    PlayerManager.OnPlayStateListener, ICutView.VideoProgressSeekListener {
+) : BaseVideoEditUi(context, attrs, defStyleAttr), IVideoCut, ICutView.VideoProgressSeekListener {
     private val binding = DataBindingUtil.inflate<LayoutVideoCutContainerBinding>(
         LayoutInflater.from(context),
         R.layout.layout_video_cut_container,
         this,
         true
     )
-    private var mDuration = ""
-    private var mCurrentTime = 0L
 
     init {
         initEvent()
@@ -51,22 +48,15 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
     /**
      * 事件监听
      */
-     fun initEvent() {
+    fun initEvent() {
         binding.apply {
-            mCutViewLayout.setVideoProgressSeekListener(this@TWVideoEditCutContainer)
-
-            // 播放动作
-            playerControl.apply {
-                videoPlayAction.setOnClickListener {
-                    PlayerManager.playVideo(false)
-                }
-            }
+            cutControl.mCutViewLayout.setVideoProgressSeekListener(this@TWVideoEditCutContainer)
 
             //设置剪辑起点终点动作
             cutControl.apply {
                 beginAction.setOnClickListener {
-                    if (mCurrentTime < mVideoEditorHelper.cutterEndTime) {
-                        mVideoEditorHelper.cutterStartTime = mCurrentTime
+                    if (mVideoPlayerView.getCurrentTime() < mVideoEditorHelper.cutterEndTime) {
+                        mVideoEditorHelper.cutterStartTime = mVideoPlayerView.getCurrentTime()
                         showCutTime(mVideoEditorHelper)
                     } else {
                         showToast("剪辑起点不能大于剪辑终点")
@@ -74,8 +64,8 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
                 }
 
                 endAction.setOnClickListener {
-                    if (mCurrentTime > mVideoEditorHelper.cutterStartTime) {
-                        mVideoEditorHelper.cutterEndTime = mCurrentTime
+                    if (mVideoPlayerView.getCurrentTime() > mVideoEditorHelper.cutterStartTime) {
+                        mVideoEditorHelper.cutterEndTime = mVideoPlayerView.getCurrentTime()
                         showCutTime(mVideoEditorHelper)
                     } else {
                         showToast("剪辑终点不能小于剪辑起点")
@@ -93,11 +83,16 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
                 // 初始化播放器界面[必须在setPictureList/setVideoPath设置数据源之后]
                 mVideoPlayerView.initPlayerLayout()
                 it.resetDuration()
-                //添加播放状态监听
-                PlayerManager.addOnPlayStateListener(this@TWVideoEditCutContainer)
-                PlayerManager.addOnPreviewListener(this@TWVideoEditCutContainer)
 
                 showCutTime(it)
+
+                mVideoPlayerView.previewProgressAction {
+                    val currentState = PlayerManager.getCurrentState()
+                    if (currentState == PlayState.STATE_PLAY || currentState == PlayState.STATE_RESUME) {
+                        binding.cutControl.mCutViewLayout.setCurrentTime(it.toLong())
+                    }
+                }
+
             }
         }
     }
@@ -128,29 +123,22 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
         } else {
             // 初始化缩略图列表，裁剪缩略图时间间隔秒钟一张
             val interval = videoTimeInterval(info.duration)
-            binding.mCutViewLayout.setTotalDuration(info.duration)
-            binding.mCutViewLayout.setAllThumbnailListWidth((info.duration / interval).toInt())
-            binding.mCutViewLayout.setThumbnailList(mVideoEditorHelper.allThumbnailList)
-            //总时长
-            mDuration = formatDuration(info.duration)
+            binding.cutControl.mCutViewLayout.apply {
+                setTotalDuration(info.duration)
+                setAllThumbnailListWidth((info.duration / interval).toInt())
+                setThumbnailList(mVideoEditorHelper.allThumbnailList)
+            }
+
         }
     }
+
+    fun getPlayerView() = binding.mVideoPlayerView
 
     override fun release() {
         super.release()
         TelephonyUtil.getInstance().uninitPhoneListener()
-        PlayerManager.removeOnPreviewListener(this)
-        PlayerManager.removeOnPlayStateListener(this)
     }
 
-
-    override fun setVideoEditFlag(flag: Boolean) {
-        JumpActivityMgr.getInstance().editFlagFromCut = flag
-    }
-
-    override fun getVideoOutputPath(): String {
-        return VideoGenerateKit.getInstance().videoOutputPath
-    }
 
 
     override fun onVideoProgressSeek(currentTimeMs: Long) {
@@ -160,38 +148,6 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
     override fun onVideoProgressSeekFinish(currentTimeMs: Long) {
         PlayerManager.previewAtTime(currentTimeMs)
     }
-
-    override fun onPlayState(state: Int) {
-        binding.playerControl.apply {
-            LogUtils.i("------onPlayState-------------$state-------------------")
-            when (state) {
-                PlayState.STATE_PLAY, PlayState.STATE_RESUME -> {
-                    videoPlayAction.setImageResource(R.mipmap.icon_player_stop)
-                }
-                PlayState.STATE_STOP, PlayState.STATE_PAUSE, PlayState.STATE_NONE -> {
-                    videoPlayAction.setImageResource(R.mipmap.icon_player_start)
-                }
-
-            }
-        }
-    }
-
-    override fun onPreviewProgress(time: Int) {
-        LogUtils.i("----time--------onPreviewProgress-------$time------------")
-        mCurrentTime = time.toLong()
-        binding.playerControl.videoTime.text = "${formatDuration(time.toLong())}/$mDuration"
-
-        val currentState = PlayerManager.getCurrentState()
-        if (currentState == PlayState.STATE_PLAY || currentState == PlayState.STATE_RESUME) {
-            binding.mCutViewLayout.setCurrentTime(time.toLong())
-        }
-
-    }
-
-    override fun onPreviewFinish() {
-
-    }
-
 
 
 }

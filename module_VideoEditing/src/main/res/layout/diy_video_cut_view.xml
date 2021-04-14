@@ -20,17 +20,6 @@
             android:layout_height="95dp"
          />
 
-        <com.tencent.qcloud.ugckit.component.slider.RangeSlider
-            android:id="@+id/range_slider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            seekbar:leftThumbDrawable="?attr/editerCutSliderLeftIcon"
-            seekbar:leftThumbIndex="0"
-            seekbar:lineColor="?attr/editerCutViewColor"
-            seekbar:lineHeight="3dp"
-            seekbar:rightThumbDrawable="?attr/editerCutSliderRightIcon"
-            seekbar:thumbWidth="10dp"
-            seekbar:tickCount="100" />
 
         <ImageView
             android:layout_width="2dp"

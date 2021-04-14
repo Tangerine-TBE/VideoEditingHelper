@@ -62,7 +62,7 @@ open class BasePopup<T:ViewDataBinding>(val activity: FragmentActivity?, layout:
 
     private fun intBgAnimation() {
         mInValueAnimator = ValueAnimator.ofFloat(1.0f, 0.5f)
-        mInValueAnimator.duration = 300
+        mInValueAnimator.duration = 100
         mInValueAnimator.addUpdateListener { animation -> updateBgWindowAlpha(animation.animatedValue as Float) }
         mOutValueAnimator = ValueAnimator.ofFloat(0.5f, 1.0f)
         mOutValueAnimator.duration = 100
@@ -110,6 +110,9 @@ open class BasePopup<T:ViewDataBinding>(val activity: FragmentActivity?, layout:
     inline  fun doSure(crossinline action: () -> Unit)=addListener( sure = action)
 
     inline  fun doCancel(crossinline action: () -> Unit)=addListener( cancel = action)
+
+
+
 
 
 }

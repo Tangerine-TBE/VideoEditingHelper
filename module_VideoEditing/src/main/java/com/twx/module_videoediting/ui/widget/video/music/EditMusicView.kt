@@ -27,8 +27,7 @@ class EditMusicView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BaseUi(context, attrs, defStyleAttr), IEditMusicPannel, SeekBar.OnSeekBarChangeListener,
     RangeSlider.OnRangeChangeListener {
-    private var mMicVolume = 100
-    private var mBGMVolume = 100
+
     private val binding = DataBindingUtil.inflate<TwLayoutEditMusicBinding>(
         LayoutInflater.from(context),
         R.layout.tw_layout_edit_music,
@@ -44,12 +43,15 @@ class EditMusicView @JvmOverloads constructor(
 
     fun initEvent() {
         binding.apply {
+            txMusicName.isSelected=true
+
             seekbarBgmVolume.setOnSeekBarChangeListener(this@EditMusicView)
             seekbarMicVolume.setOnSeekBarChangeListener(this@EditMusicView)
             bgmRangeSlider.setRangeChangeListener(this@EditMusicView)
 
             btnBgmDelete.setOnClickListener {
                 mMusicChangeListener?.onMusicDelete()
+                txMusicName.text=""
             }
 
             btnBgmReplace.setOnClickListener {
@@ -60,14 +62,18 @@ class EditMusicView @JvmOverloads constructor(
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        if (seekBar.id == com.tencent.qcloud.ugckit.R.id.seekbar_mic_volume) {
-            mMicVolume = progress
-            mMusicChangeListener?.onMicVolumeChanged(mMicVolume / 100.toFloat())
+        binding.apply {
+            if (seekBar.id == R.id.seekbar_mic_volume) {
+                tvMicVolume.text="原音音量（${progress}%）"
+                mMusicChangeListener?.onMicVolumeChanged( progress / 100.toFloat())
 
-        } else if (seekBar.id == com.tencent.qcloud.ugckit.R.id.seekbar_bgm_volume) {
-            mBGMVolume = progress
-            mMusicChangeListener?.onMusicVolumChanged(mBGMVolume / 100.toFloat())
+            } else if (seekBar.id ==R.id.seekbar_bgm_volume) {
+                tvBgmVolume.text="背景音乐音量（${progress}%）"
+                mMusicChangeListener?.onMusicVolumChanged(progress / 100.toFloat())
+            }
         }
+
+
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -85,37 +91,33 @@ class EditMusicView @JvmOverloads constructor(
     override fun onKeyUp(type: Int, leftPinIndex: Int, rightPinIndex: Int) {
         val leftTime = mBgmDuration * leftPinIndex / 100
         val rightTime = mBgmDuration * rightPinIndex / 100
-        binding.tvBgmStartTime.text = String.format(
-            resources.getString(com.tencent.qcloud.ugckit.R.string.bgm_start_position),
-            DateTimeUtil.millsecondToMinuteSecond(leftTime.toInt())
-        )
 
         mMusicChangeListener?.onMusicTimeChanged(leftTime, rightTime)
 
+        binding.tvBgmStartTime.text = "背景音乐从${DateTimeUtil.millsecondToMinuteSecond(
+            leftTime.toInt()
+        )}开始"
 
-        binding.tvBgmStartTime.text = String.format(
-            resources.getString(com.tencent.qcloud.ugckit.R.string.bgm_start_position),
-            DateTimeUtil.millsecondToMinuteSecond(
-                leftTime.toInt()
-            )
-        )
     }
 
     private var mBgmDuration: Long = 0
     override fun setMusicInfo(musicInfo: MusicInfo) {
         binding.apply {
+            val bgVolume= (musicInfo.videoVolume * 100).toInt()
+            val musicVolume = (musicInfo.bgmVolume * 100).toInt()
             if (!TextUtils.isEmpty(musicInfo.name)) {
                 txMusicName.text = musicInfo.name
             }
             if (seekbarMicVolume != null && musicInfo.videoVolume != -1f) {
-                seekbarMicVolume.progress = (musicInfo.videoVolume * 100).toInt()
+                seekbarMicVolume.progress = musicVolume
             }
-
             if (seekbarBgmVolume != null && musicInfo.bgmVolume != -1f) {
-                seekbarBgmVolume.progress = (musicInfo.bgmVolume * 100).toInt()
+                seekbarBgmVolume.progress = bgVolume
             }
             mBgmDuration = musicInfo.duration
             setCutRange(musicInfo.startTime, musicInfo.endTime)
+
+            setVolume(bgVolume,musicVolume)
         }
 
     }
@@ -134,15 +136,20 @@ class EditMusicView @JvmOverloads constructor(
                 bgmRangeSlider.setCutRange(left, right)
             }
             if (tvBgmStartTime != null) {
-                tvBgmStartTime.text = String.format(
-                    resources.getString(R.string.bgm_start_position),
-                    DateTimeUtil.millsecondToMinuteSecond(
-                        startTime.toInt()
-                    )
-                )
+                tvBgmStartTime.text = "背景音乐从${DateTimeUtil.millsecondToMinuteSecond(
+                    startTime.toInt()
+                )}开始"
+
             }
         }
     }
 
+
+  private  fun setVolume(bgVolume:Int,musicVolume:Int){
+        binding.apply {
+            tvBgmVolume.text="背景音乐音量（${bgVolume}%）"
+            tvMicVolume.text="原音音量（${musicVolume}%）"
+        }
+    }
 
 }

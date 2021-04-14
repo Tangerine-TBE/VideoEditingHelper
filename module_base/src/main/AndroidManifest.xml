@@ -29,6 +29,20 @@
         <meta-data android:value="01a1119aa055917f8816f3a" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
 
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            tools:replace="android:authorities"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@ import java.io.IOException
  */
 class TWVideoEditMusicContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoEditUi(context, attrs, defStyleAttr),IVideoMusic {
+) : BaseVideoEditUi(context, attrs, defStyleAttr) {
     private var onClickMusic:()->Unit={}
     private val binding = DataBindingUtil.inflate<LayoutVideoMusiceContainerBinding>(
         LayoutInflater.from(context),
@@ -50,13 +50,11 @@ class TWVideoEditMusicContainer @JvmOverloads constructor(
     }
 
 
-
      fun initEvent() {
          binding.apply {
              selectMusic?.setOnClickListener {
                  onClickMusic()
              }
-
 
              mEditMusicView.setOnMusicChangeListener(object:IEditMusicPannel.MusicChangeListener{
                  override fun onMicVolumeChanged(volume: Float) {
@@ -89,12 +87,12 @@ class TWVideoEditMusicContainer @JvmOverloads constructor(
         onClickMusic=block
     }
 
-    override fun setVideoInfo(videoPath: String) {
+     fun setVideoInfo(videoPath: String) {
         mVideoEditorHelper.setVideoPathInfo(videoPath)
         binding.mVideoPlayerView.initPlayerLayout()
     }
 
-    override fun setMusicInfo(musicInfo: MusicInfo) {
+     fun setMusicInfo(musicInfo: MusicInfo) {
         videoEditor.let {
             val result =it.setBGM(musicInfo.path)
             if (result != 0) {
@@ -132,8 +130,8 @@ class TWVideoEditMusicContainer @JvmOverloads constructor(
 
     }
 
-
    fun getPlayerView()=binding.mVideoPlayerView
+
 
     fun showMusicEditor(){
        binding.apply {

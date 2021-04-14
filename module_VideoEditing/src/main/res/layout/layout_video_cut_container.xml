@@ -12,46 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <com.twx.module_videoediting.ui.widget.video.ganeral.TWVideoEditPlayerView
+        <com.twx.module_videoediting.ui.widget.video.ganeral.VideoCutPlayerControl
             android:id="@+id/mVideoPlayerView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/playerControl"
-            layout="@layout/layout_player_view_control"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mVideoPlayerView" />
 
     <include
         android:id="@+id/cutControl"
         layout="@layout/layout_cut_view_control"
-        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerControl" />
-
-
-
-
-        <com.twx.module_videoediting.ui.widget.video.cut.CutView
-            android:id="@+id/mCutViewLayout"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cutControl"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/mVideoPlayerView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,4 +48,10 @@ object DataProvider {
             ItemBean(title="比例",icon = R.mipmap.icon_item_bili),
     )
 
+    val itemSelectPopupList= arrayListOf(
+            ItemBean(title = "分享"),
+            ItemBean(title = "重命名"),
+            ItemBean(title = "删除"),
+    )
+
 }

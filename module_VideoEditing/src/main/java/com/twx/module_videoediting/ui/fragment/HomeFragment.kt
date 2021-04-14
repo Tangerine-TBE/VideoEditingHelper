@@ -19,9 +19,10 @@ import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.activity.MusicActivity
 import com.twx.module_videoediting.ui.activity.ReverseActivity
-import com.twx.module_videoediting.ui.activity.VideoCutActivity
+import com.twx.module_videoediting.ui.activity.CutActivity
 import com.twx.module_videoediting.ui.adapter.recycleview.HomeBottomAdapter
 import com.twx.module_base.widget.popup.LoadingPopup
+import com.twx.module_videoediting.ui.activity.DivisionActivity
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.cancelMake
 import com.twx.module_videoediting.viewmodel.MainViewModel
@@ -103,7 +104,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 }
 
                 divisionAction.setOnClickListener {
-                   // toOtherActivity<VideoCutActivity>(activity) {}
+                    openMediaSelect(ACTION_DIVISION)
                 }
 
                 jointAction.setOnClickListener {
@@ -114,9 +115,9 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
         mHomeBottomAdapter.setOnItemClickListener { adapter, view, position ->
             when(position){
+                0->openMediaSelect(ACTION_MUSIC)
                 1-> openMediaSelect(ACTION_REVERSE)
                 2->{}
-                0->openMediaSelect(ACTION_MUSIC)
                 3->{}
             }
 
@@ -150,7 +151,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
             if (it.size>0){
                 val path = it[0].path
                 when(requestCode){
-                   ACTION_CUT, ACTION_REVERSE-> {
+                   ACTION_CUT, ACTION_REVERSE, ACTION_DIVISION-> {
                         preVideo(path)
                     }
                     ACTION_MUSIC->{
@@ -198,8 +199,9 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
     private fun toEditPage(){
         when(openAction){
-            ACTION_CUT-> toOtherActivity<VideoCutActivity>(activity){}
+            ACTION_CUT-> toOtherActivity<CutActivity>(activity){}
             ACTION_REVERSE->toOtherActivity<ReverseActivity>(activity){}
+            ACTION_DIVISION-> toOtherActivity<DivisionActivity>(activity){}
         }
     }
 

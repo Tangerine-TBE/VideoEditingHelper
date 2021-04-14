@@ -22,4 +22,7 @@ object Constants {
     const val KEY_VIDEO_PATH="KEY_VIDEO_PATH"
     const val KEY_VIDEO_URI="KEY_VIDEO_URI"
 
+
+    const val KEY_AUDIO_INFO="KEY_AUDIO_INFO"
+
 }

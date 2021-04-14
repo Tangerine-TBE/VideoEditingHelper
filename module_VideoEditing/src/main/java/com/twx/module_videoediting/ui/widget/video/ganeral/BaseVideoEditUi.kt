@@ -47,6 +47,11 @@ open  class BaseVideoEditUi @JvmOverloads constructor(
     }
 
 
+   open fun setVideoPath(videoPath: String?) {
+
+    }
+
+
      fun setOnCutListener(listener: IVideoCut.OnCutListener?) {
         if (listener == null) {
             ProcessKit.getInstance().setOnUpdateUIListener(null)

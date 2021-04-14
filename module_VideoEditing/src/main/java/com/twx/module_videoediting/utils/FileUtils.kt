@@ -3,12 +3,14 @@ package com.twx.module_videoediting.utils
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.core.content.contentValuesOf
 import com.tamsiree.rxkit.RxTimeTool
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
 import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.formatTime
 import com.twx.module_videoediting.domain.MediaInformation
+import com.umeng.commonsdk.debug.D
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,7 +44,7 @@ object FileUtils {
                 val bitmap = MediaStore.Video.Thumbnails.getThumbnail(contentResolver, id, MediaStore.Video.Thumbnails.MICRO_KIND, null)//缩略图
                    LogUtils.i("---getAllVideo--${bitmap}--${id}---${name}---${size}---${duration}-----${path}---${uri}---")
                 videoList.add(MediaInformation(id,name,
-                        "${formatDuration(duration )}",
+                        duration,
                         "${RxTimeTool.date2String(Date(File(path).lastModified()), SimpleDateFormat("yyyy-MM-dd"))}",
                         path,
                         uri.toString(),
@@ -52,6 +54,42 @@ object FileUtils {
         }
         return videoList
     }
+
+
+    /**
+     * 获取音频文件
+     * @return MutableList<MediaInformation>
+     */
+    fun getAllAudio(): MutableList<MediaInformation> {
+        val videoList = ArrayList<MediaInformation>()
+        contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, "${MediaStore.MediaColumns.DATE_ADDED} desc")?.apply {
+            while (moveToNext()) {
+                val id = getLong(getColumnIndexOrThrow(MediaStore.MediaColumns._ID))
+                val uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
+                val duration = getLong(getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)) // 时长
+                val name = getString(getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME))//名字
+                val path = getString(getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)) // 路径
+                //   LogUtils.i("---getAllAudio---${id}---${name}-----${duration}---${date}-----${path}---${uri}---")
+                videoList.add(MediaInformation(id, name, duration,
+                    "${RxTimeTool.date2String(Date(File(path).lastModified()), SimpleDateFormat("yyyy-MM-dd"))}", uri.toString(), path,null))
+            }
+            close()
+        }
+        return videoList
+    }
+
+
+    /**
+     * 重命名文件
+     * @param uri Uri
+     * @param name String
+     * @param type MediaState
+     * @return Int
+     */
+    fun reNameToMedia(uri:Uri,name:String,path:String):Int{
+        return contentResolver.update(uri,contentValuesOf(MediaStore.Video.Media.DISPLAY_NAME to name,MediaStore.Video.Media.DATA to path), null, null)
+    }
+
 
     /**
      * 删除文件

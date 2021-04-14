@@ -24,6 +24,7 @@ import com.google.gson.Gson
 import com.permissionx.guolindev.PermissionX
 import com.tamsiree.rxkit.RxNetTool
 import com.tamsiree.rxkit.view.RxToast
+import com.twx.module_base.base.BasePopup
 import java.util.*
 
 
@@ -94,6 +95,9 @@ fun shareContent(context: Context, result: String) {
             )
     )
 }
+
+
+
 
 //设置页面和状态栏的距离
 fun setToolBar(activity: Activity, title: String, view: MyToolbar, color: Int = Color.WHITE) {

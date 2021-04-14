@@ -46,6 +46,7 @@ class VideoEditPlayerControl @JvmOverloads constructor(
 
     }
 
+    private var isUser=false
 
     private fun initEvent() {
         binding.apply {
@@ -66,9 +67,11 @@ class VideoEditPlayerControl @JvmOverloads constructor(
                         }
                     }
                     override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                        isUser=true
                     }
 
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        isUser=false
                         PlayerManager.playVideo(false)
                     }
                 })
@@ -98,9 +101,12 @@ class VideoEditPlayerControl @JvmOverloads constructor(
     override fun onPreviewProgress(time: Int) {
         LogUtils.i("------onPreviewProgress-------------$time-------------------")
         binding.playerControl.apply {
-            progressBar.progress = time
+            if (!isUser) {
+                progressBar.progress = time
+            }
             beginTime.text = formatDuration(time.toLong())
             endTime.text = formatDuration(maxDuration)
+            
         }
     }
 

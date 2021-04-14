@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.twx.module_base.base.BasePopup
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.PopupRemindWindowBinding
-import com.twx.module_videoediting.domain.ItemBean
 import com.twx.module_videoediting.domain.MediaInformation
-import com.twx.module_videoediting.ui.adapter.recycleview.PopupSelectItemAdapter
+import com.twx.module_videoediting.ui.adapter.recycleview.PopupDeleteItemAdapter
 
 /**
  * @name VidelPlayer
@@ -21,7 +20,7 @@ import com.twx.module_videoediting.ui.adapter.recycleview.PopupSelectItemAdapter
  * @class describe
  */
 class RemindDeletePopup(activity: FragmentActivity?): BasePopup<PopupRemindWindowBinding>(activity, R.layout.popup_remind_window, ViewGroup.LayoutParams.MATCH_PARENT) {
-    private  val mSelectItemAdapter= PopupSelectItemAdapter()
+    private  val mSelectItemAdapter= PopupDeleteItemAdapter()
     override fun initEvent() {
         mView.apply {
 
