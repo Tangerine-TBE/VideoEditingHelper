@@ -9,7 +9,7 @@ import com.alibaba.sdk.android.feedback.impl.FeedbackAPI
 import com.twx.module_base.provider.ModuleProvider
 import com.twx.module_base.utils.PackageUtil
 import com.twx.module_base.utils.SPUtil
-import com.tamsiree.rxkit.RxTool
+
 import com.umeng.commonsdk.UMConfigure
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,7 +41,7 @@ open class BaseApplication : Application() {
         mPackName = packageName
         SPUtil.init(this@BaseApplication)
         GlobalScope.launch {
-            RxTool.init(this@BaseApplication)
+          //  RxTool.init(this@BaseApplication)
          //   LitePal.initialize(this@BaseApplication)
            // LitePal.getDatabase()
             ARouter.openDebug()

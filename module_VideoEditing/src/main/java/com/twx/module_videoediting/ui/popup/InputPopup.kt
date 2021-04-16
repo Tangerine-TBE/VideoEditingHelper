@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
 
-import com.tamsiree.rxkit.RxKeyboardTool
 import com.twx.module_base.base.BasePopup
+import com.twx.module_base.utils.tools.RxKeyboardTool
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.PopupInputWindowBinding
 

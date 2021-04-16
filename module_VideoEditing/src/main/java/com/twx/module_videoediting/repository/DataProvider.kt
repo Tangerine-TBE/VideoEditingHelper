@@ -33,7 +33,6 @@ object DataProvider {
             ItemBean(title="意见反馈"),
             ItemBean(title="用户协议"),
             ItemBean(title="隐私政策"),
-            ItemBean(title="清除默认方式"),
     )
 
 

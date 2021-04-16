@@ -33,6 +33,8 @@ class VideoCutPlayerControl @JvmOverloads constructor(
         true
     )
     private var mDuration = ""
+
+    private var textTime=0L
     /**
      * 初始化预览播放器
      */
@@ -42,6 +44,7 @@ class VideoCutPlayerControl @JvmOverloads constructor(
         param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE
         mVideoEditorHelper.editer?.initWithPreview(param)
         mDuration=  formatDuration(mVideoEditorHelper.txVideoInfo.duration)
+        textTime=mVideoEditorHelper.txVideoInfo.duration
         //添加播放状态监听
         PlayerManager.addOnPlayStateListener(this)
         PlayerManager.addOnPreviewListener(this)
@@ -59,7 +62,7 @@ class VideoCutPlayerControl @JvmOverloads constructor(
 
     private var mCurrentTime = 0L
     override fun onPreviewProgress(time: Int) {
-        LogUtils.i("----time--------onPreviewProgress-------$time------------")
+        LogUtils.i("------onPreviewProgress:$time---------总时长:$textTime----------")
         mCurrentTime = time.toLong()
         binding.playerControl.videoTime.text = "${formatDuration(time.toLong())}/$mDuration"
         previewAction(time)

@@ -6,13 +6,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.twx.module_base.utils.SizeUtils
 import com.twx.module_base.utils.formatTime
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemVideoFileContainerBinding
 import com.twx.module_videoediting.domain.MediaInformation
-import java.util.HashSet
+import com.twx.module_videoediting.utils.formatDuration
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.MutableList
+import kotlin.collections.toSet
+
 
 /**
  * @name VideoEditingHelper
@@ -59,13 +66,13 @@ class VideoFileAdapter : RecyclerView.Adapter<VideoFileAdapter.MyHolder>() {
             itemBinding?.apply {
                 media?.let {
                     Glide.with(videoThumbnail.context)
-                            .load(it.bitmap)
-                            .apply(RequestOptions.bitmapTransform(RoundedCorners(5)))
+                            .load(it.uri)
+                            .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(SizeUtils.dip2px(videoThumbnail.context,5f))))
                             .error(R.mipmap.icon_login_logo).into(videoThumbnail)
                     videoName.text = "${it.name}"
                     videoName.isSelected=true
                     videoDate.text = "${it.date}"
-                    videoDuration.text = "时长：${"${formatTime(it.duration / 1000)}"}"
+                    videoDuration.text = "时长：${"${formatDuration(it.duration)}"}"
                 }
 
 
@@ -93,7 +100,7 @@ class VideoFileAdapter : RecyclerView.Adapter<VideoFileAdapter.MyHolder>() {
                         }
                     }
                     mSelectAllState=mSelectItemList.size==mList.size
-                    mListener?.onItemClick(media, position,itemView)
+                    mListener?.onItemClick(media, position, itemView)
                 }
 
                 videoMore.setOnClickListener {
@@ -134,7 +141,7 @@ class VideoFileAdapter : RecyclerView.Adapter<VideoFileAdapter.MyHolder>() {
     }
 
     interface OnItemClickListener {
-        fun onItemClick(item: MediaInformation, position: Int,view: View)
+        fun onItemClick(item: MediaInformation, position: Int, view: View)
 
         fun onItemSubClick(item: MediaInformation, position: Int)
     }

@@ -171,7 +171,6 @@ public class TCVideoPreviewActivity extends Activity implements View.OnClickList
         mTXVodPlayer.enableHardwareDecode(false);
         mTXVodPlayer.setRenderRotation(TXLiveConstants.RENDER_ROTATION_PORTRAIT);
         mTXVodPlayer.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION);
-
         mTXVodPlayer.setConfig(mTXPlayConfig);
 
         int result = mTXVodPlayer.startPlay(mVideoPath); // result返回值：0 success;  -1 empty url; -2 invalid url; -3 invalid playType;

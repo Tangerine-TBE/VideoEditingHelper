@@ -21,8 +21,8 @@ android {
 
     buildFeatures{
         dataBinding=true
-    }
 
+    }
 
     buildTypes {
         release {
@@ -51,11 +51,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation project(path: ':module_base')
-    implementation project(path: ':videorecorder')
     implementation project(path: ':videojoiner')
     implementation project(path: ':videoediter')
     implementation project(path: ':ugckit')
     //implementation project(path: ':picture_library')
    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
 
+    implementation 'com.google.android.exoplayer:exoplayer:2.13.3'
 }

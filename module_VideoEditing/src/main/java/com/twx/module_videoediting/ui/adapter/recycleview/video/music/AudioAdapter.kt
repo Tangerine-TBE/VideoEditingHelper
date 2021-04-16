@@ -1,4 +1,4 @@
-package com.twx.module_videoediting.ui.adapter.recycleview
+package com.twx.module_videoediting.ui.adapter.recycleview.video.music
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
@@ -7,8 +7,6 @@ import com.twx.module_base.utils.SPUtil
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemAudioContainerBinding
-import com.twx.module_videoediting.databinding.ItemSelectPopupContainerBinding
-import com.twx.module_videoediting.domain.ItemBean
 import com.twx.module_videoediting.domain.MediaInformation
 
 /**

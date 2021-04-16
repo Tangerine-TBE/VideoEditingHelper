@@ -224,7 +224,7 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
                         if (!TextUtils.isEmpty(name)) {
                             viewModel.reNameToMediaFile(name, it, updatePosition)
                         } else {
-                            RxToast.normal("文件名不能为空！")
+                            RxToast.showToast("文件名不能为空！")
                         }
                     }
                 }

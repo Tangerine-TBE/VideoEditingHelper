@@ -1,7 +1,5 @@
 package com.twx.module_videoediting.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.twx.module_base.base.BaseVmViewActivity
@@ -9,7 +7,7 @@ import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivitySelectMediaBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
-import com.twx.module_videoediting.ui.adapter.recycleview.AudioAdapter
+import com.twx.module_videoediting.ui.adapter.recycleview.video.music.AudioAdapter
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.twx.module_videoediting.viewmodel.SelectMediaViewModel
 

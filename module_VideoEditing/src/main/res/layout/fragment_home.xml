@@ -12,6 +12,13 @@
         android:layout_height="match_parent">
 
 
+        <ImageView
+            android:id="@+id/test"
+            android:layout_width="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="50dp"/>
+
         <TextView
             android:id="@+id/homeTitle"
             android:layout_width="wrap_content"

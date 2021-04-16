@@ -3,7 +3,10 @@
     package="com.twx.module_videoediting">
 
     <application>
-        <activity android:name=".ui.activity.DivisionActivity"></activity>
+        <activity android:name=".ui.activity.SpeedActivity"></activity>
+        <activity android:name=".ui.activity.JoinActivity" />
+        <activity android:name=".ui.activity.ReadyJoinActivity" />
+        <activity android:name=".ui.activity.DivisionActivity" />
         <activity android:name=".ui.activity.SelectMediaActivity" />
         <activity android:name=".ui.activity.MusicActivity" />
         <activity android:name=".ui.activity.ReverseActivity" />

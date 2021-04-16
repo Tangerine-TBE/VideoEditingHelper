@@ -2,15 +2,17 @@ package com.twx.module_videoediting.ui.fragment
 
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.sdk.android.feedback.impl.FeedbackAPI
+import com.twx.module_base.activity.AboutActivity
+import com.twx.module_base.activity.DealViewActivity
 import com.twx.module_base.base.BaseVmFragment
+import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.FragmentSetBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.SetAdapter
-import com.twx.module_base.utils.textViewThemeDrawable
 
-import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
 /**
@@ -56,11 +58,18 @@ class SetFragment : BaseVmFragment<FragmentSetBinding, MainViewModel>() {
     override fun initEvent() {
         binding.apply {
             mSetAdapter.setOnItemClickListener { adapter, view, position ->
-                when(position){
-                    0 -> {
-                        ThemeChangeLiveData.setThemeType()
-
+                when (position) {
+                    0 -> ThemeChangeLiveData.setThemeType()
+                    1-> toAppShop(activity)
+                    2-> toOtherActivity<AboutActivity>(activity){}
+                    3->FeedbackAPI.openFeedbackActivity()
+                    4->toOtherActivity<DealViewActivity>(activity){
+                        putExtra(Constants.SET_DEAL1,1)
                     }
+                    5->toOtherActivity<DealViewActivity>(activity){
+                        putExtra(Constants.SET_DEAL1,2)
+                    }
+
 
                 }
             }

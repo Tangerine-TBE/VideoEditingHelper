@@ -4,13 +4,13 @@ import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.content.contentValuesOf
-import com.tamsiree.rxkit.RxTimeTool
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
 import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.utils.LogUtils
-import com.twx.module_base.utils.formatTime
+import com.twx.module_base.utils.tools.RxTimeTool
+
 import com.twx.module_videoediting.domain.MediaInformation
-import com.umeng.commonsdk.debug.D
+
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*

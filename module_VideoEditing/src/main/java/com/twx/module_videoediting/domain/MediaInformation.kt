@@ -1,6 +1,7 @@
 package com.twx.module_videoediting.domain
 
 import android.graphics.Bitmap
+import android.os.Parcelable
 
 /**
  * @name VideoEditingHelper
@@ -10,4 +11,15 @@ import android.graphics.Bitmap
  * @time 2021/4/13 14:25:13
  * @class describe
  */
-data class MediaInformation(val id:Long=0L,var name:String="", var duration:Long=0L, var date:String?="", var path:String="", var uri :String="", val bitmap: Bitmap?=null)
+
+
+data class MediaInformation(
+    val id: Long = 0L,
+    var name: String = "",
+    var duration: Long = 0L,
+    var date: String? = "",
+    var path: String = "",
+    var uri: String = "",
+    val bitmap: Bitmap? = null
+)
+

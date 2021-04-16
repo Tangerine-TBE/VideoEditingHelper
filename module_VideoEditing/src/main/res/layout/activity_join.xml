@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/joinContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.JoinActivity">
+
+        <com.twx.module_videoediting.ui.widget.TitleBar
+            android:id="@+id/joinTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            app:barTitle="视频预览"
+            app:barHaveTvAction="true"
+            app:barTvActionTitle="导出"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.twx.module_videoediting.ui.widget.video.join.VideoJoinContainer
+            android:id="@+id/mVideoJoinContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/joinTitleBar"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

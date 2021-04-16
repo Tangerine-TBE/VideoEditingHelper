@@ -22,7 +22,6 @@ import com.twx.module_base.widget.LoadingDialog
 import com.twx.module_base.widget.MyToolbar
 import com.google.gson.Gson
 import com.permissionx.guolindev.PermissionX
-import com.tamsiree.rxkit.RxNetTool
 import com.tamsiree.rxkit.view.RxToast
 import com.twx.module_base.base.BasePopup
 import java.util.*
@@ -75,7 +74,7 @@ fun copyContent(context: Context?, result: String) {
     val cm = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val mClipData = ClipData.newPlainText("text", result)
     cm.setPrimaryClip(mClipData)
-    RxToast.normal("已复制到剪切板")
+    RxToast.showToast("已复制到剪切板")
 }
 
 //分享
@@ -157,13 +156,9 @@ fun startCountDown(totalTime: Long, followTime: Long, finish: () -> Unit, tickin
     }
 
 
-//网络是否连接
-fun isConnectedWifi(context: Context) = RxNetTool.isConnected(context)
-
-
 //弹出toast
 fun showToast(str: String) {
-    RxToast.normal(str)
+    RxToast.showToast(str)
 }
 
 
@@ -299,8 +294,6 @@ fun formatTime(timeTemp: Long): String {
         "00:00:" + if (second > 10) second.toString() + "" else "0$second"
     }
 }
-
-
 
 
 

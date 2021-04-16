@@ -22,8 +22,11 @@ class MyToolbar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private val binding= DataBindingUtil.inflate<LayoutToolbarNewBinding>(LayoutInflater.from(context),R.layout.layout_toolbar_new,this,true)
+
+
+
+
     init {
-        LayoutInflater.from(context).inflate(R.layout.layout_toolbar_new, this, true)
         context.obtainStyledAttributes(attrs, R.styleable.MyToolbar).apply {
             mTitle = getString(R.styleable.MyToolbar_toolbarTitle) ?: "顶部栏"
             mRightTitle = getString(R.styleable.MyToolbar_rightTitle)
@@ -43,7 +46,6 @@ class MyToolbar @JvmOverloads constructor(
         initEvent()
     }
 
-
     private var mTitle: String = ""
     private var mRightTitle: String? = null
     private var mTitleColor: Int = Color.BLACK
@@ -56,6 +58,7 @@ class MyToolbar @JvmOverloads constructor(
     private var isHaveRightTwo: Boolean? = null
     private var isHaveRight: Boolean? = null
     private var mRightTitleColor: Int? = null
+
 
 
     private fun initView() {
@@ -126,7 +129,7 @@ class MyToolbar @JvmOverloads constructor(
 
     private fun initEvent() {
         binding.apply {
-            ivBarRight.setOnClickListener {
+            ivBarBack.setOnClickListener {
                 mOnBackClickListener?.onBack()
             }
 
@@ -163,36 +166,6 @@ class MyToolbar @JvmOverloads constructor(
 
         fun onRightTwoTo()
     }
-
-
-    inline fun addBarListener(
-        crossinline comeBack: () -> Unit = {},
-        crossinline rightTo: () -> Unit = {},
-        crossinline rightTwoTo: () -> Unit = {}
-    ): OnBackClickListener {
-        val listener = object : OnBackClickListener {
-            override fun onBack() {
-                comeBack()
-            }
-
-            override fun onRightTo() {
-                rightTo()
-            }
-
-            override fun onRightTwoTo() {
-                rightTwoTo()
-            }
-
-        }
-        setOnBackClickListener(listener)
-        return listener
-    }
-
-    inline fun doComeBack(crossinline action: () -> Unit) = addBarListener(comeBack = action)
-
-    inline fun doOnRightTo(crossinline action: () -> Unit) = addBarListener(rightTo = action)
-
-    inline fun doRightTwoTo(crossinline action: () -> Unit) = addBarListener(rightTwoTo = action)
 
 
 }

@@ -38,6 +38,9 @@ android {
     }
 
 
+
+
+
     signingConfigs {
         release {
             storeFile file("cn.yuntk.reader.jks")

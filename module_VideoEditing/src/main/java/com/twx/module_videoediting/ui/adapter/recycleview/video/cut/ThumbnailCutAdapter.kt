@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.tamsiree.rxkit.RxDeviceTool
+
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.utils.LogUtils
+import com.twx.module_base.utils.SizeUtils
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemVideoCutContainerBinding
 import com.twx.module_videoediting.domain.ThumbnailInfo
@@ -44,7 +45,7 @@ class ThumbnailCutAdapter : RecyclerView.Adapter<ThumbnailCutAdapter.MyHolder>()
         when (viewType) {
             TYPE_HEADER, TYPE_FOOTER -> {
                 val itemView = View(parent.context)
-                itemView.layoutParams = ViewGroup.LayoutParams(RxDeviceTool.getScreenWidth(parent.context) / 2, ViewGroup.LayoutParams.MATCH_PARENT)
+                itemView.layoutParams = ViewGroup.LayoutParams(SizeUtils.getScreenWidth(parent.context) / 2, ViewGroup.LayoutParams.MATCH_PARENT)
                 itemView.setBackgroundColor(Color.TRANSPARENT)
                 return MyHolder(itemView)
             }

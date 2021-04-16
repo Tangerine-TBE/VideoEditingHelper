@@ -1,6 +1,4 @@
-include ':ucrop'
-include ':picture_library'
-include ':videorecorder'
+
 include ':videojoiner'
 include ':videoediter'
 include ':ugckit'

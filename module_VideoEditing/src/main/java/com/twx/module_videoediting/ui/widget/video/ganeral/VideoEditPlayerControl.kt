@@ -99,7 +99,7 @@ class VideoEditPlayerControl @JvmOverloads constructor(
     }
 
     override fun onPreviewProgress(time: Int) {
-        LogUtils.i("------onPreviewProgress-------------$time-------------------")
+        LogUtils.i("------onPreviewProgress:$time---------totalTime:$maxDuration----------")
         binding.playerControl.apply {
             if (!isUser) {
                 progressBar.progress = time
