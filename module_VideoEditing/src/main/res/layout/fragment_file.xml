@@ -71,6 +71,7 @@
             android:gravity="center"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
+            android:textStyle="bold"
             android:layout_marginBottom="12dp"
             android:visibility="@{data.selectItems.size()>0?View.VISIBLE:View.GONE}"
             android:text="@{`删除`+data.selectItems.size()+`个视频`}"

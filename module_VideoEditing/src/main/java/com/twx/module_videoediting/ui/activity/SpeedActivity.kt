@@ -13,6 +13,7 @@ import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivitySpeedBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
+import com.twx.module_videoediting.ui.widget.video.speed.SpeedView
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.twx.module_videoediting.viewmodel.SpeedViewModel
@@ -64,17 +65,21 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
         }
     }
 
-    private var mSpeed=1f
     override fun initEvent() {
         binding.apply {
             speedTitleBar.setBarEventAction(this@SpeedActivity) {}
 
-          /*   {
-                mSpeed++
-                player.setPlaybackParameters(PlaybackParameters(mSpeed))
+            speedView.setOnSpeedListener(object :SpeedView.OnSpeedListener{
+                override fun selectSpeed(speed: Float) {
+                    player.setPlaybackParameters(PlaybackParameters(speed))
+                    speedHint.text="${String.format("%.2f",speed)}X"
+                    LogUtils.i("---setPlaybackParameters---------${player.playbackParameters}---------------")
+                }
+            })
 
-                LogUtils.i("---setPlaybackParameters---------${player.playbackParameters}---------------")
-            }*/
+            completeSpeed.setOnClickListener {
+
+            }
 
         }
     }

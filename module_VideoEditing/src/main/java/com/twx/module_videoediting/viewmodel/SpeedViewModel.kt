@@ -11,4 +11,5 @@ import com.twx.module_base.base.BaseViewModel
  * @class describe
  */
 class SpeedViewModel:BaseViewModel() {
+
 }
