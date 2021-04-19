@@ -102,6 +102,7 @@ class LoadingView @JvmOverloads constructor(
             addUpdateListener {
                 mCurrentAngle = it.animatedValue as Float
                 duration = 500
+                invalidate()
             }
         }
         mValueAnimator?.start()
@@ -110,8 +111,12 @@ class LoadingView @JvmOverloads constructor(
 
     private var mProgress = 0
     fun setProgress(progress: Int) {
-        mProgress = progress
-        invalidate()
+        mProgress = if (progress >= 100) {
+            99
+        } else {
+            progress
+        }
+
     }
 
 

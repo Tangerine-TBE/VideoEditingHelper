@@ -12,8 +12,8 @@ import com.twx.module_base.base.BaseLiveData
  */
 object MakeBackLiveData:BaseLiveData<Boolean>() {
 
-    fun setMakeState(state:Boolean){
-        value=state
+    fun setMakeFinishState(state:Boolean){
+        postValue(state)
     }
 
     fun getMakeState()=value?:true

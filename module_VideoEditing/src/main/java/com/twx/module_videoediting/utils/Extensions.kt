@@ -5,6 +5,7 @@ import com.tencent.qcloud.ugckit.basic.UGCKitResult
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
+import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.widget.popup.LoadingPopup
@@ -12,6 +13,8 @@ import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_videoediting.ui.activity.ExportActivity
 import com.twx.module_videoediting.ui.widget.TitleBar
 import com.twx.module_videoediting.ui.widget.video.cut.IVideoCut
+import io.microshow.rxffmpeg.RxFFmpegInvoke
+
 
 
 fun TitleBar.setBarEventAction(activity: Activity?, block: () -> Unit){
@@ -82,16 +85,16 @@ fun outPutVideo(loadingPopup:LoadingPopup,activity: Activity?)=
                     putExtra(Constants.KEY_VIDEO_PATH,ugcKitResult.outputPath)
                 }
                 loadingPopup.dismiss()
-                MakeBackLiveData.setMakeState(true)
+                MakeBackLiveData.setMakeFinishState(true)
             }
         }
         override fun onCutterCanceled() {
-            MakeBackLiveData.setMakeState(true)
+            MakeBackLiveData.setMakeFinishState(true)
         }
         override fun onCutterProgress(progress: Float) {
             LogUtils.i("-----onCutterProgress---${Thread.currentThread().name}----------${(progress * 100).toInt()}-------------")
             loadingPopup.setProgress((progress*100).toInt())
-            MakeBackLiveData.setMakeState(false)
+            MakeBackLiveData.setMakeFinishState(false)
         }
 }
 
@@ -102,6 +105,34 @@ fun cancelMake(isProcess:Boolean) {
     } else {
         VideoGenerateKit.getInstance().stopGenerate()
     }
-    MakeBackLiveData.setMakeState(true)
+    MakeBackLiveData.setMakeFinishState(true)
 }
+
+
+fun ffCallback(onProgress:(Int)->Unit={},onComplete:()->Unit={})=
+    object : RxFFmpegInvoke.IFFmpegListener{
+        override fun onFinish() {
+              onComplete()
+              MakeBackLiveData.setMakeFinishState(true)
+        }
+
+        override fun onProgress(progress: Int, progressTime: Long) {
+            BaseApplication.mHandler.post {
+                LogUtils.i("---onProgress--------------     $progress  ")
+                if (progress>=0){
+                    onProgress(progress)
+                }
+                MakeBackLiveData.setMakeFinishState(false)
+            }
+        }
+
+        override fun onCancel() {
+            MakeBackLiveData.setMakeFinishState(true)
+        }
+
+        override fun onError(message: String?) {
+            MakeBackLiveData.setMakeFinishState(true)
+        }
+
+    }
 

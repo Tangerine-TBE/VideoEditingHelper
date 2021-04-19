@@ -1,8 +1,5 @@
 package com.twx.module_videoediting.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.LayoutType
 import com.twx.module_base.utils.setStatusBarDistance
@@ -28,8 +25,8 @@ class DivisionActivity : BaseVmViewActivity<ActivityDivisionBinding,VideoCutView
                 divisionTitleBar,
                 LayoutType.CONSTRAINTLAYOUT
             )
-            val videoPath = intent.getStringExtra(Constants.KEY_VIDEO_PATH)
-            mTWVideoCutContainer.setVideoPath(videoPath)
+
+            mTWVideoCutContainer.initPlayerLayout()
             lifecycle.addObserver(mTWVideoCutContainer.getPlayerView())
         }
     }

@@ -26,8 +26,7 @@ class CutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutViewMode
         binding.apply {
             data=viewModel
             setStatusBarDistance(this@CutActivity, cutTitleBar, LayoutType.CONSTRAINTLAYOUT)
-            val videoPath = intent.getStringExtra(Constants.KEY_VIDEO_PATH)
-            mTWVideoCutContainer.setVideoPath(videoPath)
+            mTWVideoCutContainer.initPlayerLayout()
             lifecycle.addObserver(mTWVideoCutContainer.getPlayerView())
         }
     }

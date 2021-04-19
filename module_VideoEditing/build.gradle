@@ -19,8 +19,8 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
-    buildFeatures{
-        dataBinding=true
+    buildFeatures {
+        dataBinding = true
 
     }
 
@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+
     api fileTree(dir: "libs", include: ["*.jar"])
     api fileTree(dir: "libs", include: ["*.aar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -55,7 +56,13 @@ dependencies {
     implementation project(path: ':videoediter')
     implementation project(path: ':ugckit')
     //implementation project(path: ':picture_library')
-   implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
 
     implementation 'com.google.android.exoplayer:exoplayer:2.13.3'
+
+    //implementation 'com.coder.command:ffmpeg-mini:1.2.0-beta3'
+
+    //极速版 (预计占用 4M 左右空间)，主要移除了一些不常用的编解码器
+    implementation 'com.github.microshow:RxFFmpeg:4.9.0-lite'
+
 }

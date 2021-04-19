@@ -38,7 +38,7 @@ class VideoCutPlayerControl @JvmOverloads constructor(
     /**
      * 初始化预览播放器
      */
-    fun initPlayerLayout() {
+   override fun initPlayerLayout() {
         val param = TXPreviewParam()
         param.videoView = binding.mVideoPlayerView
         param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE

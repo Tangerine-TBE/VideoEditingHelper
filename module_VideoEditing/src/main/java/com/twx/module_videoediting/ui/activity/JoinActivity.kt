@@ -1,6 +1,5 @@
 package com.twx.module_videoediting.ui.activity
 
-import com.tencent.qcloud.ugckit.UGCKitConstants
 import com.tencent.qcloud.ugckit.utils.AlbumSaver
 import com.tencent.qcloud.ugckit.utils.CoverUtil
 import com.tencent.ugc.TXVideoEditConstants
@@ -14,6 +13,7 @@ import com.twx.module_videoediting.domain.ValueJoinList
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.ui.widget.video.join.IVideoJoin
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.twx.module_videoediting.viewmodel.JoinViewModel
 
@@ -70,7 +70,7 @@ class JoinActivity : BaseVmViewActivity<ActivityJoinBinding, JoinViewModel>() {
                 override fun onJoinProgress(progress: Float) {
                     LogUtils.i("**----onJoinProgress------------$progress---------------")
                     loadingPopup.setProgress((progress * 100).toInt())
-                    MakeBackLiveData.setMakeState(false)
+                    MakeBackLiveData.setMakeFinishState(false)
                 }
 
                 override fun onJoinComplete(
@@ -79,34 +79,24 @@ class JoinActivity : BaseVmViewActivity<ActivityJoinBinding, JoinViewModel>() {
                 ) {
                     loadingPopup.dismiss()
                     if (result.retCode == TXVideoEditConstants.JOIN_RESULT_OK) {
-                        // 获取哪个视频的封面
-                        CoverUtil.getInstance().setInputPath(videoOutputPath)
-                        // 创建新的封面
-                        CoverUtil.getInstance().createThumbFile { coverPath ->
-                            downloadRecord(videoOutputPath,coverPath)
-                        }
+                        FileUtils.saveAlbum(this@JoinActivity,videoOutputPath)
+                        ExportActivity.toExportPage(this@JoinActivity,true,videoOutputPath)
                     } else {
                         showToast("视频合失败！")
                     }
-                    MakeBackLiveData.setMakeState(true)
+                    MakeBackLiveData.setMakeFinishState(true)
                 }
 
             })
 
-
             loadingPopup.cancelMake {
                 mVideoJoinContainer.stopGenerateVideo()
-                MakeBackLiveData.setMakeState(true)
+                MakeBackLiveData.setMakeFinishState(true)
             }
 
         }
 
     }
 
-    private fun downloadRecord(videoOutputPath:String,coverImagePath:String) {
-        val txVideoInfo = TXVideoInfoReader.getInstance(this).getVideoFileInfo(videoOutputPath)
-        AlbumSaver.getInstance(this).setOutputProfile(videoOutputPath, txVideoInfo?.duration?:0L, coverImagePath)
-        AlbumSaver.getInstance(this).saveVideoToDCIM()
-    }
 
 }

@@ -23,7 +23,7 @@ import java.io.IOException
  * @time 2021/4/9 16:19:53
  * @class describe
  */
-class TWVideoEditMusicContainer @JvmOverloads constructor(
+class VideoEditMusicContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BaseVideoEditUi(context, attrs, defStyleAttr) {
     private var onClickMusic:()->Unit={}

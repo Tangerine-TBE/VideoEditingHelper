@@ -32,7 +32,7 @@ class VideoEditPlayerControl @JvmOverloads constructor(
     /**
      * 初始化预览播放器
      */
-    fun initPlayerLayout() {
+   override fun initPlayerLayout() {
         val param = TXVideoEditConstants.TXPreviewParam()
         param.videoView = binding.mPlayerView
         param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE

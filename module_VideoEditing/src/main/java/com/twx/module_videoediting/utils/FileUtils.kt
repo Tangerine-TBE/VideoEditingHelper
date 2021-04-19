@@ -1,10 +1,14 @@
 package com.twx.module_videoediting.utils
 
 import android.content.ContentUris
+import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.content.contentValuesOf
+import com.tencent.qcloud.ugckit.utils.AlbumSaver
+import com.tencent.qcloud.ugckit.utils.CoverUtil
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
+import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.tools.RxTimeTool
@@ -109,4 +113,21 @@ object FileUtils {
     } else {
         false
     }
+
+    /**
+     * 保持到相册
+     * @param videoOutputPath String
+     * @param coverImagePath String
+     */
+     fun saveAlbum(context: Context,videoOutputPath:String) {
+        // 获取哪个视频的封面
+        CoverUtil.getInstance().setInputPath(videoOutputPath)
+        // 创建新的封面
+        CoverUtil.getInstance().createThumbFile { coverPath ->
+            val txVideoInfo = TXVideoInfoReader.getInstance(context).getVideoFileInfo(videoOutputPath)
+            AlbumSaver.getInstance(context).setOutputProfile(videoOutputPath, txVideoInfo?.duration?:0L, coverPath)
+            AlbumSaver.getInstance(context).saveVideoToDCIM()
+        }
+    }
+
 }

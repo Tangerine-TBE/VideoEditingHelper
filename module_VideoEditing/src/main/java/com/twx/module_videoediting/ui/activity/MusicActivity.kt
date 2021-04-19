@@ -65,16 +65,6 @@ class MusicActivity : BaseVmViewActivity<ActivityMusicBinding,MusicViewModel>(){
     }
 
     private fun openMediaSelect() {
-     /*   PictureSelector.create(this)
-            .openGallery(PictureConfig.TYPE_AUDIO)
-            .imageSpanCount(3)// 每行显示个数 int
-            .maxSelectNum(1)
-            .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-            .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
-            .isCamera(false)// 是否显示拍照按钮 true or false
-            .isZoomAnim(true)
-            .forResult(Constants.REQUEST_VIDEO_CODE);//结果回调onActivityResult code*/
-
         toOtherResultActivity<SelectMediaActivity>(this,SelectMediaActivity.REQUEST_CODE){}
 
     }

@@ -17,7 +17,7 @@ import com.twx.module_videoediting.utils.video.PlayerManager
  * @time 2021/4/7 14:23:01
  * @class describe
  */
-class TWVideoEditReverseContainer @JvmOverloads constructor(
+class VideoEditReverseContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BaseVideoEditUi(context, attrs, defStyleAttr){
     private val binding = DataBindingUtil.inflate<LayoutVideoReverseContainerBinding>(

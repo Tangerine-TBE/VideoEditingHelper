@@ -76,7 +76,7 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
     }
 
 
-    override fun setVideoPath(videoPath: String?) {
+    override fun initPlayerLayout() {
         mVideoEditorHelper.let {
             binding.apply {
                 loadVideoInfo()

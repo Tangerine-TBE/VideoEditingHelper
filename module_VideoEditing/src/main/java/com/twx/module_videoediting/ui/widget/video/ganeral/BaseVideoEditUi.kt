@@ -47,7 +47,7 @@ open  class BaseVideoEditUi @JvmOverloads constructor(
     }
 
 
-   open fun setVideoPath(videoPath: String?) {
+   open fun initPlayerLayout() {
 
     }
 

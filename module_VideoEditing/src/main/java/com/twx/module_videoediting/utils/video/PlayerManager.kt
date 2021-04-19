@@ -131,7 +131,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
      * @param timeMs
      */
     fun previewAtTime(timeMs: Long) {
-        mVideoEditerSDK.apply {
+        mVideoEditerSDK?.apply {
             pausePlay()
             isPreviewFinish = false
             editer?.previewAtTime(timeMs)

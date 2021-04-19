@@ -38,8 +38,8 @@ object DataProvider {
 
     val editList= arrayListOf(
             ItemBean(title="剪辑",icon = R.mipmap.icon_item_jianji),
+        ItemBean(title="拼接",icon = R.mipmap.icon_item_pingjie),
             ItemBean(title="分割",icon = R.mipmap.icon_item_fenge),
-            ItemBean(title="拼接",icon = R.mipmap.icon_item_pingjie),
             ItemBean(title="贴纸",icon = R.mipmap.icon_item_tiezhi),
             ItemBean(title="配乐",icon = R.mipmap.icon_item_peiyue),
             ItemBean(title="倒放",icon = R.mipmap.icon_item_daofang),

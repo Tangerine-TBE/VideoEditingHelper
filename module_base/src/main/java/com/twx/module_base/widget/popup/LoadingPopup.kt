@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import com.twx.module_base.R
 import com.twx.module_base.base.BasePopup
 import com.twx.module_base.databinding.PopupLoadingWindowBinding
+import com.twx.module_base.livedata.MakeBackLiveData
 
 
 /**
@@ -34,6 +35,7 @@ class LoadingPopup(activity: FragmentActivity?):BasePopup<PopupLoadingWindowBind
 
     fun cancelMake(block:()->Unit){
         mView.cancelMake.setOnClickListener {
+            mView.loadingView.setProgress(0)
             block()
             dismiss()
         }

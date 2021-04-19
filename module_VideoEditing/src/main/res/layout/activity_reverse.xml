@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.twx.module_videoediting.ui.widget.video.reverse.TWVideoEditReverseContainer
+        <com.twx.module_videoediting.ui.widget.video.reverse.VideoEditReverseContainer
             android:id="@+id/mTWVideoReverseContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -31,15 +31,13 @@ class VideoDivisionContainer @JvmOverloads constructor(
     )
 
 
-    override fun setVideoPath(videoPath: String?) {
+    override fun initPlayerLayout() {
         mVideoEditorHelper.let {
             binding.apply {
              //   loadVideoInfo()
                 // 初始化播放器界面[必须在setPictureList/setVideoPath设置数据源之后]
                 mVideoCutPlayerControl.initPlayerLayout()
                 it.resetDuration()
-
-
 
             }
         }

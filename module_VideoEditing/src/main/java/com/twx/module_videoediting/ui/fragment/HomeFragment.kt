@@ -2,7 +2,6 @@ package com.twx.module_videoediting.ui.fragment
 
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
@@ -83,17 +82,17 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
     }
 
     companion object {
-        const val ACTION_CUT = 1
-        const val ACTION_JOINT = 2
-        const val ACTION_DIVISION = 3
-        const val ACTION_TAGS = 4
-        const val ACTION_MUSIC = 5
-        const val ACTION_REVERSE = 6
-        const val ACTION_SPEED = 7
-        const val ACTION_SIZE = 8
+        const val ACTION_CUT = 0
+        const val ACTION_JOINT = 1
+        const val ACTION_DIVISION = 2
+        const val ACTION_TAGS = 3
+        const val ACTION_MUSIC = 4
+        const val ACTION_REVERSE = 5
+        const val ACTION_SPEED = 6
+        const val ACTION_SIZE = 7
     }
 
-    private var openAction = 0
+    private var openAction = -1
 
     override fun initEvent() {
         binding.apply {
@@ -108,8 +107,13 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 }
 
                 jointAction.setOnClickListener {
-                    openMediaSelect(ACTION_JOINT, 5,2,PictureConfig.MULTIPLE)
+                    openMediaSelect(ACTION_JOINT, 5, 2, PictureConfig.MULTIPLE)
                 }
+
+                tagsAction.setOnClickListener {
+                    openMediaSelect(ACTION_TAGS)
+                }
+
             }
         }
 
@@ -117,7 +121,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
             when (position) {
                 0 -> openMediaSelect(ACTION_MUSIC)
                 1 -> openMediaSelect(ACTION_REVERSE)
-                2 ->openMediaSelect(ACTION_SPEED)
+                2 -> openMediaSelect(ACTION_SPEED)
                 3 -> {
                     toOtherActivity<TCVideoPickerActivity>(activity) {}
                 }
@@ -132,18 +136,24 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
     }
 
-    private fun openMediaSelect(action: Int, maxSelectNum: Int = 1,minSelectNum: Int = 1,selectionMode:Int=PictureConfig.SINGLE) {
+    private fun openMediaSelect(
+        action: Int,
+        maxSelectNum: Int = 1,
+        minSelectNum: Int = 1,
+        selectionMode: Int = PictureConfig.SINGLE
+    ) {
         openAction = action
         PictureSelector.create(this@HomeFragment)
-                .openGallery(PictureConfig.TYPE_VIDEO)
-                .imageSpanCount(3)// 每行显示个数 int
-                .maxSelectNum(maxSelectNum)
-                .minSelectNum(minSelectNum)
-                .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-                .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
-                .isCamera(false)// 是否显示拍照按钮 true or false
-                .isZoomAnim(false)
-                .forResult(action);//结果回调onActivityResult code
+            .openGallery(PictureConfig.TYPE_VIDEO)
+            .imageSpanCount(3)// 每行显示个数 int
+            .maxSelectNum(maxSelectNum)
+            .minSelectNum(minSelectNum)
+            .videoMaxSecond(3600)
+            .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+            .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
+            .isCamera(false)// 是否显示拍照按钮 true or false
+            .isZoomAnim(false)
+            .forResult(action);//结果回调onActivityResult code
     }
 
 
@@ -154,19 +164,32 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
             if (it.size > 0) {
                 val path = it[0].path
                 when (requestCode) {
-                    ACTION_CUT, ACTION_REVERSE, ACTION_DIVISION -> preVideo(path)
-                    ACTION_MUSIC -> toOtherActivity<MusicActivity>(activity) { putExtra(Constants.KEY_VIDEO_PATH, path) }
-                    ACTION_JOINT->{
+                    ACTION_CUT, ACTION_REVERSE, ACTION_DIVISION, ACTION_TAGS-> preVideo(path)
+                    ACTION_MUSIC -> toOtherActivity<MusicActivity>(activity) {
+                        putExtra(
+                            Constants.KEY_VIDEO_PATH,
+                            path
+                        )
+                    }
+                    ACTION_JOINT -> {
                         val mediaInfo = ArrayList<MediaInformation>()
                         it.forEach {
-                            mediaInfo.add(MediaInformation(path = it.path,duration =it.duration))
+                            mediaInfo.add(MediaInformation(path = it.path, duration = it.duration))
                             LogUtils.i("---ACTION_JOINT------${it.path}-----------------")
                         }
                         toOtherActivity<ReadyJoinActivity>(activity) {
-                            putExtra(Constants.KEY_VIDEO_PATH, Gson().toJson(ValueJoinList(mediaInfo)))
+                            putExtra(
+                                Constants.KEY_VIDEO_PATH,
+                                Gson().toJson(ValueJoinList(mediaInfo))
+                            )
                         }
                     }
-                    ACTION_SPEED->toOtherActivity<SpeedActivity>(activity) { putExtra(Constants.KEY_VIDEO_PATH, path) }
+                    ACTION_SPEED -> toOtherActivity<SpeedActivity>(activity) {
+                        putExtra(
+                            Constants.KEY_VIDEO_PATH,
+                            path
+                        )
+                    }
                 }
             }
         }
@@ -190,18 +213,18 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
     override fun onUIProgress(progress: Float) {
         mLoadingPopup.setProgress((progress * 100).toInt())
-        MakeBackLiveData.setMakeState(false)
+        MakeBackLiveData.setMakeFinishState(false)
         LogUtils.i("-----setOnCutListener---${Thread.currentThread().name}----------${(progress * 100).toInt()}-------------")
     }
 
     override fun onUIComplete(retCode: Int, descMsg: String?) {
         mLoadingPopup.dismiss()
         toEditPage()
-        MakeBackLiveData.setMakeState(true)
+        MakeBackLiveData.setMakeFinishState(true)
     }
 
     override fun onUICancel() {
-        MakeBackLiveData.setMakeState(true)
+        MakeBackLiveData.setMakeFinishState(true)
     }
 
 
@@ -210,6 +233,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
             ACTION_CUT -> toOtherActivity<CutActivity>(activity) {}
             ACTION_REVERSE -> toOtherActivity<ReverseActivity>(activity) {}
             ACTION_DIVISION -> toOtherActivity<DivisionActivity>(activity) {}
+            ACTION_TAGS -> toOtherActivity<TagsActivity>(activity) {}
         }
     }
 
