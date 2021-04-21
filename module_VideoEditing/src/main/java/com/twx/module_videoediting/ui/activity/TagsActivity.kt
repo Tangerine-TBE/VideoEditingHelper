@@ -10,6 +10,8 @@ import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityTagsBinding
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
+import com.twx.module_videoediting.utils.cancelMake
+import com.twx.module_videoediting.utils.outPutVideo
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.twx.module_videoediting.viewmodel.TagsViewModel
 
@@ -48,7 +50,16 @@ class TagsActivity : BaseVmViewActivity<ActivityTagsBinding,TagsViewModel>() {
 
     override fun initEvent() {
         binding.apply {
-            tagsTitleBar.setBarEventAction(this@TagsActivity) {}
+            mVideoTagsContainer.setOnCutListener(outPutVideo(loadingPopup,this@TagsActivity))
+            tagsTitleBar.setBarEventAction(this@TagsActivity){
+                mVideoTagsContainer.startExportVideo()
+                loadingPopup.showPopupView(tagsContainer)
+            }
+
+            loadingPopup.cancelMake {
+                cancelMake(false)
+            }
+
         }
     }
 }

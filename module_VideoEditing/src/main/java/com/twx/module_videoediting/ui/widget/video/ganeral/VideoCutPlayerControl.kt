@@ -76,6 +76,7 @@ class VideoCutPlayerControl @JvmOverloads constructor(
     fun getCurrentTime()=mCurrentTime
 
     override fun onPlayState(state: Int) {
+        playState(state)
         binding.playerControl.apply {
             LogUtils.i("------onPlayState-------------$state-------------------")
             when (state) {
@@ -88,6 +89,13 @@ class VideoCutPlayerControl @JvmOverloads constructor(
             }
         }
     }
+
+    private var playState:(Int)->Unit={}
+
+    fun setPlayState(action:(Int)->Unit){
+        playState=action
+    }
+
     override fun onPreviewFinish() {
 
     }

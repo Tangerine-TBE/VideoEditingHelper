@@ -7,7 +7,7 @@
         <item name="backIcon">@drawable/btn_back_no_shaddow</item>
         <item name="nextIcon">@drawable/drawable_ugc_red_next</item>
         <item name="progressColor">@color/colorRed2</item>
-        <item name="sliderColor">@color/colorRed2</item>
+        <item name="sliderColor">@color/theme</item>
         <item name="ugckitColorPrimary">@color/colorRed2</item>
     </style>
 

@@ -109,7 +109,7 @@ fun cancelMake(isProcess:Boolean) {
 }
 
 
-fun ffCallback(onProgress:(Int)->Unit={},onComplete:()->Unit={})=
+fun ffCallback(onProgress:(Int)->Unit={},onComplete:()->Unit={},onCancel:()->Unit={})=
     object : RxFFmpegInvoke.IFFmpegListener{
         override fun onFinish() {
               onComplete()
@@ -127,6 +127,7 @@ fun ffCallback(onProgress:(Int)->Unit={},onComplete:()->Unit={})=
         }
 
         override fun onCancel() {
+            onCancel()
             MakeBackLiveData.setMakeFinishState(true)
         }
 

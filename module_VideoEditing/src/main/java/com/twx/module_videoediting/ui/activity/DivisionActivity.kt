@@ -29,6 +29,9 @@ class DivisionActivity : BaseVmViewActivity<ActivityDivisionBinding,VideoCutView
             mTWVideoCutContainer.initPlayerLayout()
             lifecycle.addObserver(mTWVideoCutContainer.getPlayerView())
         }
+
+
+
     }
 
 

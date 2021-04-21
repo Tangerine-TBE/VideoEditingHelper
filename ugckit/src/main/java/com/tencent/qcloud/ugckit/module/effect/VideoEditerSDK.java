@@ -94,7 +94,13 @@ public class VideoEditerSDK {
         mTXVideoInfo = TXVideoInfoReader.getInstance(UGCKit.getAppContext()).getVideoFileInfo(mVideoPath);
         setCutterStartTime(0,mTXVideoInfo.duration);
         mThumbnailCount= (int) (mTXVideoInfo.duration/ExtensionsKt.videoTimeInterval(mTXVideoInfo.duration));
+
     }
+
+
+
+
+
 
 
     /**

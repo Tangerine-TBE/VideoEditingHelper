@@ -14,7 +14,7 @@
         android:id="@+id/paster_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <com.tencent.qcloud.ugckit.component.floatlayer.FloatLayerViewGroup
         android:id="@+id/bubble_container"

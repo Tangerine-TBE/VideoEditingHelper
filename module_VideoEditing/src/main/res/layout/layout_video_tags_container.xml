@@ -10,22 +10,69 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.twx.module_videoediting.ui.widget.video.ganeral.VideoCutPlayerControl
-            android:id="@+id/mVideoCutPlayerControl"
+
+        <com.twx.module_videoediting.ui.widget.video.ganeral.VideoPasterPlayer
+            android:id="@+id/mVideoPlayer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="400dp"/>
 
-
-        <com.twx.module_videoediting.ui.widget.video.tags.TimeLineView
-            android:id="@+id/timeline_view"
+        <com.tencent.qcloud.ugckit.component.floatlayer.FloatLayerViewGroup
+            android:id="@+id/mFloatLayerViewGroup"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@+id/play_control_layout"
-            android:background="@color/editer_bottom"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/secondContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mVideoCutPlayerControl" />
+            app:layout_constraintTop_toBottomOf="@+id/mVideoPlayer">
+
+            <com.twx.module_videoediting.ui.widget.video.tags.PasterPlayerControl
+                android:id="@+id/mVideoPasterPlayerControl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.twx.module_videoediting.ui.widget.video.tags.TimeLineView
+                android:id="@+id/timeline_view"
+
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/play_control_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mVideoPasterPlayerControl" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRvPaster"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeline_view" />
+
+
+            <com.twx.module_videoediting.ui.widget.video.tags.PasterPannel
+                android:id="@+id/mPasterPannel"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

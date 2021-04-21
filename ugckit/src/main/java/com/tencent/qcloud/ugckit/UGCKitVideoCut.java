@@ -207,6 +207,7 @@ public class UGCKitVideoCut extends AbsVideoCutUI implements PlayerManagerKit.On
                 @Override
                 public void onRotate(int rotation) {
                     VideoEditerSDK.getInstance().getEditer().setRenderRotation(rotation);
+
                 }
             });
             TXCLog.i(TAG,"[UGCKit][VideoCut]load thunmail");

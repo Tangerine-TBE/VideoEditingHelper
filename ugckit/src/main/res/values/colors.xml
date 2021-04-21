@@ -25,7 +25,7 @@
 
     <color name="color_bottom_bar_background">#FD5D40</color>
     <color name="colorPrimaryDark">#21a3f5</color>
-    <color name="colorAccent">#0accac</color>
+    <color name="colorAccent">@color/theme</color>
     <color name="transparent">#00000000</color>
     <color name="colorBlue">#440accac</color>
     <color name="colorActivityBackground">#F3F3F3</color>
@@ -152,10 +152,10 @@
     <color name="record_progress_pending">#a8002d</color>
 
     <color name="record_speed_text_normal">#ffffff</color>
-    <color name="record_speed_text_select">#00f5ac</color>
+    <color name="record_speed_text_select">@color/theme</color>
 
     <color name="record_settings_tip">#999999</color>
-    <color name="input_text_color">#00f5ac</color>
+    <color name="input_text_color">@color/theme</color>
     <color name="paster_activity_background_color">#0d0d0d</color>
     <color name="bubble_panel_background_color">#0d0d0d</color>
 
@@ -173,7 +173,7 @@
     <color name="screen_split">#EC8435</color>
     <color name="screen_split_press">#B2FFBB00</color>
 
-    <color name="light_wave">#1FBCB6</color>
+    <color name="light_wave">@color/theme</color>
     <color name="rock_light_press">#B2655CE6</color>
 
     <color name="dark_illusion">#449FF3</color>
@@ -202,14 +202,19 @@
     <color name="illusion_color_press">#CC7F554C</color>
 
     <color name="editer_bottom">#1F2531</color>
-    <color name="time_bg_normal">#0accac</color>
-    <color name="time_bg_selected">#AA0ACCAC</color>
+    <color name="time_bg_normal">@color/theme</color>
+    <color name="time_bg_selected">@color/theme</color>
 
     <color name="follow_shot_bg_normal">#ec766a</color>
     <color name="follow_shot_bg_selected">#ec6455</color>
 
     <!-- 裁剪范围颜色 -->
     <color name="colorAccentTransparent30">#B2FF584C</color>
+
+    <color name="colorThemeTransparent30">#B24060FF</color>
+
+    <color name="theme">#4060FF</color>
+
     <color name="actionsheet_gray">#8F8F8F</color>
 
     <color name="cut_line_color">#FFFF584C</color>

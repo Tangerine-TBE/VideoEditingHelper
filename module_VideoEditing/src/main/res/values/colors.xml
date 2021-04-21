@@ -13,5 +13,6 @@
 
     <color name="color_divider">#E1E1E1</color>
 
+    <color name="color_red">#FF0000</color>
 
 </resources>

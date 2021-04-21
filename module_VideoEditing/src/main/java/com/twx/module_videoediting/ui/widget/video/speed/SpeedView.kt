@@ -23,8 +23,14 @@ class SpeedView @JvmOverloads constructor(
 
     private var mWidth = 0
     private var mHeight = 0
-    private var mScaleHeight = 0f
-    private var interval = 0f
+
+    private var maxInterval = 0f
+    private var maxScaleHeight = 0f
+
+    private var minInterval=0f
+    private var minScaleHeight = 0f
+
+
     private val minValue = 50f
     private var maxValue = 0f
     private var radius = minValue / 3 * 2
@@ -33,16 +39,20 @@ class SpeedView @JvmOverloads constructor(
 
 
     init {
+        val themeState = SPUtil.getInstance().getBoolean(Constants.SP_THEME_STATE)
+
+
         mScalePaint.apply {
-            color = ContextCompat.getColor(context, R.color.theme_color)
+            color = ContextCompat.getColor(context,if (themeState) R.color.theme_color else R.color.white)
             style = Paint.Style.FILL_AND_STROKE
             strokeWidth = 5f
+
             isAntiAlias = true
         }
 
 
         mCirclePaint.apply {
-            color = Color.RED
+            color = ContextCompat.getColor(context,if (themeState) R.color.color_red else R.color.theme_color)
             style = Paint.Style.FILL
             strokeWidth = 5f
             isAntiAlias = true
@@ -50,7 +60,7 @@ class SpeedView @JvmOverloads constructor(
 
 
         mTextPaint.apply {
-            color =if (SPUtil.getInstance().getBoolean(Constants.SP_THEME_STATE)) Color.BLACK else Color.WHITE
+            color =if (themeState) Color.BLACK else Color.WHITE
             style = Paint.Style.FILL_AND_STROKE
             textAlign = Paint.Align.CENTER
             textSize = SizeUtils.sp2px(context,14f).toFloat()
@@ -64,15 +74,17 @@ class SpeedView @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         mWidth = MeasureSpec.getSize(widthMeasureSpec)
         mHeight = MeasureSpec.getSize(heightMeasureSpec)
-        interval = mWidth / 8f
-        mScaleHeight = mHeight / 3 * 2f
-        maxValue=interval*7+minValue
 
-        initValue=interval+minValue
+        maxInterval = mWidth / 8f
+        minInterval=mWidth/40f
+
+        minScaleHeight=mHeight/5*3f
+        maxScaleHeight = mHeight / 3 * 2f
 
 
+        maxValue=maxInterval*7+minValue
+        initValue=maxInterval+minValue
         moveX=initValue
-
         setMeasuredDimension(mWidth, mHeight)
     }
 
@@ -85,29 +97,35 @@ class SpeedView @JvmOverloads constructor(
 
 
     private fun drawScale(canvas: Canvas) {
+        mScalePaint.strokeWidth=3f
         canvas.drawLine(
             minValue,
-            mScaleHeight / 2,
+            maxScaleHeight / 2,
             maxValue,
-            mScaleHeight / 2,
+            maxScaleHeight / 2,
             mScalePaint
         )
+
+        for (i in 0 until 36){
+            canvas.drawLine(i*minInterval+minValue,   (maxScaleHeight-minScaleHeight),i*minInterval+minValue,minScaleHeight,mScalePaint)
+        }
+
+        mScalePaint.strokeWidth=8f
         for (i in 0 until 8) {
             canvas.drawLine(
-                i * interval + minValue,
+                i * maxInterval + minValue,
                 0f,
-                i * interval + minValue,
-                mScaleHeight,
+                i * maxInterval + minValue,
+                maxScaleHeight,
                 mScalePaint
             )
-
-            canvas.drawText("${(i+1)*0.5f}", i * interval + minValue, mHeight.toFloat(), mTextPaint)
+            canvas.drawText("${(i+1)*0.5f}", i * maxInterval + minValue, mHeight.toFloat(), mTextPaint)
         }
     }
 
 
     private fun drawCircle(canvas: Canvas, moveX: Float) {
-        canvas.drawCircle(moveX, mScaleHeight / 2, radius, mCirclePaint)
+        canvas.drawCircle(moveX, maxScaleHeight / 2, radius, mCirclePaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -147,7 +165,7 @@ class SpeedView @JvmOverloads constructor(
             4.0f
         }
         else -> {
-            ((moveX- minValue)/interval)*0.5f+0.5f
+            ((moveX- minValue)/maxInterval)*0.5f+0.5f
         }
     }
 

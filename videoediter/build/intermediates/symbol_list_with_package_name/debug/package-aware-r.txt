@@ -1299,6 +1299,7 @@ color colorTextG4
 color colorTextWhite
 color colorTheme
 color colorThemeActive
+color colorThemeTransparent30
 color colorTransparentBlack
 color colorTransparentGray
 color colorVeryDarkTransparentGray
@@ -1540,6 +1541,7 @@ color text_blue2
 color text_gray1
 color text_gray2
 color text_select_color
+color theme
 color themeColor
 color theme_bg_color
 color theme_color
@@ -1557,6 +1559,7 @@ color umeng_text_color
 color umeng_white
 color white
 color white_40
+color white_56
 color win_shaddow_color
 color win_shaddow_color_press
 color x_recycler_color_loading_color1
@@ -3590,6 +3593,8 @@ layout video_timeline
 layout view_actionsheet
 layout x_recycler_view_item
 layout x_recycler_view_load_more
+mipmap icon_cut_left
+mipmap icon_cut_right
 mipmap icon_login_logo_false
 mipmap icon_login_logo_true
 plurals mtrl_badge_content_description

@@ -11,7 +11,9 @@ import com.tencent.qcloud.ugckit.basic.UGCKitResult
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
+import com.twx.module_base.utils.SPUtil
 import com.twx.module_videoediting.ui.widget.video.cut.IVideoCut
+import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.video.PlayerManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -31,6 +33,10 @@ open  class BaseVideoEditUi @JvmOverloads constructor(
         VideoEditerSDK.getInstance()
 
     }
+    protected val themeState by lazy {
+        SPUtil.getInstance().getBoolean(Constants.SP_THEME_STATE)
+    }
+
 
     protected val mJob = Job()
     protected var mScope = CoroutineScope(mJob)

@@ -62,7 +62,7 @@ public class ProcessKit extends BaseGenerateKit implements TXVideoEditer.TXVideo
     }
 
 
-    public void startTwProcess(){
+    public void startNormalProcess(){
         VideoEditerSDK videoEditor = VideoEditerSDK.getInstance();
         videoEditor.clearThumbnails();
         long cutterStartTime = videoEditor.getCutterStartTime();
@@ -81,6 +81,32 @@ public class ProcessKit extends BaseGenerateKit implements TXVideoEditer.TXVideo
         }
         LogUtils.i("startProcess----------"+cutterStartTime+"----------"+cutterEndTime+"-----------------"+thumbnail.count);
     }
+
+
+    public void startSpecialProcess(){
+        VideoEditerSDK videoEditor = VideoEditerSDK.getInstance();
+        videoEditor.clearThumbnails();
+        long cutterStartTime = videoEditor.getCutterStartTime();
+        long cutterEndTime =videoEditor.getCutterEndTime();
+        TXVideoEditConstants.TXThumbnail thumbnail = new TXVideoEditConstants.TXThumbnail();
+        thumbnail.count = 4;
+        thumbnail.width = 100;
+        thumbnail.height = 100;
+        TXVideoEditer editer = videoEditor.getEditer();
+        if (editer != null) {
+            editer.setThumbnail(thumbnail);
+            editer.setThumbnailListener(this);
+            editer.setVideoProcessListener(this);
+            editer.setCutFromTime(cutterStartTime, cutterEndTime);
+            editer.processVideo();
+        }
+        LogUtils.i("startProcess----------"+cutterStartTime+"----------"+cutterEndTime+"-----------------"+thumbnail.count);
+    }
+
+
+
+
+
 
     /**
      * 停止预处理视频[包括一些异常操作导致的合成取消]

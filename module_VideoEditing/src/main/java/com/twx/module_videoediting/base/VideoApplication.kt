@@ -16,8 +16,8 @@ import com.tencent.ugc.TXUGCBase
  * @class describe
  */
 class VideoApplication : BaseApplication() {
-    var ugcLicenceUrl = "http://license.vod2.myqcloud.com/license/v1/ebb8e35f8de1b1937129c4032ca48e85/TXUgcSDK.licence"
-    var ugcKey = "8cd54276b496819824c7bd1e1e1f7ff1"
+    var ugcLicenceUrl = "http://license.vod2.myqcloud.com/license/v1/1b592d2799a3f2883bf67909d7c618aa/TXUgcSDK.licence"
+    var ugcKey = "ddabc6115bdc625158612c14d21b8b28"
     override fun initData() {
         TXUGCBase.getInstance().setLicence(this, ugcLicenceUrl, ugcKey)
         val string = TXUGCBase.getInstance().getLicenceInfo(this)

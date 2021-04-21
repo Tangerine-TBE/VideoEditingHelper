@@ -57,7 +57,7 @@ dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
     api fileTree(dir: "libs", include: ["*.aar"])
     implementation 'com.android.support:multidex:1.0.0'
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    api 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.tencent.bugly:crashreport:3.1.0'

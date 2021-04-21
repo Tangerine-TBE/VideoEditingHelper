@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,13 +13,53 @@
 
         <com.twx.module_videoediting.ui.widget.video.ganeral.VideoCutPlayerControl
             android:id="@+id/mVideoCutPlayerControl"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
+        <TextView
+            android:id="@+id/twoEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="00:00"
+            android:textColor="@color/theme_color"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mVideoCutPlayerControl" />
 
+        <TextView
+            android:id="@+id/oneEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/mDivisionView"
+            app:layout_constraintTop_toTopOf="@+id/twoEndTime" />
+
+
+        <TextView
+            android:id="@+id/totalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/mDivisionView"
+            app:layout_constraintTop_toTopOf="@+id/twoEndTime" />
+
+        <com.twx.module_videoediting.ui.widget.video.division.DivisionView
+            android:id="@+id/mDivisionView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/twoEndTime" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

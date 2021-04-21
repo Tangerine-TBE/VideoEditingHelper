@@ -1175,6 +1175,7 @@ color tooltip_background_light
 color transparent
 color white
 color white_40
+color white_56
 color x_recycler_color_loading_color1
 color x_recycler_color_loading_color2
 color x_recycler_color_loading_color3
@@ -2507,6 +2508,8 @@ layout text_view_with_theme_line_height
 layout text_view_without_line_height
 layout x_recycler_view_item
 layout x_recycler_view_load_more
+mipmap icon_cut_left
+mipmap icon_cut_right
 mipmap icon_login_logo_false
 mipmap icon_login_logo_true
 plurals mtrl_badge_content_description

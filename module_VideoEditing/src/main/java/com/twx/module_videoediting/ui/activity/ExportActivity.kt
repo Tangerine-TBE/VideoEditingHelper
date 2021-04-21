@@ -188,7 +188,7 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
         mProcessHelper.apply {
             stopProcess()
             setOnUpdateUIListener(this@ExportActivity)
-            startTwProcess()
+            startNormalProcess()
         }
     }
 

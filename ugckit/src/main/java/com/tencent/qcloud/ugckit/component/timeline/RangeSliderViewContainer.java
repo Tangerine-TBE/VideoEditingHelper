@@ -82,9 +82,11 @@ public class RangeSliderViewContainer extends LinearLayout {
         ViewGroup.LayoutParams layoutParams = mMiddleView.getLayoutParams();
         layoutParams.width = mDistance;
         mMiddleView.setLayoutParams(layoutParams);
-        setMiddleRangeColor(mContext.getResources().getColor(R.color.colorAccentTransparent30));
+        setMiddleRangeColor(mContext.getResources().getColor(R.color.colorThemeTransparent30));
 
         setTouchProcessListener();
+
+
     }
 
     /**

@@ -1174,6 +1174,7 @@ int color tooltip_background_light 0x0
 int color transparent 0x0
 int color white 0x0
 int color white_40 0x0
+int color white_56 0x0
 int color x_recycler_color_loading_color1 0x0
 int color x_recycler_color_loading_color2 0x0
 int color x_recycler_color_loading_color3 0x0
@@ -2506,6 +2507,8 @@ int layout text_view_with_theme_line_height 0x0
 int layout text_view_without_line_height 0x0
 int layout x_recycler_view_item 0x0
 int layout x_recycler_view_load_more 0x0
+int mipmap icon_cut_left 0x0
+int mipmap icon_cut_right 0x0
 int mipmap icon_login_logo_false 0x0
 int mipmap icon_login_logo_true 0x0
 int plurals mtrl_badge_content_description 0x0

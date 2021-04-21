@@ -21,29 +21,34 @@ import com.twx.module_videoediting.viewmodel.SpeedViewModel
 import io.microshow.rxffmpeg.RxFFmpegInvoke
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 
 class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>() {
-    private var mSrcFile=""
-    private var mVideoOutputPath=""
-    private var mSpeed=1.0f
+    private var mSrcFile = ""
+    private var mVideoOutputPath = ""
+    private var mSpeed = 1.0f
     private val callback by lazy {
         ffCallback(onComplete = {
             FileUtils.saveAlbum(this, mVideoOutputPath)
-            ExportActivity.toExportPage(this,true,mVideoOutputPath)
-        },onProgress = {
+            ExportActivity.toExportPage(this, true, mVideoOutputPath)
+        }, onProgress = {
             loadingPopup.setProgress(it)
+        }, onCancel = {
+            if (!TextUtils.isEmpty(mVideoOutputPath)) {
+                FileUtils.deleteFile(File(mVideoOutputPath))
+            }
         })
     }
     private val player by lazy {
-      SimpleExoPlayer.Builder(this@SpeedActivity).build()
+        SimpleExoPlayer.Builder(this@SpeedActivity).build()
     }
+
     override fun getViewModelClass(): Class<SpeedViewModel> {
         return SpeedViewModel::class.java
     }
 
-    override fun getLayoutView(): Int =R.layout.activity_speed
-
+    override fun getLayoutView(): Int = R.layout.activity_speed
 
 
     override fun initView() {
@@ -51,9 +56,9 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
             setStatusBarDistance(this@SpeedActivity, speedTitleBar, LayoutType.CONSTRAINTLAYOUT)
             //获取视频路径播放
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
-                mSrcFile=it
-                playerView.player= player.apply {
-                    setMediaItem( MediaItem.fromUri(Uri.parse(it)))
+                mSrcFile = it
+                playerView.player = player.apply {
+                    setMediaItem(MediaItem.fromUri(Uri.parse(it)))
                     prepare()
                     play()
                 }
@@ -69,11 +74,11 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
             viewModel.apply {
                 ThemeChangeLiveData.observe(this@SpeedActivity, {
                     speedTitleBar.setThemeChange(it)
-                    viewThemeColor(it, speedContainer)
+                    viewThemeColor(it, speedContainer,speedHint)
                 })
 
-                MakeBackLiveData.observe(this@SpeedActivity,{
-                    if (it)loadingPopup.dismiss()
+                MakeBackLiveData.observe(this@SpeedActivity, {
+                    if (it) loadingPopup.dismiss()
                 })
 
             }
@@ -81,17 +86,16 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
     }
 
 
-
     override fun initEvent() {
         binding.apply {
             speedTitleBar.setBarEventAction(this@SpeedActivity) {}
 
             //调整速度
-            speedView.setOnSpeedListener(object :SpeedView.OnSpeedListener{
+            speedView.setOnSpeedListener(object : SpeedView.OnSpeedListener {
                 override fun selectSpeed(speed: Float) {
-                    mSpeed=speed
+                    mSpeed = speed
                     player.setPlaybackParameters(PlaybackParameters(speed))
-                    speedHint.text="${String.format("%.2f",speed)}X"
+                    speedHint.text = "${String.format("%.2f", speed)}X"
 
                 }
             })
@@ -99,9 +103,9 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
             //输出视频
             completeSpeed.setOnClickListener {
                 if (!TextUtils.isEmpty(mSrcFile)) {
-                    mScope.launch(Dispatchers.IO){
-                        mVideoOutputPath=VideoPathUtil.generateVideoPath()
-                        FFmpegHelper.startCommand(FFmpegHelper.changeVideoSpeed(mSpeed,mSrcFile,mVideoOutputPath),callback)
+                    mScope.launch(Dispatchers.IO) {
+                        mVideoOutputPath = VideoPathUtil.generateVideoPath()
+                        FFmpegHelper.startCommand(FFmpegHelper.changeVideoSpeed(mSpeed, mSrcFile, mVideoOutputPath), callback)
 
                     }
                     player.stop()
@@ -116,7 +120,6 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
             FFmpegHelper.exitCommand()
         }
     }
-
 
 
     override fun release() {

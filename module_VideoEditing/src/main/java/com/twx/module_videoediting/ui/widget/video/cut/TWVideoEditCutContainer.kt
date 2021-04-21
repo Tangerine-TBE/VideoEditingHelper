@@ -16,6 +16,7 @@ import com.tencent.qcloud.ugckit.utils.DialogUtil
 import com.tencent.qcloud.ugckit.utils.TelephonyUtil
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.showToast
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutVideoCutContainerBinding
 import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
@@ -50,10 +51,11 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
      */
     fun initEvent() {
         binding.apply {
-            cutControl.mCutViewLayout.setVideoProgressSeekListener(this@TWVideoEditCutContainer)
-
-            //设置剪辑起点终点动作
             cutControl.apply {
+                mCutViewLayout.setVideoProgressSeekListener(this@TWVideoEditCutContainer)
+                viewThemeColor(themeState,beginTime,endTime,timeInterval)
+
+                //设置剪辑起点终点动作
                 beginAction.setOnClickListener {
                     if (mVideoPlayerView.getCurrentTime() < mVideoEditorHelper.cutterEndTime) {
                         mVideoEditorHelper.cutterStartTime = mVideoPlayerView.getCurrentTime()
@@ -121,7 +123,7 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
                 null
             )
         } else {
-            // 初始化缩略图列表，裁剪缩略图时间间隔秒钟一张
+            // 初始化缩略图列表，裁剪缩略图
             val interval = videoTimeInterval(info.duration)
             binding.cutControl.mCutViewLayout.apply {
                 setTotalDuration(info.duration)

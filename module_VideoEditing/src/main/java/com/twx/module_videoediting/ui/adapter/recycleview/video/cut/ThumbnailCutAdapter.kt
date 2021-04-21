@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.utils.LogUtils
+import com.twx.module_base.utils.SPUtil
 import com.twx.module_base.utils.SizeUtils
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemVideoCutContainerBinding
 import com.twx.module_videoediting.domain.ThumbnailInfo
+import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.formatDuration
 
 /**
@@ -29,13 +32,16 @@ class ThumbnailCutAdapter : RecyclerView.Adapter<ThumbnailCutAdapter.MyHolder>()
     private val TYPE_FOOTER = 2
     private val TYPE_THUMBNAIL = 3
     private val dataList: MutableList<VideoEditerSDK.ThumbnailBitmapInfo> = ArrayList()
+    private val themeState=SPUtil.getInstance().getBoolean(Constants.SP_THEME_STATE)
 
-    class MyHolder(itemView: View, val itemBinding: ItemVideoCutContainerBinding? = null) : RecyclerView.ViewHolder(itemView) {
+
+   inner class MyHolder(itemView: View, val itemBinding: ItemVideoCutContainerBinding? = null) : RecyclerView.ViewHolder(itemView) {
 
         fun setItemData(thumbnailBitmapInfo: VideoEditerSDK.ThumbnailBitmapInfo, position: Int) {
             itemBinding?.apply {
                 time.text = "${formatDuration(thumbnailBitmapInfo.ptsMs)}"
                 thumbnail.setImageBitmap(thumbnailBitmapInfo.bitmap)
+                viewThemeColor(themeState,time)
             }
         }
     }

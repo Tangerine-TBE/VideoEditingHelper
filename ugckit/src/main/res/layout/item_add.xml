@@ -9,7 +9,7 @@
         android:id="@+id/add_paster_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_edit_add_selector" />
+      />
 
     <TextView
         android:id="@+id/add_paster_tv_name"

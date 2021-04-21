@@ -1298,6 +1298,7 @@ int color colorTextG4 0x0
 int color colorTextWhite 0x0
 int color colorTheme 0x0
 int color colorThemeActive 0x0
+int color colorThemeTransparent30 0x0
 int color colorTransparentBlack 0x0
 int color colorTransparentGray 0x0
 int color colorVeryDarkTransparentGray 0x0
@@ -1539,6 +1540,7 @@ int color text_blue2 0x0
 int color text_gray1 0x0
 int color text_gray2 0x0
 int color text_select_color 0x0
+int color theme 0x0
 int color themeColor 0x0
 int color theme_bg_color 0x0
 int color theme_color 0x0
@@ -1556,6 +1558,7 @@ int color umeng_text_color 0x0
 int color umeng_white 0x0
 int color white 0x0
 int color white_40 0x0
+int color white_56 0x0
 int color win_shaddow_color 0x0
 int color win_shaddow_color_press 0x0
 int color x_recycler_color_loading_color1 0x0
@@ -3589,6 +3592,8 @@ int layout video_timeline 0x0
 int layout view_actionsheet 0x0
 int layout x_recycler_view_item 0x0
 int layout x_recycler_view_load_more 0x0
+int mipmap icon_cut_left 0x0
+int mipmap icon_cut_right 0x0
 int mipmap icon_login_logo_false 0x0
 int mipmap icon_login_logo_true 0x0
 int plurals mtrl_badge_content_description 0x0

@@ -137,23 +137,23 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
     }
 
     private fun openMediaSelect(
-        action: Int,
-        maxSelectNum: Int = 1,
-        minSelectNum: Int = 1,
-        selectionMode: Int = PictureConfig.SINGLE
+            action: Int,
+            maxSelectNum: Int = 1,
+            minSelectNum: Int = 1,
+            selectionMode: Int = PictureConfig.SINGLE,
     ) {
         openAction = action
         PictureSelector.create(this@HomeFragment)
-            .openGallery(PictureConfig.TYPE_VIDEO)
-            .imageSpanCount(3)// 每行显示个数 int
-            .maxSelectNum(maxSelectNum)
-            .minSelectNum(minSelectNum)
-            .videoMaxSecond(3600)
-            .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
-            .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
-            .isCamera(false)// 是否显示拍照按钮 true or false
-            .isZoomAnim(false)
-            .forResult(action);//结果回调onActivityResult code
+                .openGallery(PictureConfig.TYPE_VIDEO)
+                .imageSpanCount(3)// 每行显示个数 int
+                .maxSelectNum(maxSelectNum)
+                .minSelectNum(minSelectNum)
+                .videoMaxSecond(3600)
+                .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
+                .isCamera(false)// 是否显示拍照按钮 true or false
+                .isZoomAnim(false)
+                .forResult(action);//结果回调onActivityResult code
     }
 
 
@@ -164,11 +164,12 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
             if (it.size > 0) {
                 val path = it[0].path
                 when (requestCode) {
-                    ACTION_CUT, ACTION_REVERSE, ACTION_DIVISION, ACTION_TAGS-> preVideo(path)
+                    ACTION_CUT, ACTION_REVERSE, ACTION_TAGS -> preVideo(path, false)
+                    ACTION_DIVISION -> preVideo(path, true)
                     ACTION_MUSIC -> toOtherActivity<MusicActivity>(activity) {
                         putExtra(
-                            Constants.KEY_VIDEO_PATH,
-                            path
+                                Constants.KEY_VIDEO_PATH,
+                                path
                         )
                     }
                     ACTION_JOINT -> {
@@ -179,15 +180,15 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                         }
                         toOtherActivity<ReadyJoinActivity>(activity) {
                             putExtra(
-                                Constants.KEY_VIDEO_PATH,
-                                Gson().toJson(ValueJoinList(mediaInfo))
+                                    Constants.KEY_VIDEO_PATH,
+                                    Gson().toJson(ValueJoinList(mediaInfo))
                             )
                         }
                     }
                     ACTION_SPEED -> toOtherActivity<SpeedActivity>(activity) {
                         putExtra(
-                            Constants.KEY_VIDEO_PATH,
-                            path
+                                Constants.KEY_VIDEO_PATH,
+                                path
                         )
                     }
                 }
@@ -196,7 +197,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
     }
 
 
-    private fun preVideo(videoPath: String) {
+    private fun preVideo(videoPath: String, isSpecial: Boolean) {
         mLoadingPopup.showPopupView(binding.bottomContainer)
         mVideoEditorHelper.apply {
             releaseSDK()
@@ -207,7 +208,11 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         mProcessHelper.apply {
             stopProcess()
             setOnUpdateUIListener(this@HomeFragment)
-            startTwProcess()
+            if (isSpecial) {
+                startSpecialProcess()
+            } else {
+                startNormalProcess()
+            }
         }
     }
 

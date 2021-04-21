@@ -4,12 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
-import com.tencent.qcloud.ugckit.module.effect.utils.PlayState
+import com.twx.module_base.utils.LogUtils
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
-import com.twx.module_videoediting.databinding.LayoutVideoCutContainerBinding
 import com.twx.module_videoediting.databinding.LayoutVideoDivisionContainerBinding
 import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
-import com.twx.module_videoediting.utils.video.PlayerManager
+import com.twx.module_videoediting.utils.formatDuration
 
 /**
  * @name VideoEditingHelper
@@ -21,7 +21,9 @@ import com.twx.module_videoediting.utils.video.PlayerManager
  */
 class VideoDivisionContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoEditUi(context, attrs, defStyleAttr) {
+) : BaseVideoEditUi(context, attrs, defStyleAttr), DivisionView.OnDivisionTimeListener {
+
+
 
     private val binding = DataBindingUtil.inflate<LayoutVideoDivisionContainerBinding>(
         LayoutInflater.from(context),
@@ -29,6 +31,23 @@ class VideoDivisionContainer @JvmOverloads constructor(
         this,
         true
     )
+
+    init {
+        binding.apply {
+            viewThemeColor(themeState,oneEndTime,totalTime)
+            val totalDuration = mVideoEditorHelper.txVideoInfo.duration
+            totalTime.text= "${formatDuration(totalDuration)}"
+            mDivisionView.setVideoInfo(totalDuration,mVideoEditorHelper.allThumbnailList)
+        }
+        initEvent()
+    }
+
+    private fun initEvent() {
+        binding.apply {
+            mDivisionView.setOnSelectTimeListener(this@VideoDivisionContainer)
+
+        }
+    }
 
 
     override fun initPlayerLayout() {
@@ -45,5 +64,10 @@ class VideoDivisionContainer @JvmOverloads constructor(
 
 
     fun getPlayerView() = binding.mVideoCutPlayerControl
+
+
+    override fun divisionTime(time: Long) {
+        LogUtils.i("------divisionTime--------${time}------------------")
+    }
 
 }

@@ -10,10 +10,12 @@ import com.tencent.qcloud.ugckit.component.slider.RangeSlider
 import com.tencent.qcloud.ugckit.module.effect.bgm.view.IEditMusicPannel
 import com.tencent.qcloud.ugckit.module.record.MusicInfo
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.TwLayoutEditMusicBinding
 import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
 import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
+import com.twx.module_videoediting.utils.Constants
 
 /**
  * @name VideoEditingHelper
@@ -36,13 +38,14 @@ class EditMusicView @JvmOverloads constructor(
     )
 
     init {
-
         initEvent()
 
     }
 
     fun initEvent() {
         binding.apply {
+            viewThemeColor(themeState,ivMusicIcon,txMusicName,btnBgmDelete,btnBgmReplace,tvBgmStartTime,tvBgmVolume,tvMicVolume)
+
             txMusicName.isSelected=true
 
             seekbarBgmVolume.setOnSeekBarChangeListener(this@EditMusicView)
