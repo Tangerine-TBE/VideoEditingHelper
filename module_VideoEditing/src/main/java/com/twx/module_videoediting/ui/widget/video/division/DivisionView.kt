@@ -36,7 +36,7 @@ class DivisionView @JvmOverloads constructor(
     private var mShearWidth=0
     private var mShearHeight=0
 
-
+    private var paddingDis=80
 
 
 
@@ -44,7 +44,8 @@ class DivisionView @JvmOverloads constructor(
         mBitmapPaint.apply {
             isFilterBitmap=true
         }
-        mShearWidth=mShearBitmap.width/2
+        mShearWidth=mShearBitmap.width/7
+
         mShearHeight=mShearBitmap.height
     }
 
@@ -52,7 +53,7 @@ class DivisionView @JvmOverloads constructor(
         mWidth= MeasureSpec.getSize(widthMeasureSpec)
         mHeight= MeasureSpec.getSize(heightMeasureSpec)
 
-        bitmapWidth=(mWidth-40)/4f
+        bitmapWidth=(mWidth-paddingDis)/4f
 
 
         setMeasuredDimension(mWidth,mHeight)
@@ -64,31 +65,6 @@ class DivisionView @JvmOverloads constructor(
         drawThumbnail(canvas)
         drawShear(canvas)
     }
-
-
-
-
-    private fun drawShear(canvas: Canvas) {
-        mShearBitmap.let {
-            srcShear.apply {
-                left=0
-                right=it.width
-                top=0
-                bottom=it.height
-            }
-
-            dstShear.apply {
-                left=(moveX-it.width/4).toInt()
-                right=(moveX+it.width/4).toInt()
-                top=0
-                bottom=mHeight
-            }
-            canvas.drawBitmap(it,srcShear,dstShear,mBitmapPaint)
-        }
-
-
-    }
-
 
     private fun drawThumbnail(canvas: Canvas) {
        if (thumbnailList.size>0){
@@ -103,8 +79,8 @@ class DivisionView @JvmOverloads constructor(
 
                   dstThumbnail.apply {
                       top=0
-                      left= (bitmapWidth* i).toInt()
-                      right= (bitmapWidth*(1+i)).toInt()
+                      left= (bitmapWidth* i).toInt()+paddingDis/2
+                      right= (bitmapWidth*(1+i)).toInt()+paddingDis/2
                       bottom= mHeight.toFloat().toInt()
                   }
                   canvas.drawBitmap(it,srcThumbnail,dstThumbnail,mBitmapPaint)
@@ -112,22 +88,42 @@ class DivisionView @JvmOverloads constructor(
            }
        }
     }
-
     override fun onTouchEvent(event: MotionEvent): Boolean {
         moveX = event.x
+        LogUtils.i("---- event.x--------------${ event.x}------------")
         when (event.action) {
-            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN -> {
+            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP-> {
                 if (moveX<0){
                     moveX=0f
-                }else if (moveX>mWidth){
-                    moveX=mWidth.toFloat()
+                }else if (moveX>mWidth-paddingDis){
+                    moveX= mWidth-paddingDis.toFloat()
                 }
-                mOnDivisionTimeListener?.divisionTime(((moveX/mWidth)* mTotalTime).toLong())
+                mOnDivisionTimeListener?.divisionTime(((moveX/(mWidth-paddingDis))* mTotalTime).toLong())
                 invalidate()
             }
         }
         return true
     }
+    private fun drawShear(canvas: Canvas) {
+        mShearBitmap.let {
+            srcShear.apply {
+                left=0
+                right=it.width
+                top=0
+                bottom=it.height
+            }
+
+            dstShear.apply {
+                left=(moveX-mShearWidth+paddingDis/2).toInt()
+                right=(moveX+mShearWidth+paddingDis/2).toInt()
+                top=0
+                bottom=mHeight
+            }
+            canvas.drawBitmap(it,srcShear,dstShear,mBitmapPaint)
+        }
+    }
+
+
 
     private var mTotalTime=0L
 

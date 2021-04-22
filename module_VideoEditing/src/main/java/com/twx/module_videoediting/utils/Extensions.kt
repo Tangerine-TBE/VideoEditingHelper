@@ -112,26 +112,29 @@ fun cancelMake(isProcess:Boolean) {
 fun ffCallback(onProgress:(Int)->Unit={},onComplete:()->Unit={},onCancel:()->Unit={})=
     object : RxFFmpegInvoke.IFFmpegListener{
         override fun onFinish() {
+            LogUtils.i("-ffCallback--onFinish-------------- ")
               onComplete()
               MakeBackLiveData.setMakeFinishState(true)
         }
 
         override fun onProgress(progress: Int, progressTime: Long) {
+            LogUtils.i("-ffCallback--onProgress--------------     $progress  ")
+            MakeBackLiveData.setMakeFinishState(false)
             BaseApplication.mHandler.post {
-                LogUtils.i("---onProgress--------------     $progress  ")
                 if (progress>=0){
                     onProgress(progress)
                 }
-                MakeBackLiveData.setMakeFinishState(false)
             }
         }
 
         override fun onCancel() {
+            LogUtils.i("-ffCallback--onCancel-------------- ")
             onCancel()
             MakeBackLiveData.setMakeFinishState(true)
         }
 
         override fun onError(message: String?) {
+            LogUtils.i("--ffCallback-onError--------------     $message  ")
             MakeBackLiveData.setMakeFinishState(true)
         }
 

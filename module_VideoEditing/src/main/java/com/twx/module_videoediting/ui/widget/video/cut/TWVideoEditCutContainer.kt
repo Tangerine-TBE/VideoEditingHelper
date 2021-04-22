@@ -34,7 +34,7 @@ import com.twx.module_videoediting.utils.videoTimeInterval
  */
 class TWVideoEditCutContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoEditUi(context, attrs, defStyleAttr), IVideoCut, ICutView.VideoProgressSeekListener {
+) : BaseVideoEditUi(context, attrs, defStyleAttr), IVideoCut, ICutView.VideoProgressSeekListener, PlayerManager.OnPreviewListener {
     private val binding = DataBindingUtil.inflate<LayoutVideoCutContainerBinding>(
         LayoutInflater.from(context),
         R.layout.layout_video_cut_container,
@@ -42,7 +42,13 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
         true
     )
 
+    private val totalTime= mVideoEditorHelper.txVideoInfo.duration
+    private  var backTime:Long=0L
+    private  var goTime:Long=0L
+    private var currentTime=0L
+
     init {
+        PlayerManager.addOnPreviewListener(this)
         initEvent()
     }
 
@@ -50,6 +56,7 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
      * 事件监听
      */
     fun initEvent() {
+
         binding.apply {
             cutControl.apply {
                 mCutViewLayout.setVideoProgressSeekListener(this@TWVideoEditCutContainer)
@@ -59,7 +66,7 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
                 beginAction.setOnClickListener {
                     if (mVideoPlayerView.getCurrentTime() < mVideoEditorHelper.cutterEndTime) {
                         mVideoEditorHelper.cutterStartTime = mVideoPlayerView.getCurrentTime()
-                        showCutTime(mVideoEditorHelper)
+                        showCutTime()
                     } else {
                         showToast("剪辑起点不能大于剪辑终点")
                     }
@@ -68,14 +75,41 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
                 endAction.setOnClickListener {
                     if (mVideoPlayerView.getCurrentTime() > mVideoEditorHelper.cutterStartTime) {
                         mVideoEditorHelper.cutterEndTime = mVideoPlayerView.getCurrentTime()
-                        showCutTime(mVideoEditorHelper)
+                        showCutTime()
                     } else {
                         showToast("剪辑终点不能小于剪辑起点")
                     }
                 }
+
+
+                mVideoPlayerView.apply {
+                    backContainer.setOnClickListener {
+                        i--
+                        backTime=currentTime-1000
+                        if (backTime < 1000) {
+                            backTime = 0
+                        }
+                        PlayerManager.previewAtTime(backTime)
+                        showCutTime()
+                    }
+
+
+                    goContainer.setOnClickListener {
+                        i++
+                        goTime+=1000
+                        if (goTime >totalTime) {
+                            goTime =totalTime
+                        }
+                        PlayerManager.previewAtTime(goTime)
+                        showCutTime()
+                    }
+                }
+
             }
         }
     }
+
+    private var i=0
 
 
     override fun initPlayerLayout() {
@@ -86,25 +120,29 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
                 mVideoPlayerView.initPlayerLayout()
                 it.resetDuration()
 
-                showCutTime(it)
+                showCutTime()
 
-                mVideoPlayerView.previewProgressAction {
-                    val currentState = PlayerManager.getCurrentState()
-                    if (currentState == PlayState.STATE_PLAY || currentState == PlayState.STATE_RESUME) {
-                        binding.cutControl.mCutViewLayout.setCurrentTime(it.toLong())
-                    }
-                }
+                sliderView()
+            }
+        }
+    }
 
+    private fun LayoutVideoCutContainerBinding.sliderView() {
+        mVideoPlayerView.previewProgressAction {
+            val currentState = PlayerManager.getCurrentState()
+            if (currentState == PlayState.STATE_PLAY || currentState == PlayState.STATE_RESUME) {
+                binding.cutControl.mCutViewLayout.setCurrentTime(it.toLong())
             }
         }
     }
 
     //设置开始结束剪辑时间
-    private fun LayoutVideoCutContainerBinding.showCutTime(it: VideoEditerSDK) {
+    private fun LayoutVideoCutContainerBinding.showCutTime() {
+
         cutControl.apply {
-            beginTime.text = formatDuration(it.cutterStartTime)
-            endTime.text = formatDuration(it.cutterEndTime)
-            timeInterval.text = formatDuration(it.geCutterDuration())
+            beginTime.text = formatDuration(mVideoEditorHelper.cutterStartTime)
+            endTime.text = formatDuration(mVideoEditorHelper.cutterEndTime)
+            timeInterval.text = formatDuration(mVideoEditorHelper.geCutterDuration())
         }
     }
 
@@ -149,6 +187,15 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
 
     override fun onVideoProgressSeekFinish(currentTimeMs: Long) {
         PlayerManager.previewAtTime(currentTimeMs)
+    }
+
+    override fun onPreviewProgress(time: Int) {
+        currentTime=time.toLong()
+        LogUtils.i("--TWVideoEditCutContainer--------------${time}---------$i-------")
+    }
+
+    override fun onPreviewFinish() {
+
     }
 
 

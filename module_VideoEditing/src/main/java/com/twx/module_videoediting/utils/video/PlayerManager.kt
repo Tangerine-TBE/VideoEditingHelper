@@ -134,7 +134,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
         mVideoEditerSDK?.apply {
             pausePlay()
             isPreviewFinish = false
-            editer?.previewAtTime(timeMs)
+            editer.previewAtTime(timeMs)
             mPreviewAtTime = timeMs
             LogUtils.i("------previewAtTime-------playmanager----------$timeMs------")
             mCurrentState = PlayState.STATE_PREVIEW_AT_TIME

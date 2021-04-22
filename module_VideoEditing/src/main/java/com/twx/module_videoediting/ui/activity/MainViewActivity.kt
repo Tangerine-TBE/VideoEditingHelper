@@ -1,7 +1,9 @@
 package com.twx.module_videoediting.ui.activity
 
+import android.content.Intent
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.*
@@ -14,9 +16,20 @@ import com.twx.module_videoediting.ui.adapter.recycleview.NavigationAdapter
 import com.twx.module_videoediting.ui.fragment.FileFragment
 import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.ui.fragment.SetFragment
+import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
 class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>() {
+
+    companion object{
+        fun toFileFragment(activity: FragmentActivity?){
+               toOtherActivity<MainViewActivity>(activity,true){
+                                    putExtra(Constants.KEY_FRAGMENT_ID,1)
+                                }
+        }
+
+  }
+
 
     private val mHomeFragment by lazy {  HomeFragment() }
     private val mFileFragment by lazy {  FileFragment() }
@@ -24,8 +37,6 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
     private val mNavigationAdapter by lazy {
         NavigationAdapter()
     }
-
-
 
     override fun getViewModelClass(): Class<MainViewModel> {
         return MainViewModel::class.java
@@ -103,5 +114,26 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
         }
         return super.onKeyDown(keyCode, event)
     }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        val id = intent.getIntExtra(Constants.KEY_FRAGMENT_ID, -1)
+        LogUtils.i("----onResume-----------   $id  ---------------")
+        when(id) {
+            1->{
+                mNavigationAdapter.setSelectPosition(1)
+                showFragment(mFileFragment)
+            }
+        }
+    }
+
+
 
 }

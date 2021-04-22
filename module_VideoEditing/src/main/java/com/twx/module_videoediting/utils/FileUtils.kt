@@ -14,6 +14,7 @@ import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.tools.RxTimeTool
 
 import com.twx.module_videoediting.domain.MediaInformation
+import kotlinx.coroutines.coroutineScope
 
 import java.io.File
 import java.text.SimpleDateFormat
@@ -35,6 +36,7 @@ object FileUtils {
      * @return MutableList<MediaInformation>
      */
     fun getAllVideo(): MutableList<MediaInformation> {
+
         val videoList = ArrayList<MediaInformation>()
         val selection = MediaStore.Video.Media.DATA + " like ?"
         contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null,selection, arrayOf("${VideoPathUtil.createPath()}"+"%"),  "${MediaStore.MediaColumns.DATE_ADDED} desc")?.apply {
@@ -100,7 +102,7 @@ object FileUtils {
      * @param uri Uri
      * @return Int
      */
-    fun deleteMedia(uri: Uri)= contentResolver.delete(uri,null,null)
+       fun deleteMedia(uri: Uri)= contentResolver.delete(uri,null,null)
 
 
     /**

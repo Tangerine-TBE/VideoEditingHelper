@@ -46,6 +46,32 @@ public class VideoPathUtil {
         return outputFolder + "/" + saveFileName;
     }
 
+    /**
+     * 生成编辑后输出视频路径
+     *
+     * @return
+     */
+    public static String generateVideoPath2(int index) {
+      /*  File sdcardDir = UGCKit.getAppContext().getExternalFilesDir(null);
+        if (sdcardDir == null) {
+            Log.e(TAG, "generateVideoPath sdcardDir is null");
+            return "";
+        }
+        String outputPath = sdcardDir + File.separator + UGCKitConstants.DEFAULT_MEDIA_PACK_FOLDER;*/
+
+        String outputPath = createPath();
+        File outputFolder = new File(outputPath);
+        if (!outputFolder.exists()) {
+            outputFolder.mkdirs();
+        }
+        String current = String.valueOf(System.currentTimeMillis() / 1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String time = sdf.format(new Date(Long.valueOf(current + "000")));
+        String saveFileName = String.format(index+"TWXVideo_%s.mp4", time);
+        return outputFolder + "/" + saveFileName;
+    }
+
+
     public static String getCustomVideoOutputPath() {
         return getCustomVideoOutputPath(null);
     }

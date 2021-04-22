@@ -242,6 +242,8 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
     }
 
 
+
+
     private fun doItemAction(block: (MediaInformation) -> Unit) {
         mItemValue?.let {
             block(it)

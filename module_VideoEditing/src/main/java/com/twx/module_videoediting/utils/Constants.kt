@@ -17,6 +17,9 @@ object Constants {
     //------------------request code------------
     const val REQUEST_VIDEO_CODE=511
 
+    //------------------to Fragment key
+    const val KEY_FRAGMENT_ID="KEY_FRAGMENT_ID"
+
 
     //------------------to Activity key
     const val KEY_VIDEO_PATH="KEY_VIDEO_PATH"

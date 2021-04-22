@@ -87,6 +87,10 @@ public class VideoEditerSDK {
         mTXVideoEditer.setVideoPath(mVideoPath);
     }
 
+    public String getVideoPath(){
+        return mVideoPath;
+    }
+
 
     public void setVideoPathInfo(String videoPathInfo){
         mVideoPath=videoPathInfo;

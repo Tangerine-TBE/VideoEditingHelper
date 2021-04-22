@@ -121,13 +121,13 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
                         preVideo()
                     }
                     1-> openMediaSelect(4, 1, PictureConfig.MULTIPLE)
-                    4->toOtherActivity<MusicActivity>(this@ExportActivity) {
+                    4->toOtherActivity<MusicActivity>(this@ExportActivity,true) {
                         putExtra(
                             Constants.KEY_VIDEO_PATH,
                             mVideoPath
                         )
                     }
-                    6->toOtherActivity<SpeedActivity>(this@ExportActivity) {
+                    6->toOtherActivity<SpeedActivity>(this@ExportActivity,true) {
                         putExtra(
                             Constants.KEY_VIDEO_PATH,
                             mVideoPath
@@ -212,6 +212,8 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
             HomeFragment.ACTION_CUT -> toOtherActivity<CutActivity>(this,true) {}
             HomeFragment.ACTION_REVERSE -> toOtherActivity<ReverseActivity>(this,true) {}
             HomeFragment.ACTION_DIVISION -> toOtherActivity<DivisionActivity>(this,true) {}
+            HomeFragment.ACTION_TAGS -> toOtherActivity<TagsActivity>(this,true) {}
+
         }
     }
 

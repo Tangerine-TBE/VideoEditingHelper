@@ -36,6 +36,9 @@ import com.twx.module_videoediting.viewmodel.MainViewModel
  * @class describe
  */
 class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpdateUIListener {
+
+
+
     private val mHomeBottomAdapter by lazy {
         HomeBottomAdapter()
     }
