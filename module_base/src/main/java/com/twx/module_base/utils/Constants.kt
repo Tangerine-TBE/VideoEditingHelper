@@ -9,6 +9,9 @@ package com.twx.module_base.utils
  * @class describe
  */
 object Constants {
+
+    const val SP_CORE_TYPE="SP_CORE_TYPE"
+
     // 打开类型
      const val DATA_TYPE_VIDEO = "video/*"
 

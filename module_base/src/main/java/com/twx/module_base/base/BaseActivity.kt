@@ -7,10 +7,12 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.twx.module_base.livedata.MakeBackLiveData
+import com.twx.module_base.utils.Constants
 import com.twx.module_base.utils.MyActivityManager
 import com.twx.module_base.utils.MyStatusBarUtil
 import com.twx.module_base.utils.SPUtil
 import com.twx.module_base.widget.LoadingDialog
+import com.twx.module_base.widget.popup.LoadingPopup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 
@@ -20,6 +22,7 @@ import kotlinx.coroutines.Job
  * @description：
  */
 open class BaseActivity:FragmentActivity() {
+
 
     protected val mJob=Job()
     protected val mScope by lazy {
@@ -32,6 +35,16 @@ open class BaseActivity:FragmentActivity() {
     protected val mLoadingDialog by lazy{
         LoadingDialog(this)
     }
+
+    protected val themeState by lazy {
+        SPUtil.getInstance().getBoolean(Constants.SP_THEME_STATE)
+    }
+
+    protected val loadingPopup by lazy {
+        LoadingPopup(this).apply { setTitle("视频导出中...") }
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +74,7 @@ open class BaseActivity:FragmentActivity() {
 
 
     open fun release() {
-
+        loadingPopup.dismiss()
     }
 
     override fun onDestroy() {

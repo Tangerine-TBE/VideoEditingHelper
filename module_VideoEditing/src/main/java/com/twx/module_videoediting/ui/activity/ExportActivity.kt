@@ -11,25 +11,22 @@ import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.ugc.TXVideoInfoReader
-import com.twx.module_base.base.BaseVmViewActivity
+import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
-import com.twx.module_base.widget.popup.LoadingPopup
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityExportBinding
 import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.domain.ValueJoinList
-import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.video.cut.ExportAdapter
 import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.cancelMake
 import com.twx.module_videoediting.utils.setBarEventAction
-import com.twx.module_videoediting.viewmodel.ExportViewModel
 import java.io.File
 
-class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>(),
+class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
     OnUpdateUIListener {
     private val mExportAdapter by lazy {
         ExportAdapter()
@@ -41,9 +38,7 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
     private val mProcessHelper by lazy {
         ProcessKit.getInstance()
     }
-    private val mLoadingPopup by lazy {
-        LoadingPopup(this).apply { setTitle("视频预加载中...") }
-    }
+
 
     companion object{
         fun toExportPage(activity:FragmentActivity?,isFinish: Boolean,path:String){
@@ -53,9 +48,7 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
         }
     }
 
-    override fun getViewModelClass(): Class<ExportViewModel> {
-        return ExportViewModel::class.java
-    }
+
 
     override fun getLayoutView(): Int=R.layout.activity_export
 
@@ -63,6 +56,9 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
 
     override fun initView() {
         binding.apply {
+            loadingPopup.setTitle("视频预加载中...")
+
+            viewThemeColor(themeState, videoExportContainer,exportHint)
             setStatusBarDistance(this@ExportActivity, exportTitleBar, LayoutType.CONSTRAINTLAYOUT)
 
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
@@ -88,18 +84,7 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
     }
 
 
-    override fun observerData() {
-        binding.apply {
-            viewModel.apply {
-                ThemeChangeLiveData.observe(this@ExportActivity, {
-                    exportTitleBar.setThemeChange(it)
-                    viewThemeColor(it, videoExportContainer,exportHint)
-                })
 
-            }
-        }
-
-    }
     private var openAction = 0
     override fun initEvent() {
         binding.apply {
@@ -136,7 +121,7 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
                 }
             }
 
-            mLoadingPopup.cancelMake {
+            loadingPopup.cancelMake {
                 cancelMake(true)
             }
 
@@ -184,7 +169,7 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
 
 
     private fun preVideo(){
-        mLoadingPopup.showPopupView(binding.videoExportContainer)
+        loadingPopup.showPopupView(binding.videoExportContainer)
         mProcessHelper.apply {
             stopProcess()
             setOnUpdateUIListener(this@ExportActivity)
@@ -193,12 +178,12 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
     }
 
     override fun onUIProgress(progress: Float) {
-        mLoadingPopup.setProgress((progress * 100).toInt())
+        loadingPopup.setProgress((progress * 100).toInt())
         MakeBackLiveData.setMakeFinishState(false)
     }
 
     override fun onUIComplete(retCode: Int, descMsg: String?) {
-        mLoadingPopup.dismiss()
+        loadingPopup.dismiss()
         toEditPage()
         MakeBackLiveData.setMakeFinishState(true)
     }
@@ -218,7 +203,7 @@ class ExportActivity : BaseVmViewActivity<ActivityExportBinding,ExportViewModel>
     }
 
     override fun release() {
-        mLoadingPopup.dismiss()
+        super.release()
         mProcessHelper.stopProcess()
     }
 

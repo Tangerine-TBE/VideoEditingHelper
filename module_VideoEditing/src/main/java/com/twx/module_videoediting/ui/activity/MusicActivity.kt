@@ -1,30 +1,22 @@
 package com.twx.module_videoediting.ui.activity
 
 import android.content.Intent
-import com.luck.picture.lib.PictureSelector
-import com.luck.picture.lib.config.PictureConfig
 import com.tencent.qcloud.ugckit.module.record.MusicInfo
-import com.twx.module_base.base.BaseVmViewActivity
+import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityMusicBinding
 import com.twx.module_videoediting.domain.MediaInformation
-import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.cancelMake
 import com.twx.module_videoediting.utils.outPutVideo
 import com.twx.module_videoediting.utils.setBarEventAction
-import com.twx.module_videoediting.viewmodel.MusicViewModel
 
-class MusicActivity : BaseVmViewActivity<ActivityMusicBinding,MusicViewModel>(){
-    override fun getViewModelClass(): Class<MusicViewModel> {
-        return MusicViewModel::class.java
-    }
-
+class MusicActivity : BaseViewActivity<ActivityMusicBinding>(){
     override fun getLayoutView(): Int=R.layout.activity_music
-
     override fun initView() {
         binding.apply {
+            viewThemeColor(themeState, musicContainer)
             setStatusBarDistance(this@MusicActivity, musicTitleBar, LayoutType.CONSTRAINTLAYOUT)
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
                 mTWVideoMusicContainer.setVideoInfo(it)
@@ -33,17 +25,7 @@ class MusicActivity : BaseVmViewActivity<ActivityMusicBinding,MusicViewModel>(){
         }
     }
 
-    override fun observerData() {
-        binding.apply {
-            viewModel.apply {
-                ThemeChangeLiveData.observe(this@MusicActivity, {
-                    musicTitleBar.setThemeChange(it)
-                    viewThemeColor(it, musicContainer)
-                })
 
-            }
-        }
-    }
 
     override fun initEvent() {
         binding.apply {

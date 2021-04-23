@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -24,6 +25,7 @@ import com.tencent.qcloud.ugckit.component.timeline.SliderViewContainer;
 
 import com.tencent.ugc.TXVideoEditConstants;
 import com.tencent.ugc.TXVideoEditer;
+import com.twx.module_base.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +143,25 @@ public class TCTimeFragment extends Fragment implements View.OnClickListener {
             layoutRepeat.setVisibility(View.VISIBLE);
             layoutReverse.setVisibility(View.VISIBLE);
         }
+
+
+        TextView textView = (TextView)view.findViewById(R.id.test);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timess+=1000;
+                if (timess>6000){
+                    timess=0;
+                }
+                LogUtils.i("------testKit------------------------"+timess);
+                PlayerManagerKit.getInstance().previewAtTime(timess);
+            }
+        });
     }
+    private long timess;
+
+
+
 
     private void initRepeatLayout() {
         long currentTime = 0;

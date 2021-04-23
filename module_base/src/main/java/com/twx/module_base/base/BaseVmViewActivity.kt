@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.twx.module_base.utils.Constants
 import com.twx.module_base.utils.SPUtil
 import com.twx.module_base.widget.popup.LoadingPopup
 
@@ -19,9 +20,7 @@ import com.twx.module_base.widget.popup.LoadingPopup
  */
 abstract class BaseVmViewActivity<T:ViewDataBinding,Vm:ViewModel>:BaseActivity() {
 
-    protected val loadingPopup by lazy {
-        LoadingPopup(this).apply { setTitle("视频导出中...") }
-    }
+
 
 
 
@@ -59,11 +58,6 @@ abstract class BaseVmViewActivity<T:ViewDataBinding,Vm:ViewModel>:BaseActivity()
 
     abstract fun getLayoutView(): Int
 
-
-    override fun release() {
-        super.release()
-        loadingPopup.dismiss()
-    }
 
 
 }

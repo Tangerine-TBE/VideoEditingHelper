@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutTitleBarContainerBinding
+import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
 
 
 /**
@@ -25,7 +26,7 @@ import com.twx.module_videoediting.databinding.LayoutTitleBarContainerBinding
  */
 class TitleBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : BaseUi(context, attrs, defStyleAttr) {
 
 
     private val binding=DataBindingUtil.inflate<LayoutTitleBarContainerBinding>(LayoutInflater.from(context),
@@ -56,6 +57,8 @@ class TitleBar @JvmOverloads constructor(
 
     private fun initEvent() {
         binding.apply {
+            viewThemeColor(themeState,titleBarIcon,titleBarTitle)
+
             titleBarIcon.setOnClickListener {
                 mListener?.backAction()
             }
@@ -73,11 +76,6 @@ class TitleBar @JvmOverloads constructor(
     }
 
 
-    fun setThemeChange(state: Boolean) {
-        binding.apply {
-            viewThemeColor(state,titleBarIcon,titleBarTitle)
-        }
-    }
 
     private var mListener:OnBarActionListener?=null
     fun setOnBarActionListener(listener:OnBarActionListener){

@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
 
     implementation 'com.google.android.exoplayer:exoplayer:2.13.3'
-
+    implementation 'com.shuyu:GSYVideoPlayer:8.1.2'
     //implementation 'com.coder.command:ffmpeg-mini:1.2.0-beta3'
 
     //极速版 (预计占用 4M 左右空间)，主要移除了一些不常用的编解码器

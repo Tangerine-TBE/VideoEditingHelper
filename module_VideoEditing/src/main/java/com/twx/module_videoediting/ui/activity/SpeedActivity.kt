@@ -6,25 +6,21 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
-import com.twx.module_base.base.BaseVmViewActivity
+import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.LayoutType
-import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.setStatusBarDistance
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivitySpeedBinding
-import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.ui.widget.video.speed.SpeedView
 import com.twx.module_videoediting.utils.*
-import com.twx.module_videoediting.viewmodel.SpeedViewModel
-import io.microshow.rxffmpeg.RxFFmpegInvoke
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
 
-class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>() {
+class SpeedActivity : BaseViewActivity<ActivitySpeedBinding>() {
     private var mSrcFile = ""
     private var mVideoOutputPath = ""
     private var mSpeed = 1.0f
@@ -44,15 +40,13 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
         SimpleExoPlayer.Builder(this@SpeedActivity).build()
     }
 
-    override fun getViewModelClass(): Class<SpeedViewModel> {
-        return SpeedViewModel::class.java
-    }
 
     override fun getLayoutView(): Int = R.layout.activity_speed
 
 
     override fun initView() {
         binding.apply {
+            viewThemeColor(themeState, speedContainer,speedHint)
             setStatusBarDistance(this@SpeedActivity, speedTitleBar, LayoutType.CONSTRAINTLAYOUT)
             //获取视频路径播放
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
@@ -65,24 +59,10 @@ class SpeedActivity : BaseVmViewActivity<ActivitySpeedBinding, SpeedViewModel>()
             }
 
         }
+        MakeBackLiveData.observe(this@SpeedActivity, {
+            if (it) loadingPopup.dismiss()
+        })
 
-    }
-
-
-    override fun observerData() {
-        binding.apply {
-            viewModel.apply {
-                ThemeChangeLiveData.observe(this@SpeedActivity, {
-                    speedTitleBar.setThemeChange(it)
-                    viewThemeColor(it, speedContainer,speedHint)
-                })
-
-                MakeBackLiveData.observe(this@SpeedActivity, {
-                    if (it) loadingPopup.dismiss()
-                })
-
-            }
-        }
     }
 
 

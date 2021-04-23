@@ -42,6 +42,19 @@ object DataProvider {
     )
 
 
+    val cropItemList= arrayListOf(
+        ItemBean(title="垂直翻转",icon = R.mipmap.icon_crop_sx),
+        ItemBean(title="左右翻转",icon = R.mipmap.icon_crop_sx),
+        ItemBean(title="旋转",icon = R.mipmap.icon_crop_xuanzhuan),
+        ItemBean(title="还原",icon = R.mipmap.icon_crop_huanyuan),
+        ItemBean(title="原始比例",icon = R.mipmap.icon_crop_xuanzhuan),
+        ItemBean(title="自由",icon = R.mipmap.icon_crop_xuanzhuan),
+        ItemBean(title="1:1",icon = R.mipmap.icon_crop_xuanzhuan),
+        ItemBean(title="16:9",icon = R.mipmap.icon_crop_xuanzhuan),
+        ItemBean(title="9:16",icon = R.mipmap.icon_crop_xuanzhuan),
+    )
+
+
     val editList= arrayListOf(
             ItemBean(title="剪辑",icon = R.mipmap.icon_item_jianji),
         ItemBean(title="拼接",icon = R.mipmap.icon_item_pingjie),

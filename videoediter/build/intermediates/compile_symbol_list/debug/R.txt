@@ -3226,6 +3226,7 @@ int id tag_transition_group 0x0
 int id tag_unhandled_key_event_manager 0x0
 int id tag_unhandled_key_listeners 0x0
 int id tc_record_bgm_pannel 0x0
+int id test 0x0
 int id test_checkbox_android_button_tint 0x0
 int id test_checkbox_app_button_tint 0x0
 int id test_radiobutton_android_button_tint 0x0

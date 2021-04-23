@@ -92,7 +92,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         const val ACTION_MUSIC = 4
         const val ACTION_REVERSE = 5
         const val ACTION_SPEED = 6
-        const val ACTION_SIZE = 7
+        const val ACTION_CROP = 7
     }
 
     private var openAction = -1
@@ -126,7 +126,10 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 1 -> openMediaSelect(ACTION_REVERSE)
                 2 -> openMediaSelect(ACTION_SPEED)
                 3 -> {
-                    toOtherActivity<TCVideoPickerActivity>(activity) {}
+                    openMediaSelect(ACTION_CROP)
+                    //toOtherActivity<TCVideoPickerActivity>(activity) {}
+
+
                 }
             }
 
@@ -194,6 +197,13 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                                 path
                         )
                     }
+                    ACTION_CROP->toOtherActivity<CropActivity>(activity) {
+                        putExtra(
+                            Constants.KEY_VIDEO_PATH,
+                            path
+                        )
+                    }
+
                 }
             }
         }

@@ -215,6 +215,11 @@ inline fun <reified T> gsonHelper(result: String?): T? =
         null
     }
 
+inline fun <reified T> String.toJsonFormat():T?{
+    return Gson().fromJson(this, T::class.java)
+}
+
+
 
 fun checkAppPermission(
         permissions: ArrayList<String>,

@@ -1,32 +1,25 @@
 package com.twx.module_videoediting.ui.activity
 
-import com.tencent.qcloud.ugckit.utils.AlbumSaver
-import com.tencent.qcloud.ugckit.utils.CoverUtil
 import com.tencent.ugc.TXVideoEditConstants
-import com.tencent.ugc.TXVideoInfoReader
-import com.twx.module_base.base.BaseVmViewActivity
+import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityJoinBinding
 import com.twx.module_videoediting.domain.ValueJoinList
-import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.ui.widget.video.join.IVideoJoin
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.utils.setBarEventAction
-import com.twx.module_videoediting.viewmodel.JoinViewModel
 
-class JoinActivity : BaseVmViewActivity<ActivityJoinBinding, JoinViewModel>() {
+class JoinActivity : BaseViewActivity<ActivityJoinBinding>() {
 
-    override fun getViewModelClass(): Class<JoinViewModel> {
-        return JoinViewModel::class.java
-    }
 
     override fun getLayoutView(): Int = R.layout.activity_join
 
     override fun initView() {
         binding.apply {
+            viewThemeColor(themeState, joinContainer)
             setStatusBarDistance(this@JoinActivity, joinTitleBar, LayoutType.CONSTRAINTLAYOUT)
             lifecycle.addObserver(mVideoJoinContainer)
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let { it ->
@@ -46,17 +39,6 @@ class JoinActivity : BaseVmViewActivity<ActivityJoinBinding, JoinViewModel>() {
     }
 
 
-    override fun observerData() {
-        binding.apply {
-            viewModel.apply {
-                ThemeChangeLiveData.observe(this@JoinActivity, {
-                    joinTitleBar.setThemeChange(it)
-                    viewThemeColor(it, joinContainer)
-                })
-
-            }
-        }
-    }
 
     override fun initEvent() {
         binding.apply {

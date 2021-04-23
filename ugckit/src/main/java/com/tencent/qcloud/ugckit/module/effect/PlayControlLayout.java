@@ -68,7 +68,7 @@ public class PlayControlLayout extends RelativeLayout implements IPlayControlLay
 
     @Override
     public void onPreviewProgress(int timeMs) {
-        LogUtils.i("-------onPreviewProgress-----------test------------------"+timeMs);
+        LogUtils.i("-------onPreviewProgress-----------testKit------------------"+timeMs);
         mTvCurrent.setText(DateTimeUtil.duration(timeMs));
     }
 

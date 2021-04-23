@@ -47,7 +47,6 @@ class SelectMediaActivity : BaseVmViewActivity<ActivitySelectMediaBinding, Selec
         binding.apply {
             viewModel.apply {
                 ThemeChangeLiveData.observe(this@SelectMediaActivity, {
-                    mediaTitleBar.setThemeChange(it)
                     viewThemeColor(it, mediaContainer)
                 })
 

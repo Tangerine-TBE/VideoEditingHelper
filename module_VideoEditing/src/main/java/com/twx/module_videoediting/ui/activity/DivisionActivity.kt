@@ -4,6 +4,7 @@ import android.content.Intent
 import android.text.TextUtils
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
+import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
@@ -20,15 +21,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
-class DivisionActivity : BaseVmViewActivity<ActivityDivisionBinding,VideoCutViewModel>() {
+class DivisionActivity : BaseViewActivity<ActivityDivisionBinding>() {
 
     override fun getLayoutView(): Int = R.layout.activity_division
-    override fun getViewModelClass(): Class<VideoCutViewModel> {
-        return VideoCutViewModel::class.java
-    }
+
 
     override fun initView() {
         binding.apply {
+            viewThemeColor(themeState, divisionContainer)
             setStatusBarDistance(
                 this@DivisionActivity,
                 divisionTitleBar,
@@ -38,25 +38,14 @@ class DivisionActivity : BaseVmViewActivity<ActivityDivisionBinding,VideoCutView
             mVideoDivisionContainer.initPlayerLayout()
             lifecycle.addObserver(mVideoDivisionContainer.getPlayerView())
         }
-    }
 
-
-    override fun observerData() {
-        binding.apply {
-            viewModel.apply {
-                ThemeChangeLiveData.observe(this@DivisionActivity, {
-                    divisionTitleBar.setThemeChange(it)
-                    viewThemeColor(it, divisionContainer)
-                })
-
-                MakeBackLiveData.observe(this@DivisionActivity, {
-                    if (it) loadingPopup.dismiss()
-                })
-
-            }
-        }
+        MakeBackLiveData.observe(this@DivisionActivity, {
+            if (it) loadingPopup.dismiss()
+        })
 
     }
+
+
 
     private var outPathOne=""
     private var outPathTwo=""

@@ -36,7 +36,6 @@ class CutActivity : BaseVmViewActivity<ActivityVidelCutBinding, VideoCutViewMode
         binding.apply {
             viewModel.apply {
                 ThemeChangeLiveData.observe(this@CutActivity, {
-                    cutTitleBar.setThemeChange(it)
                     viewThemeColor(it, videoCutContainer)
                 })
 
