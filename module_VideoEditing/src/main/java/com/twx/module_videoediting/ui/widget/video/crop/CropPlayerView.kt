@@ -20,9 +20,9 @@ class CropPlayerView : StandardGSYVideoPlayer {
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
 
+
+
     override fun getLayoutId(): Int = R.layout.layout_crop_player_view
-
-
     override fun updateStartImage() {
         mStartButton.visibility = View.VISIBLE
         if (mStartButton is ImageView) {
@@ -68,9 +68,8 @@ class CropPlayerView : StandardGSYVideoPlayer {
 
 
 
-    enum class FlipState{
-        NORMAL,VERTICAL,HORIZONTAL
-    }
+
+
 
 
 
@@ -84,9 +83,6 @@ class CropPlayerView : StandardGSYVideoPlayer {
                 val transform = Matrix()
                 transform.setScale(-1f, 1f, (mTextureView.width / 2).toFloat(), 0f)
                 mTextureView.setTransform(transform)
-
-
-
                 mTextureView.invalidate()
             }
             2 -> {
@@ -105,8 +101,10 @@ class CropPlayerView : StandardGSYVideoPlayer {
     }
 
 
-    fun getRotationValue()=mTextureView.rotation
 
+
+
+    fun getRotationValue()=mTextureView.rotation
     fun setRotation() {
         if (mTextureView.rotation - mRotate == 270f) {
             mTextureView.rotation = mRotate.toFloat()
@@ -116,14 +114,5 @@ class CropPlayerView : StandardGSYVideoPlayer {
             mTextureView.requestLayout()
         }
     }
-
-    /**
-     * 旋转逻辑
-     */
-    private fun resolveRotateUI() {
-        mTextureView.rotation = mRotate.toFloat()
-        mTextureView.requestLayout()
-    }
-
 
 }

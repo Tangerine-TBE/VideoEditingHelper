@@ -55,6 +55,14 @@ object FFmpegHelper {
     }
 
 
+    fun orientationVideo(srcFile:String,targetFile:String):Array<String?>{
+        var command ="ffmpeg -i %s -vf rotate=PI/2 %s"
+        //var command = "ffmpeg -i %s -filter_complex [0:v]pad=w=2*iw[main];[0:v]hflip[overlay];[main][overlay]overlay=x=w %s"
+        command =  String.format(command,srcFile,targetFile)
+        LogUtils.i("--FFmpegHelper--orientationVideo------- $command")
+        return return command.split(" ").toTypedArray()
+    }
+
 
 
 

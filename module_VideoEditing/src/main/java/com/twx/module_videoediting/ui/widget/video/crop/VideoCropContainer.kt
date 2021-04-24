@@ -35,7 +35,12 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager
 class VideoCropContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BaseUi(context, attrs, defStyleAttr) {
-    private val binding= DataBindingUtil.inflate<LayoutVideoCropViewBinding>(LayoutInflater.from(context), R.layout.layout_video_crop_view, this, true)
+    private val binding = DataBindingUtil.inflate<LayoutVideoCropViewBinding>(
+        LayoutInflater.from(context),
+        R.layout.layout_video_crop_view,
+        this,
+        true
+    )
 
     private val mCropOneAdapter by lazy {
         CropItemAdapter()
@@ -66,15 +71,15 @@ class VideoCropContainer @JvmOverloads constructor(
                 .build(mCropPlayerView)
 
             cropOneContainer.apply {
-                layoutManager=GridLayoutManager(context,4)
-                mCropOneAdapter.setList(DataProvider.cropItemList.subList(0,4))
-                adapter=mCropOneAdapter
+                layoutManager = GridLayoutManager(context, 4)
+                mCropOneAdapter.setList(DataProvider.cropItemList.subList(0, 4))
+                adapter = mCropOneAdapter
             }
 
             cropTwoContainer.apply {
-                layoutManager=GridLayoutManager(context,5)
-                mCropTwoAdapter.setList(DataProvider.cropItemList.subList(3,8))
-                adapter=mCropTwoAdapter
+                layoutManager = GridLayoutManager(context, 5)
+                mCropTwoAdapter.setList(DataProvider.cropItemList.subList(3, 8))
+                adapter = mCropTwoAdapter
             }
 
         }
@@ -86,7 +91,7 @@ class VideoCropContainer @JvmOverloads constructor(
             mCropPlayerView.apply {
                 setGSYStateUiListener {
                     LogUtils.i("-setGSYStateUiListener--------------$it------------------")
-                    when(it){
+                    when (it) {
                         GSYVideoView.CURRENT_STATE_ERROR -> {
                             errorSelectCore()
                         }
@@ -96,71 +101,77 @@ class VideoCropContainer @JvmOverloads constructor(
                 mCropOneAdapter.setOnItemClickListener { adapter, view, position ->
                     LogUtils.i("-mCropOneAdapter--------------${getRotationValue()}------------------")
 
-                    when(position){
-                        0-> setResolveTransform(true,getResolveTransform())
-                        1-> setResolveTransform(false,getResolveTransform())
-                        2->setRotation()
-                        3->restoreVideoUi()
+                    when (position) {
+                        0 -> setResolveTransform(true, getResolveTransform())
+                        1 -> setResolveTransform(false, getResolveTransform())
+                        2 -> setRotation()
+                        3 -> restoreVideoUi()
                     }
                 }
 
             }
+
+
+            completeCrop.setOnClickListener {
+                completeAction()
+            }
+
         }
-
     }
 
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun playerResume(){
-        binding.mCropPlayerView.onVideoResume()
+    private var completeAction:()->Unit={}
+    fun setCompleteCropAction(action:()->Unit){
+        completeAction=action
     }
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    private fun playerPause(){
+
+
+
+
+     fun playerPause() {
         binding.mCropPlayerView.onVideoPause()
     }
 
 
-
-    fun setVideoPath(path:String){
+    fun setVideoPath(path: String) {
         binding.mCropPlayerView.apply {
             val videoFileInfo = TXVideoInfoReader.getInstance(context).getVideoFileInfo(path)
-            LogUtils.i("-videoFileInfo--------------  ${   videoFileInfo.width} ${videoFileInfo.height}   ------------------")
-            setUp(path,true,"")
+            LogUtils.i("-videoFileInfo--------------  ${videoFileInfo.width} ${videoFileInfo.height}   ------------------")
+            setUp(path, true, "")
             startPlayLogic()
         }
     }
 
-    private var errorCount=0
-    private fun errorSelectCore(){
-            val type = when (sp.getInt(Constants.SP_CORE_TYPE)) {
-                0 -> {
-                    PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
-                    1
-                }
-                1 -> {
-                    PlayerFactory.setPlayManager(SystemPlayerManager::class.java)
-                    2
-                }
-                2 -> {
-                    PlayerFactory.setPlayManager(IjkPlayerManager::class.java)
-                    0
-                }
-                else->{
-                    PlayerFactory.setPlayManager(IjkPlayerManager::class.java)
-                    0
-                }
+    private var errorCount = 0
+    private fun errorSelectCore() {
+        val type = when (sp.getInt(Constants.SP_CORE_TYPE)) {
+            0 -> {
+                PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
+                1
             }
-            sp.putInt(Constants.SP_CORE_TYPE,type)
-            errorCount++
-            errorCount = if (errorCount > 2) {
-                showToast("暂时不支持此视频格式")
-                0
-            } else {
-                binding.mCropPlayerView.startPlayLogic()
+            1 -> {
+                PlayerFactory.setPlayManager(SystemPlayerManager::class.java)
+                2
+            }
+            2 -> {
+                PlayerFactory.setPlayManager(IjkPlayerManager::class.java)
                 0
             }
+            else -> {
+                PlayerFactory.setPlayManager(IjkPlayerManager::class.java)
+                0
+            }
+        }
+        sp.putInt(Constants.SP_CORE_TYPE, type)
+        errorCount++
+        errorCount = if (errorCount > 2) {
+            showToast("暂时不支持此视频格式")
+            0
+        } else {
+            binding.mCropPlayerView.startPlayLogic()
+            0
+        }
     }
-
 
 
     override fun onDetachedFromWindow() {
