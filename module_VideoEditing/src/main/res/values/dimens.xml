@@ -3,4 +3,8 @@
 
     <dimen name="video_cut_thumbnail_with">60dp</dimen>
 
+
+    <dimen name="dp3">3dp</dimen>
+    <dimen name="dp1">1dp</dimen>
+
 </resources>

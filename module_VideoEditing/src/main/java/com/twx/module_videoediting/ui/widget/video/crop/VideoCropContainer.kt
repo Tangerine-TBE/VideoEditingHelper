@@ -3,6 +3,7 @@ package com.twx.module_videoediting.ui.widget.video.crop
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
@@ -19,6 +20,7 @@ import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.showToast
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutVideoCropViewBinding
+import com.twx.module_videoediting.domain.CropConfig
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.video.crop.CropItemAdapter
 import com.twx.module_videoediting.ui.widget.video.ganeral.BaseUi
@@ -61,7 +63,7 @@ class VideoCropContainer @JvmOverloads constructor(
         binding.apply {
             //初始好播放器
             GSYVideoOptionBuilder()
-                .setIsTouchWiget(true)
+                .setIsTouchWiget(false)
                 .setNeedLockFull(false)
                 .setRotateWithSystem(false)
                 .setAutoFullWithSize(false)
@@ -78,7 +80,7 @@ class VideoCropContainer @JvmOverloads constructor(
 
             cropTwoContainer.apply {
                 layoutManager = GridLayoutManager(context, 5)
-                mCropTwoAdapter.setList(DataProvider.cropItemList.subList(3, 8))
+                mCropTwoAdapter.setList(DataProvider.cropItemList.subList(3, 9))
                 adapter = mCropTwoAdapter
             }
 
@@ -95,6 +97,9 @@ class VideoCropContainer @JvmOverloads constructor(
                         GSYVideoView.CURRENT_STATE_ERROR -> {
                             errorSelectCore()
                         }
+                        GSYVideoView.CURRENT_STATE_PLAYING->{
+
+                        }
                     }
                 }
 
@@ -109,25 +114,40 @@ class VideoCropContainer @JvmOverloads constructor(
                     }
                 }
 
+
+                completeCrop.setOnClickListener {
+                    completeAction(CropConfig(getResolveTransform(),getRotationValue().toInt()))
+                }
+
+
+                showSize {
+                    mCropView.visibility=View.VISIBLE
+                    val layoutParams = mCropView.layoutParams
+                    layoutParams.width=it.width
+                    layoutParams.height=it.height
+                    mCropView.layoutParams=layoutParams
+                }
+
             }
 
 
-            completeCrop.setOnClickListener {
-                completeAction()
-            }
 
         }
+
     }
 
 
-    private var completeAction:()->Unit={}
-    fun setCompleteCropAction(action:()->Unit){
+    private var completeAction:(CropConfig)->Unit={}
+    fun setCompleteCropAction(action:(CropConfig)->Unit){
         completeAction=action
     }
 
 
 
 
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
      fun playerPause() {
         binding.mCropPlayerView.onVideoPause()
     }
@@ -141,6 +161,8 @@ class VideoCropContainer @JvmOverloads constructor(
             startPlayLogic()
         }
     }
+
+
 
     private var errorCount = 0
     private fun errorSelectCore() {
@@ -179,5 +201,8 @@ class VideoCropContainer @JvmOverloads constructor(
         binding.mCropPlayerView.release()
         GSYVideoManager.releaseAllVideos()
     }
+
+
+
 
 }

@@ -69,13 +69,14 @@ class CropActivity : BaseVmViewActivity<ActivityCropBinding,CropViewModel>() {
 
 
             mVideoCropContainer.setCompleteCropAction {
-                mScope.launch(Dispatchers.IO) {
+             /*   mScope.launch(Dispatchers.IO) {
                     mVideoOutputPath = VideoPathUtil.generateVideoPath()
-                    FFmpegHelper.startCommand(FFmpegHelper.orientationVideo(mSrcFile, mVideoOutputPath), callback)
+                    FFmpegHelper.startCommand(FFmpegHelper.orientationVideo(it,mSrcFile, mVideoOutputPath), callback)
                 }
                 mVideoCropContainer.playerPause()
-                loadingPopup.showPopupView(cropContainer)
+                loadingPopup.showPopupView(cropContainer)*/
 
+               // mVideoCropContainer.showSize()
             }
 
             loadingPopup.cancelMake {

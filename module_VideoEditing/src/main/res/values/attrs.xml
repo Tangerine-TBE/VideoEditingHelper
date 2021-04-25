@@ -21,4 +21,8 @@
     <attr name="rightThumbDrawable" format="reference" />
     <attr name="midThumbDrawable" format="reference" />
     </declare-styleable>
+
+
+
+
 </resources>

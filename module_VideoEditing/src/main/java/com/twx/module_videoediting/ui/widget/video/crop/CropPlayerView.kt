@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
 
 /**
@@ -29,34 +30,43 @@ class CropPlayerView : StandardGSYVideoPlayer {
             val imageView = mStartButton as ImageView
             when (mCurrentState) {
                 CURRENT_STATE_PLAYING -> {
-                    imageView.setImageResource(R.drawable.icon_exo_stop)
+                    imageView.setImageResource(R.mipmap.icon_player_stop)
                 }
                 CURRENT_STATE_ERROR -> {
-                    imageView.setImageResource(R.drawable.icon_exo_start)
+                    imageView.setImageResource(R.mipmap.icon_player_start)
                 }
                 else -> {
-                    imageView.setImageResource(R.drawable.icon_exo_start)
+                    imageView.setImageResource(R.mipmap.icon_player_start)
                 }
             }
         }
     }
 
-    private var mTransformSize = 0
+    companion object{
+        const val TRANSFORM_NORMAL=0
+        const val TRANSFORM_VERTICAL=2
+        const val TRANSFORM_HORIZONTAL=1
+    }
+
+
+    private var mTransformSize =TRANSFORM_NORMAL
     fun getResolveTransform() = mTransformSize
     fun setResolveTransform(isVertical: Boolean, transformSize: Int) {
         when (transformSize) {
-            0 -> {
+            TRANSFORM_NORMAL -> {
                 mTransformSize = if (isVertical) {
-                    2
+                    TRANSFORM_VERTICAL
                 } else {
-                    1
+                    TRANSFORM_HORIZONTAL
                 }
             }
-            1 -> mTransformSize = 0
-            2 -> mTransformSize = 0
+            TRANSFORM_HORIZONTAL -> mTransformSize = TRANSFORM_NORMAL
+            TRANSFORM_VERTICAL -> mTransformSize = TRANSFORM_NORMAL
         }
         resolveTransform()
+
     }
+
 
 
     fun restoreVideoUi() {
@@ -64,13 +74,11 @@ class CropPlayerView : StandardGSYVideoPlayer {
         resolveTransform()
         mTextureView.rotation = 0f
         mTextureView.requestLayout()
+        setPa()
     }
 
 
-
-
-
-
+    fun getTextureView()=mTextureView
 
 
     /**
@@ -98,8 +106,22 @@ class CropPlayerView : StandardGSYVideoPlayer {
                 mTextureView.invalidate()
             }
         }
+        setPa()
     }
 
+
+    fun setPa(){
+        getTextureView()?.apply {
+            sizeAction(showView)
+            LogUtils.i("-getTextureView------showView--------  ${width} ${height}   ------------------")
+        }
+    }
+
+
+    private var sizeAction:(View)->Unit={}
+    fun showSize(block:(View)->Unit){
+        sizeAction=block
+    }
 
 
 
@@ -113,6 +135,8 @@ class CropPlayerView : StandardGSYVideoPlayer {
             mTextureView.rotation = mTextureView.rotation + 90
             mTextureView.requestLayout()
         }
+
+        setPa()
     }
 
 }

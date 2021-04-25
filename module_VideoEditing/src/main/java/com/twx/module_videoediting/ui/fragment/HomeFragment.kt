@@ -24,8 +24,11 @@ import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.domain.ValueJoinList
 import com.twx.module_videoediting.ui.activity.*
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.utils.cancelMake
 import com.twx.module_videoediting.viewmodel.MainViewModel
+
+import kotlinx.coroutines.launch
 
 /**
  * @name VideoEditingHelper
@@ -126,7 +129,10 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 1 -> openMediaSelect(ACTION_REVERSE)
                 2 -> openMediaSelect(ACTION_SPEED)
                 3 -> {
-                    openMediaSelect(ACTION_CROP)
+                 /*   mScope.launch {
+                        FileUtils.getAllImage()
+                    }*/
+                  openMediaSelect(ACTION_CROP)
                     //toOtherActivity<TCVideoPickerActivity>(activity) {}
 
 

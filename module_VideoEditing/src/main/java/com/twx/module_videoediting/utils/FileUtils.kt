@@ -48,7 +48,7 @@ object FileUtils {
                 val size = getLong(getColumnIndexOrThrow(MediaStore.Video.Media.SIZE))//大小
                 val path = getString(getColumnIndexOrThrow(MediaStore.Video.Media.DATA)) // 路径
                 val bitmap = MediaStore.Video.Thumbnails.getThumbnail(contentResolver, id, MediaStore.Video.Thumbnails.MICRO_KIND, null)//缩略图
-                   LogUtils.i("---getAllVideo--${bitmap}--${id}---${name}---${size}---${duration}-----${path}---${uri}---")
+                //   LogUtils.i("---getAllVideo--${bitmap}--${id}---${name}---${size}---${duration}-----${path}---${uri}---")
                 videoList.add(MediaInformation(id,name,
                         duration,
                         "${RxTimeTool.date2String(Date(File(path).lastModified()), SimpleDateFormat("yyyy-MM-dd"))}",
@@ -77,6 +77,27 @@ object FileUtils {
                 val path = getString(getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)) // 路径
                 //   LogUtils.i("---getAllAudio---${id}---${name}-----${duration}---${date}-----${path}---${uri}---")
                 videoList.add(MediaInformation(id, name, duration,
+                    "${RxTimeTool.date2String(Date(File(path).lastModified()), SimpleDateFormat("yyyy-MM-dd"))}", uri.toString(), path,null))
+            }
+            close()
+        }
+        return videoList
+    }
+
+    /**
+     * 获取音频文件
+     * @return MutableList<MediaInformation>
+     */
+    fun getAllImage(): MutableList<MediaInformation> {
+        val videoList = ArrayList<MediaInformation>()
+        contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, "${MediaStore.MediaColumns.DATE_ADDED} desc")?.apply {
+            while (moveToNext()) {
+                val id = getLong(getColumnIndexOrThrow(MediaStore.MediaColumns._ID))
+                val uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
+                val name = getString(getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME))//名字
+                val path = getString(getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)) // 路径
+                   LogUtils.i("---getAllAudio----${name}-------${path}        ---       ${uri}---")
+                videoList.add(MediaInformation(id, name, 0L,
                     "${RxTimeTool.date2String(Date(File(path).lastModified()), SimpleDateFormat("yyyy-MM-dd"))}", uri.toString(), path,null))
             }
             close()

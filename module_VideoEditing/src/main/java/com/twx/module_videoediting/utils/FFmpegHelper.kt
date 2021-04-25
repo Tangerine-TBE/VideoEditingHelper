@@ -3,6 +3,7 @@ package com.twx.module_videoediting.utils
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
 import com.tencent.qcloud.ugckit.utils.VideoUtil
 import com.twx.module_base.utils.LogUtils
+import com.twx.module_videoediting.domain.CropConfig
 import io.microshow.rxffmpeg.RxFFmpegInvoke
 import io.microshow.rxffmpeg.RxFFmpegSubscriber
 import javax.security.auth.callback.Callback
@@ -55,15 +56,20 @@ object FFmpegHelper {
     }
 
 
-    fun orientationVideo(srcFile:String,targetFile:String):Array<String?>{
-        var command ="ffmpeg -i %s -vf rotate=PI/2 %s"
-        //var command = "ffmpeg -i %s -filter_complex [0:v]pad=w=2*iw[main];[0:v]hflip[overlay];[main][overlay]overlay=x=w %s"
+    fun orientationVideo(cropConfig: CropConfig,srcFile:String,targetFile:String):Array<String?>{
+
+   //   var command ="ffmpeg -i %s -vf vflip -metadata:s:v rotate=90 %s"
+       var command ="ffmpeg -i %s -metadata:s:v rotate=270 %s"
+
         command =  String.format(command,srcFile,targetFile)
         LogUtils.i("--FFmpegHelper--orientationVideo------- $command")
         return return command.split(" ").toTypedArray()
     }
 
 
+    fun rotateVideo(){
+
+    }
 
 
 }
