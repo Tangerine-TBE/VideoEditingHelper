@@ -57,18 +57,30 @@ object FFmpegHelper {
 
 
     fun orientationVideo(cropConfig: CropConfig,srcFile:String,targetFile:String):Array<String?>{
+        var command=""
+        cropConfig.apply {
+            if ((orientation == 0) and (gho == 0) and (rect.left == 0f) and (rect.bottom == 0f)) {
+                command = "ffmpeg -i %s -c copy %s"
+            } else {
+                if (gho != 0) {
+                    command="ffmpeg -i %s -vf ${if (gho == 1) "hflip" else "vflip"} %s"
 
-   //   var command ="ffmpeg -i %s -vf vflip -metadata:s:v rotate=90 %s"
-       var command ="ffmpeg -i %s -metadata:s:v rotate=270 %s"
+                } else {
+                    if (rect.left != 0f || rect.bottom != 0f) {
 
+                        command="ffmpeg -i %s -strict -2 -vf crop=960:1080:960:0 %s"
+
+
+                    } else {
+                        command ="ffmpeg -i %s -metadata:s:v rotate=-${orientation} -c copy %s"
+                    }
+                }
+
+            }
+        }
         command =  String.format(command,srcFile,targetFile)
         LogUtils.i("--FFmpegHelper--orientationVideo------- $command")
         return return command.split(" ").toTypedArray()
-    }
-
-
-    fun rotateVideo(){
-
     }
 
 

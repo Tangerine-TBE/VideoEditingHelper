@@ -2,6 +2,7 @@ package com.twx.module_videoediting.ui.widget.video.ganeral
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleObserver
 import com.twx.module_base.utils.SPUtil
@@ -30,6 +31,7 @@ open class BaseUi @JvmOverloads constructor(
 
     protected val mJob = Job()
     protected var mScope = CoroutineScope(mJob)
+
 
 
 }

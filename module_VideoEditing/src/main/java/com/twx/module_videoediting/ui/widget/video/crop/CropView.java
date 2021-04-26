@@ -4,10 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.twx.module_base.utils.LogUtils;
 import com.twx.module_videoediting.R;
 
 
@@ -17,7 +20,7 @@ import com.twx.module_videoediting.R;
  * 裁剪视频的View
  */
 
-public class CutView extends View {
+public class CropView extends View {
     float downX;
     float downY;
     float lastSlideX;
@@ -45,15 +48,15 @@ public class CutView extends View {
 
     private float aspect = -1;
 
-    public CutView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CropView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
-    public CutView(Context context, AttributeSet attrs) {
+    public CropView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-    public CutView(Context context) {
+    public CropView(Context context) {
         super(context);
         init();
     }
@@ -410,6 +413,11 @@ public class CutView extends View {
         return arr;
     }
 
+    public RectF getRectValue(){
+        return new RectF(rectLeft,rectTop,rectRight,rectBottom);
+    }
+
+
     public int getRectWidth() {
         return (int) (measuredWidth);
     }
@@ -434,11 +442,20 @@ public class CutView extends View {
         measuredWidth = getMeasuredWidth();
         measuredHeight = getMeasuredHeight();
         if(aspect == -1){
-            cornerLength = measuredWidth / 6;
-            rectRight = measuredWidth ;
-            rectLeft = 0;
-            rectTop = 0;
-            rectBottom = measuredHeight ;
+            if (isSpecial) {
+                cornerLength = measuredWidth / 6;
+
+            } else {
+                cornerLength = measuredWidth / 6;
+                rectRight = measuredWidth;
+                rectLeft = 0;
+                rectTop = 0;
+                rectBottom = measuredHeight ;
+            }
+
+
+
+            LogUtils.i("---mCropView------------------------"+measuredWidth+"---------"+measuredHeight);
         }else{
             float vh = measuredWidth*1.0f/measuredHeight;
             if(aspect > 1){
@@ -471,6 +488,19 @@ public class CutView extends View {
         //绘制四条分割线和四个角
         drawLine(canvas, rectLeft, rectTop, rectRight, rectBottom);
     }
+
+
+    private boolean isSpecial;
+
+    public void setRectValue(boolean specialState,int left, int top, int right, int bottom){
+        isSpecial=specialState;
+        rectLeft=left;
+        rectTop=top;
+        rectRight=right;
+        rectBottom=bottom;
+        invalidate();
+    }
+
 
     /**
      * 绘制四条分割线和四个角

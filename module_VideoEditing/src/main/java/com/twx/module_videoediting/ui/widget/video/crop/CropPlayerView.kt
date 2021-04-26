@@ -64,21 +64,17 @@ class CropPlayerView : StandardGSYVideoPlayer {
             TRANSFORM_VERTICAL -> mTransformSize = TRANSFORM_NORMAL
         }
         resolveTransform()
-
     }
 
 
 
-    fun restoreVideoUi() {
-        mTransformSize=0
-        resolveTransform()
-        mTextureView.rotation = 0f
-        mTextureView.requestLayout()
-        setPa()
+
+
+    fun getTextureView(block:(View)->Unit){
+        block(mTextureView.showView)
     }
 
 
-    fun getTextureView()=mTextureView
 
 
     /**
@@ -106,28 +102,17 @@ class CropPlayerView : StandardGSYVideoPlayer {
                 mTextureView.invalidate()
             }
         }
-        setPa()
+
     }
 
+    private var isRotate=false
+    private var mRotateValue=mTextureView?.rotation?:0f
+    fun getRotationValue()=mRotateValue
+    fun getRotateState()=isRotate
 
-    fun setPa(){
-        getTextureView()?.apply {
-            sizeAction(showView)
-            LogUtils.i("-getTextureView------showView--------  ${width} ${height}   ------------------")
-        }
-    }
-
-
-    private var sizeAction:(View)->Unit={}
-    fun showSize(block:(View)->Unit){
-        sizeAction=block
-    }
-
-
-
-
-    fun getRotationValue()=mTextureView.rotation
     fun setRotation() {
+        isRotate=true
+        LogUtils.i("----setRotation---begin--${mTextureView.rotation}--------------")
         if (mTextureView.rotation - mRotate == 270f) {
             mTextureView.rotation = mRotate.toFloat()
             mTextureView.requestLayout()
@@ -135,8 +120,17 @@ class CropPlayerView : StandardGSYVideoPlayer {
             mTextureView.rotation = mTextureView.rotation + 90
             mTextureView.requestLayout()
         }
+        mRotateValue= mTextureView.rotation
+        LogUtils.i("----setRotation--end---${mTextureView.rotation}--------------")
+    }
 
-        setPa()
+
+    fun restoreVideoUi() {
+        mTransformSize=0
+        mRotateValue=0f
+        mTextureView.rotation = 0f
+        resolveTransform()
+        mTextureView.requestLayout()
     }
 
 }

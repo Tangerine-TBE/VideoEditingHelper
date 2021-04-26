@@ -3,10 +3,13 @@ package com.twx.module_videoediting.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
+import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.LayoutType
+import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.setStatusBarDistance
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
@@ -67,17 +70,24 @@ class CropActivity : BaseVmViewActivity<ActivityCropBinding,CropViewModel>() {
 
             }
 
-
             mVideoCropContainer.setCompleteCropAction {
-             /*   mScope.launch(Dispatchers.IO) {
+                mScope.launch(Dispatchers.IO) {
                     mVideoOutputPath = VideoPathUtil.generateVideoPath()
                     FFmpegHelper.startCommand(FFmpegHelper.orientationVideo(it,mSrcFile, mVideoOutputPath), callback)
                 }
                 mVideoCropContainer.playerPause()
-                loadingPopup.showPopupView(cropContainer)*/
+                loadingPopup.showPopupView(cropContainer)
 
-               // mVideoCropContainer.showSize()
+                val videoFileInfo = TXVideoInfoReader.getInstance(this@CropActivity).getVideoFileInfo(mSrcFile)
+                LogUtils.i("-outInfo--------------  ${videoFileInfo.width} ${videoFileInfo.height}   ------------------")
+                val rect = it.rect
+                LogUtils.i("---outInfo---- left:${rect.left}       top:${rect.top}     right:${rect.right}     bottom:${rect.bottom}  trans:${it.gho}  rotate:${it.orientation}  ---------------------")
+
+
             }
+
+
+
 
             loadingPopup.cancelMake {
                 FFmpegHelper.exitCommand()

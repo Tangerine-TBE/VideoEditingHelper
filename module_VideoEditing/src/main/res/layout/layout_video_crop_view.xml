@@ -15,20 +15,30 @@
             android:id="@+id/mCropPlayerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/guideline5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <com.twx.module_videoediting.ui.widget.video.crop.CutView
-            android:id="@+id/mCropView"
-            android:layout_width="match_parent"
+
+        <RelativeLayout
+            android:id="@+id/mCropViewContainer"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/guideline5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
 
+            <com.twx.module_videoediting.ui.widget.video.crop.CropView
+                android:id="@+id/mCropView"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView

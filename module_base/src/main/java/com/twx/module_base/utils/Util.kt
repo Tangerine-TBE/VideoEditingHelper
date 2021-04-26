@@ -300,6 +300,15 @@ fun formatTime(timeTemp: Long): String {
     }
 }
 
+fun View.showView(){
+    visibility=View.VISIBLE
+}
+
+fun View.goneView(){
+    visibility=View.GONE
+}
+
+
 
 
 
