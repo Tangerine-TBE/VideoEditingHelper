@@ -36,7 +36,6 @@ object DataProvider {
             ItemBean(title = "主题切换"),
             ItemBean(title = "检查更新"),
             ItemBean(title = "关于我们"),
-            ItemBean(title = "意见反馈"),
             ItemBean(title = "用户协议"),
             ItemBean(title = "隐私政策"),
     )
@@ -44,14 +43,14 @@ object DataProvider {
 
     val cropItemList = arrayListOf(
             ItemBean(title = "垂直翻转", icon = R.mipmap.icon_crop_sx),
-            ItemBean(title = "左右翻转", icon = R.mipmap.icon_crop_sx),
+            ItemBean(title = "左右翻转", icon = R.mipmap.icon_crop_zy),
             ItemBean(title = "旋转", icon = R.mipmap.icon_crop_xuanzhuan),
             ItemBean(title = "还原", icon = R.mipmap.icon_crop_huanyuan),
-            ItemBean(title = "原始比例", icon = R.mipmap.icon_crop_xuanzhuan),
-            ItemBean(title = "1:1", icon = R.mipmap.icon_crop_xuanzhuan),
-            ItemBean(title = "16:9", icon = R.mipmap.icon_crop_xuanzhuan),
-            ItemBean(title = "9:16", icon = R.mipmap.icon_crop_xuanzhuan),
-            ItemBean(title = "4:3", icon = R.mipmap.icon_crop_xuanzhuan),
+            ItemBean(title = "原始比例", icon = R.mipmap.icon_size_src),
+            ItemBean(title = "1:1", icon = R.mipmap.icon_size_src),
+            ItemBean(title = "16:9", icon = R.mipmap.icon_size_169),
+            ItemBean(title = "9:16", icon = R.mipmap.icon_size_916),
+            ItemBean(title = "4:3", icon = R.mipmap.icon_size_43),
     )
 
 

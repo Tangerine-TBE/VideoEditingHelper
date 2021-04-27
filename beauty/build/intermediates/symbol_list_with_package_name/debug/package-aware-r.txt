@@ -997,15 +997,6 @@ color abc_tint_spinner
 color abc_tint_switch_track
 color accent_material_dark
 color accent_material_light
-color ali_feedback_black
-color ali_feedback_color_white
-color ali_feedback_default_title_color
-color ali_feedback_grey_btn_default
-color ali_feedback_halftransparentwhite
-color ali_feedback_normal_title_bg
-color ali_feedback_red
-color ali_feedback_white
-color ali_feedback_wxtribe_title_color
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
 color background_floating_material_dark
@@ -1284,11 +1275,6 @@ dimen abc_text_size_title_material_toolbar
 dimen action_bar_size
 dimen activity_horizontal_margin
 dimen activity_vertical_margin
-dimen ali_feedback_column_up_unit_margin
-dimen ali_feedback_common_text_size
-dimen ali_feedback_small_text_size
-dimen ali_feedback_title_bar_height
-dimen ali_feedback_title_middle_margin
 dimen appcompat_dialog_background_inset
 dimen audio_actionsheet_height
 dimen audio_friend_border_margin_top
@@ -1815,17 +1801,6 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
-drawable ali_feedback_common_back_btn_bg
-drawable ali_feedback_common_back_btn_normal
-drawable ali_feedback_common_back_btn_pressed
-drawable ali_feedback_commont_title_btn_text
-drawable ali_feedback_ic_element_noresult
-drawable ali_feedback_icon_back_white
-drawable ali_feedback_icon_more
-drawable ali_feedback_icon_redpoint
-drawable ali_feedback_popup_bg
-drawable ali_feedback_progress_bar_states
-drawable ali_feedback_pub_btn_white_nor
 drawable avd_hide_password
 drawable avd_show_password
 drawable bailan
@@ -1958,7 +1933,10 @@ drawable qingxin
 drawable rixi
 drawable seekbar_progress_drawable
 drawable shape_home_top_bg
+drawable shape_popup_agreement_text_bg
+drawable shape_popup_bg
 drawable shape_popup_loading_view_bg
+drawable splash_bg
 drawable test_custom_background
 drawable text_color1
 drawable tooltip_frame_dark
@@ -2062,7 +2040,6 @@ id action_mode_bar_stub
 id action_mode_close_button
 id action_text
 id actions
-id activityRoot
 id activity_chooser_view_content
 id add
 id alertTitle
@@ -2080,6 +2057,7 @@ id baseline
 id blocking
 id bottom
 id bounce
+id btSure
 id buttonPanel
 id cancelMake
 id cancel_action
@@ -2111,6 +2089,7 @@ id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
 id deltaRelative
+id descriptions
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -2130,8 +2109,6 @@ id easeOut
 id edit_query
 id end
 id end_padder
-id errorMsg
-id error_view_refresh_btn
 id exo_artwork
 id exo_content_frame
 id exo_controller_placeholder
@@ -2169,7 +2146,6 @@ id home
 id honorRequest
 id horizontalPickerViewFirst
 id horizontalPickerViewSecond
-id hybird_container
 id icon
 id icon_group
 id ignore
@@ -2180,6 +2156,7 @@ id info
 id invisible
 id italic
 id item_touch_helper_previous_elevation
+id ivCancel
 id iv_bar_add
 id iv_bar_back
 id iv_bar_right
@@ -2265,6 +2242,7 @@ id password_toggle
 id path
 id pathRelative
 id percent
+id permissionContainer
 id permissionIcon
 id permissionText
 id permissionsLayout
@@ -2278,10 +2256,12 @@ id progress_bar
 id progress_circular
 id progress_horizontal
 id progress_img
+id psHint
+id psIcon
+id psName
 id radio
 id record_layout_seekbar
 id rectangles
-id red_point
 id reverseSawtooth
 id right
 id right_icon
@@ -2293,6 +2273,7 @@ id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
 id scale
+id scbAgreement
 id screen
 id scrollIndicatorDown
 id scrollIndicatorUp
@@ -2358,6 +2339,7 @@ id text
 id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
+id textView22
 id textWatcher
 id text_input_end_icon
 id text_input_start_icon
@@ -2371,11 +2353,7 @@ id texture_view
 id time
 id title
 id titleDividerNoCustom
-id title_back
-id title_bar_shadow_view
-id title_button
 id title_template
-id title_text
 id top
 id topPanel
 id touch_outside
@@ -2403,7 +2381,7 @@ id view_offset_helper
 id view_tree_lifecycle_owner
 id view_tree_view_model_store_owner
 id visible
-id webview_icon_back
+id welcomeTitle
 id withinBounds
 id wrap
 id wrap_content
@@ -2470,8 +2448,6 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_about
 layout activity_deal
-layout ali_feedback_container_layout
-layout ali_feedback_error
 layout base_dialog_loading
 layout beauty_panel
 layout brvah_quick_view_load_more
@@ -2494,6 +2470,7 @@ layout design_text_input_start_icon
 layout exo_playback_control_view
 layout exo_simple_player_view
 layout item_beauty
+layout item_permission_container
 layout layout_loading_progress
 layout layout_toolbar_new
 layout mtrl_alert_dialog
@@ -2541,6 +2518,7 @@ layout notification_template_part_chronometer
 layout notification_template_part_time
 layout permissionx_default_dialog_layout
 layout permissionx_permission_item
+layout popup_agreement_window
 layout popup_loading_window
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
@@ -2566,6 +2544,7 @@ mipmap icon_cut_left
 mipmap icon_cut_right
 mipmap icon_login_logo_false
 mipmap icon_login_logo_true
+mipmap icon_no_agreement
 plurals mtrl_badge_content_description
 string N_A
 string TrackType_audio
@@ -2841,6 +2820,7 @@ style Animation_AppCompat_DropDownUp
 style Animation_AppCompat_Tooltip
 style Animation_Design_BottomSheetDialog
 style Animation_MaterialComponents_BottomSheetDialog
+style AppStartTheme
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
 style Base_Animation_AppCompat_Dialog
@@ -3541,11 +3521,6 @@ style Widget_MaterialComponents_Toolbar_PrimarySurface
 style Widget_MaterialComponents_Toolbar_Surface
 style Widget_MaterialComponents_Tooltip
 style Widget_Support_CoordinatorLayout
-style ali_feedback_common_title_left_btn_shadow
-style ali_feedback_common_title_style
-style ali_feedback_common_title_text_shadow
-style ali_feedback_commont_title_right_btn_shadow
-style ali_feedback_contentoverlay
 style loading_dialog
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
@@ -3676,7 +3651,6 @@ styleable View android_focusable android_theme paddingEnd paddingStart theme
 styleable ViewBackgroundHelper android_background backgroundTint backgroundTintMode
 styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_inflatedId android_layout
-xml alifb_provider_paths
 xml file_paths
 xml standalone_badge
 xml standalone_badge_gravity_bottom_end

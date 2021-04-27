@@ -3,24 +3,25 @@
     package="com.twx.module_videoediting">
 
     <application>
-        <activity android:name=".ui.activity.CropActivity"></activity>
-        <activity android:name=".ui.activity.TagsActivity" />
-        <activity android:name=".ui.activity.SpeedActivity" />
-        <activity android:name=".ui.activity.JoinActivity" />
-        <activity android:name=".ui.activity.ReadyJoinActivity" />
-        <activity android:name=".ui.activity.DivisionActivity" />
-        <activity android:name=".ui.activity.SelectMediaActivity" />
-        <activity android:name=".ui.activity.MusicActivity" />
-        <activity android:name=".ui.activity.ReverseActivity" />
+        <activity android:name=".ui.activity.CropActivity" android:launchMode="singleTop" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.activity.TagsActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.SpeedActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.JoinActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.ReadyJoinActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.DivisionActivity" android:launchMode="singleTop" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.SelectMediaActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.MusicActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.ReverseActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.ExportActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop" android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.activity.CutActivity"
-            android:theme="@style/EditerActivityTheme" />
+            android:theme="@style/EditerActivityTheme"  android:launchMode="singleTop" android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.MainViewActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

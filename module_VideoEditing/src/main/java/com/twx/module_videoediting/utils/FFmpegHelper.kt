@@ -62,24 +62,25 @@ object FFmpegHelper {
             if ((orientation == 0) and (gho == 0) and (rect.left == 0f) and (rect.bottom == 0f)) {
                 command = "ffmpeg -i %s -c copy %s"
             } else {
-                if (gho != 0) {
-                    command="ffmpeg -i %s -vf ${if (gho == 1) "hflip" else "vflip"} %s"
+                command = if (gho != 0) {
+                    "ffmpeg -i %s -vf ${if (gho == 1) "hflip" else "vflip"} %s"
 
                 } else {
                     if (rect.left != 0f || rect.bottom != 0f) {
-
-                        command="ffmpeg -i %s -strict -2 -vf crop=960:1080:960:0 %s"
-
-
+                        val realLeft=rect.left*widthRate
+                        val realRight=rect.right*widthRate
+                        val realTop=rect.top*widthRate
+                        val realBottom=rect.bottom*widthRate
+                        "ffmpeg -i %s -strict -2 -vf crop=${realRight-realLeft}:${realBottom-realTop}:${realLeft}:${realTop} %s"
                     } else {
-                        command ="ffmpeg -i %s -metadata:s:v rotate=-${orientation} -c copy %s"
+                        "ffmpeg -i %s -metadata:s:v rotate=-${orientation} -c copy %s"
                     }
                 }
 
             }
         }
         command =  String.format(command,srcFile,targetFile)
-        LogUtils.i("--FFmpegHelper--orientationVideo------- $command")
+        LogUtils.i("--FFmpegHelper-outInfo-orientationVideo------- $command")
         return return command.split(" ").toTypedArray()
     }
 

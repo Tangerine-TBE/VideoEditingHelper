@@ -2,7 +2,6 @@ package com.twx.module_videoediting.ui.fragment
 
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.sdk.android.feedback.impl.FeedbackAPI
 import com.twx.module_base.activity.AboutActivity
 import com.twx.module_base.activity.DealViewActivity
 import com.twx.module_base.base.BaseVmFragment
@@ -62,15 +61,12 @@ class SetFragment : BaseVmFragment<FragmentSetBinding, MainViewModel>() {
                     0 -> ThemeChangeLiveData.setThemeType()
                     1-> toAppShop(activity)
                     2-> toOtherActivity<AboutActivity>(activity){}
-                    3->FeedbackAPI.openFeedbackActivity()
-                    4->toOtherActivity<DealViewActivity>(activity){
+                    3->toOtherActivity<DealViewActivity>(activity){
                         putExtra(Constants.SET_DEAL1,1)
                     }
-                    5->toOtherActivity<DealViewActivity>(activity){
+                    4->toOtherActivity<DealViewActivity>(activity){
                         putExtra(Constants.SET_DEAL1,2)
                     }
-
-
                 }
             }
 

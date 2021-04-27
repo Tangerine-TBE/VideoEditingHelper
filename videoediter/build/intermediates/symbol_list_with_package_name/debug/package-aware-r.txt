@@ -1201,15 +1201,6 @@ color abc_tint_switch_track
 color accent_material_dark
 color accent_material_light
 color actionsheet_gray
-color ali_feedback_black
-color ali_feedback_color_white
-color ali_feedback_default_title_color
-color ali_feedback_grey_btn_default
-color ali_feedback_halftransparentwhite
-color ali_feedback_normal_title_bg
-color ali_feedback_red
-color ali_feedback_white
-color ali_feedback_wxtribe_title_color
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
 color background
@@ -1649,11 +1640,6 @@ dimen abc_text_size_title_material_toolbar
 dimen action_bar_size
 dimen activity_horizontal_margin
 dimen activity_vertical_margin
-dimen ali_feedback_column_up_unit_margin
-dimen ali_feedback_common_text_size
-dimen ali_feedback_small_text_size
-dimen ali_feedback_title_bar_height
-dimen ali_feedback_title_middle_margin
 dimen appcompat_dialog_background_inset
 dimen audio_actionsheet_height
 dimen audio_friend_border_margin_top
@@ -2192,17 +2178,6 @@ drawable actionsheet_single_selector
 drawable actionsheet_top_normal
 drawable actionsheet_top_pressed
 drawable actionsheet_top_selector
-drawable ali_feedback_common_back_btn_bg
-drawable ali_feedback_common_back_btn_normal
-drawable ali_feedback_common_back_btn_pressed
-drawable ali_feedback_commont_title_btn_text
-drawable ali_feedback_ic_element_noresult
-drawable ali_feedback_icon_back_white
-drawable ali_feedback_icon_more
-drawable ali_feedback_icon_redpoint
-drawable ali_feedback_popup_bg
-drawable ali_feedback_progress_bar_states
-drawable ali_feedback_pub_btn_white_nor
 drawable avd_hide_password
 drawable avd_show_password
 drawable bailan
@@ -2567,11 +2542,14 @@ drawable shape_motion_spirit_press
 drawable shape_motion_split_press
 drawable shape_motion_win_shadow_press
 drawable shape_picker_bg
+drawable shape_popup_agreement_text_bg
+drawable shape_popup_bg
 drawable shape_popup_loading_view_bg
 drawable shape_time_bg_normal
 drawable shape_time_bg_selected
 drawable shape_video_bottom_mask
 drawable shape_video_top_mask
+drawable splash_bg
 drawable splash_pic
 drawable swipe_menu_divider_recycler
 drawable tcloud_logo
@@ -2708,7 +2686,6 @@ id action_mode_bar_stub
 id action_mode_close_button
 id action_text
 id actions
-id activityRoot
 id activity_chooser_view_content
 id add
 id add_paster_image
@@ -2745,6 +2722,7 @@ id bgm_tv_name
 id blocking
 id bottom
 id bounce
+id btSure
 id btn_back
 id btn_bgm_confirm
 id btn_bgm_delete
@@ -2840,6 +2818,7 @@ id decelerateAndComplete
 id decor_content_parent
 id default_activity_button
 id deltaRelative
+id descriptions
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -2859,8 +2838,6 @@ id easeOut
 id edit_query
 id end
 id end_padder
-id errorMsg
-id error_view_refresh_btn
 id exo_artwork
 id exo_content_frame
 id exo_controller_placeholder
@@ -2904,7 +2881,6 @@ id honorRequest
 id horizontalPickerViewFirst
 id horizontalPickerViewSecond
 id host_name
-id hybird_container
 id ic_cover
 id icon
 id icon_group
@@ -2918,6 +2894,7 @@ id invisible
 id italic
 id item_list
 id item_touch_helper_previous_elevation
+id ivCancel
 id iv_aspect
 id iv_aspect_first
 id iv_aspect_fourth
@@ -3085,6 +3062,7 @@ id path
 id pathId
 id pathRelative
 id percent
+id permissionContainer
 id permissionIcon
 id permissionText
 id permissionsLayout
@@ -3104,6 +3082,9 @@ id progress_horizontal
 id progress_img
 id progress_time
 id progressbar
+id psHint
+id psIcon
+id psName
 id publishLayout
 id radio
 id range_slider
@@ -3130,7 +3111,6 @@ id record_speed_layout
 id record_to_edit
 id rectangles
 id recycler_view
-id red_point
 id reverseSawtooth
 id review_status
 id rg_record_speed
@@ -3161,6 +3141,7 @@ id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
 id scale
+id scbAgreement
 id screen
 id scrollFilterView
 id scrollIndicatorDown
@@ -3236,6 +3217,7 @@ id text
 id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
+id textView22
 id textView_bgm_volume
 id textWatcher
 id text_input_end_icon
@@ -3262,11 +3244,7 @@ id titleBar_layout
 id titleDividerNoCustom
 id titleId
 id titleLayoutId
-id title_back
-id title_bar_shadow_view
-id title_button
 id title_template
-id title_text
 id title_tv
 id top
 id topPanel
@@ -3352,7 +3330,7 @@ id view_tree_lifecycle_owner
 id view_tree_view_model_store_owner
 id visible
 id webrtc_link_button
-id webview_icon_back
+id welcomeTitle
 id withinBounds
 id word_et_content
 id word_tv_cancel
@@ -3432,8 +3410,6 @@ layout activity_video_choose
 layout activity_video_cut
 layout activity_video_editer
 layout activity_video_effect
-layout ali_feedback_container_layout
-layout ali_feedback_error
 layout aspect_view
 layout base_dialog_loading
 layout beauty_panel
@@ -3480,6 +3456,7 @@ layout item_bubble_img
 layout item_edit_view
 layout item_editer_bgm
 layout item_log
+layout item_permission_container
 layout item_ugc_video
 layout item_video_progress_thumbnail
 layout item_videoedit_video
@@ -3552,6 +3529,7 @@ layout picture_join_layout
 layout picture_list_layout
 layout picture_pick_layout
 layout play_control_view
+layout popup_agreement_window
 layout popup_loading_window
 layout publish_video_layout
 layout record_bottom_layout
@@ -3598,6 +3576,7 @@ mipmap icon_cut_left
 mipmap icon_cut_right
 mipmap icon_login_logo_false
 mipmap icon_login_logo_true
+mipmap icon_no_agreement
 plurals mtrl_badge_content_description
 string N_A
 string TrackType_audio
@@ -4162,6 +4141,7 @@ style Animation_AppCompat_DropDownUp
 style Animation_AppCompat_Tooltip
 style Animation_Design_BottomSheetDialog
 style Animation_MaterialComponents_BottomSheetDialog
+style AppStartTheme
 style AppTheme
 style BaseWhiteTransparentTheme
 style Base_AlertDialog_AppCompat
@@ -4888,11 +4868,6 @@ style Widget_MaterialComponents_Toolbar_PrimarySurface
 style Widget_MaterialComponents_Toolbar_Surface
 style Widget_MaterialComponents_Tooltip
 style Widget_Support_CoordinatorLayout
-style ali_feedback_common_title_left_btn_shadow
-style ali_feedback_common_title_style
-style ali_feedback_common_title_text_shadow
-style ali_feedback_commont_title_right_btn_shadow
-style ali_feedback_contentoverlay
 style bottom_dialog
 style dialog
 style dialog_bottom_full
@@ -5055,7 +5030,6 @@ styleable ViewStubCompat android_id android_inflatedId android_layout
 styleable absProgressBar backgroundColor progress textColor
 styleable floatTextProgressBar fillColor rectColor triangleColor
 styleable progressBar arrowPointColor arrowPointRadius endFillColor middleFillColor startFillColor
-xml alifb_provider_paths
 xml file_paths
 xml standalone_badge
 xml standalone_badge_gravity_bottom_end

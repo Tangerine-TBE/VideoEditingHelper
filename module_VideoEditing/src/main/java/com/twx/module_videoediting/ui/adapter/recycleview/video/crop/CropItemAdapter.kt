@@ -2,6 +2,7 @@ package com.twx.module_videoediting.ui.adapter.recycleview.video.crop
 
 import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.base.BaseAdapter
 import com.twx.module_videoediting.databinding.ItemCropItemContainerBinding
@@ -23,7 +24,27 @@ class CropItemAdapter:BaseAdapter<ItemBean,BaseDataBindingHolder<ItemCropItemCon
         holder.dataBinding?.apply {
             cropIcon.setImageResource(item.icon)
             cropTitle.text="${item.title}"
-            cropTitle.setTextColor(ContextCompat.getColor(context, if(themeState) R.color.black else R.color.white ))
+            viewThemeColor(themeState,cropIcon,cropTitle)
+
+            if (isSize) {
+                if (holder.adapterPosition == mPosition) {
+                    cropIcon.setColorFilter(ContextCompat.getColor(context,R.color.theme_color))
+                    cropTitle.setTextColor(ContextCompat.getColor(context,R.color.theme_color))
+                }
+            }
         }
     }
+
+
+
+    private var isSize=false
+    private var mPosition=-1
+
+
+    fun setModelPosition(sizeState:Boolean,position:Int){
+        mPosition=position
+        isSize=sizeState
+        notifyDataSetChanged()
+    }
+
 }

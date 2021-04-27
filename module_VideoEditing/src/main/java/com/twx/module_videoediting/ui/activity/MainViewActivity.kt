@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.twx.module_base.base.BaseVmViewActivity
+import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityHomeBinding
@@ -16,6 +17,7 @@ import com.twx.module_videoediting.ui.adapter.recycleview.NavigationAdapter
 import com.twx.module_videoediting.ui.fragment.FileFragment
 import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.ui.fragment.SetFragment
+import com.twx.module_videoediting.ui.popup.ExitPoPupWindow
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
@@ -30,7 +32,9 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
 
   }
 
-
+    private val mExitPoPupWindow by lazy {
+        ExitPoPupWindow(this)
+    }
     private val mHomeFragment by lazy {  HomeFragment() }
     private val mFileFragment by lazy {  FileFragment() }
     private val mSetFragment by lazy {  SetFragment() }
@@ -47,6 +51,7 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
 
     override fun initView() {
         binding.apply {
+            sp. putBoolean(com.twx.module_base.utils.Constants.IS_FIRST, false)
             setStatusBarDistance(this@MainViewActivity,pageContainer,LayoutType.CONSTRAINTLAYOUT)
             mBottomNavigationView.apply {
                 layoutManager=GridLayoutManager(this@MainViewActivity,3)
@@ -111,6 +116,9 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                 viewModel.setEditAction(false)
                 return false
             }
+            if (MakeBackLiveData.getMakeState()) {
+                mExitPoPupWindow.showPopupView(binding.mainContainer)
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
@@ -134,6 +142,9 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
         }
     }
 
+    override fun release() {
+        mExitPoPupWindow.dismiss()
+    }
 
 
 }

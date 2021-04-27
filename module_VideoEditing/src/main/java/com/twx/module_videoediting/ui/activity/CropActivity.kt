@@ -78,12 +78,9 @@ class CropActivity : BaseVmViewActivity<ActivityCropBinding,CropViewModel>() {
                 mVideoCropContainer.playerPause()
                 loadingPopup.showPopupView(cropContainer)
 
-                val videoFileInfo = TXVideoInfoReader.getInstance(this@CropActivity).getVideoFileInfo(mSrcFile)
-                LogUtils.i("-outInfo--------------  ${videoFileInfo.width} ${videoFileInfo.height}   ------------------")
                 val rect = it.rect
-                LogUtils.i("---outInfo---- left:${rect.left}       top:${rect.top}     right:${rect.right}     bottom:${rect.bottom}  trans:${it.gho}  rotate:${it.orientation}  ---------------------")
-
-
+                LogUtils.i("---outInfo---- left:${rect.left}       top:${rect.top}     right:${rect.right} " +
+                        "    bottom:${rect.bottom}  trans:${it.gho}  rotate:${it.orientation}    wrate:${it.widthRate}  hrate:${it.heightRate}    ---------------------")
             }
 
 

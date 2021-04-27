@@ -2,6 +2,7 @@ package com.twx.module_videoediting.ui.widget.video.crop
 
 import android.content.Context
 import android.graphics.RectF
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -92,12 +93,14 @@ class VideoCropContainer @JvmOverloads constructor(
 
     private var srcWidth=0
     private var srcHeight=0
+    private var mRealHeight=0
+    private var mRealWidth=0
 
     private fun initEvent() {
         binding.apply {
             mCropPlayerView.apply {
                 setGSYStateUiListener {
-                    LogUtils.i("-setGSYStateUiListener--------------$it------------------")
+
                     when (it) {
                         GSYVideoView.CURRENT_STATE_ERROR -> {
                             errorSelectCore()
@@ -110,6 +113,7 @@ class VideoCropContainer @JvmOverloads constructor(
 
                 mCropOneAdapter.setOnItemClickListener { adapter, view, position ->
                     mCropViewContainer.goneView()
+                    mCropTwoAdapter.setModelPosition(false,-1)
                     when (position) {
                         0 -> setResolveTransform(true, getResolveTransform())
                         1 -> setResolveTransform(false, getResolveTransform())
@@ -129,22 +133,28 @@ class VideoCropContainer @JvmOverloads constructor(
                 mCropTwoAdapter.setOnItemClickListener { adapter, view, position ->
                     restoreVideoUi()
                     getTextureView {
-                        val  realHeight=if (getRotateState()) srcHeight else it.height
-                        val  realWidth= if (getRotateState()) srcWidth  else it.width
-                        LogUtils.i("--mCropTwoAdapter-srcWidth  ${srcWidth}    it.width ${it.width}    ----$realWidth--------------$realHeight-----------------")
+                        mRealHeight=if (getRotateState()) srcHeight else it.height
+                        mRealWidth= if (getRotateState()) srcWidth  else it.width
+                        LogUtils.i("--mCropTwoAdapter-srcWidth  ${srcWidth}    it.width ${it.width}    ----$mRealWidth--------------$mRealHeight-----------------")
                         val layoutParams = mCropViewContainer.layoutParams
-                        layoutParams.height =realHeight
-                        layoutParams.width =realWidth
+                        layoutParams.height =mRealHeight
+                        layoutParams.width =mRealWidth
                         mCropViewContainer.layoutParams = layoutParams
                         mCropViewContainer.showView()
-                        setSizeType(position, realWidth, realHeight)
+                        setSizeType(position, mRealWidth, mRealHeight)
 
                     }
                 }
 
 
                 completeCrop.setOnClickListener {
-                    completeAction(CropConfig(getResolveTransform(), getRotationValue().toInt(), if (mCropViewContainer.isVisible) mCropView.rectValue else RectF() ))
+                    if (!TextUtils.isEmpty(mSrcFile)) {
+                        val videoFileInfo = TXVideoInfoReader.getInstance(context).getVideoFileInfo(mSrcFile)
+                        val widthRate = videoFileInfo.width / mRealWidth.toFloat()
+                        val heightRate = videoFileInfo.height / mRealHeight.toFloat()
+                        LogUtils.i("-outInfo****----原宽：${ videoFileInfo.width}  原高：${videoFileInfo.height}     现宽：${mRealWidth}   现高：${mRealHeight} -----------------")
+                        completeAction(CropConfig(getResolveTransform(), getRotationValue().toInt(), if (mCropViewContainer.isVisible) mCropView.rectValue else RectF(),widthRate,heightRate))
+                    }
                 }
 
             }
@@ -154,25 +164,34 @@ class VideoCropContainer @JvmOverloads constructor(
 
     }
 
+
+
+
     private fun LayoutVideoCropViewBinding.setSizeType(position: Int, realWidth: Int, realHeight: Int) {
         var cropWidth: Int
         var cropHeight: Int
         var marginLeft: Int=0
         var marginTop: Int=0
-
+        mCropTwoAdapter.setModelPosition(true,position)
         when (position) {
             //原比例
             0 -> mCropView.setRectValue(true,0, 0, realWidth, realHeight)
             //1:1
             1 -> {
-                if (realWidth > realHeight) {
-                    cropWidth = realWidth / 2
-                   marginLeft= (realWidth - cropWidth)/2
-                    mCropView.setRectValue(true, marginLeft, 0, cropWidth+marginLeft, realHeight)
-                } else {
-                    cropHeight = realHeight / 2
-                    marginTop= (realHeight - cropHeight)/2
-                    mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
+                when {
+                    realWidth > realHeight -> {
+                        cropWidth = realWidth / 2
+                        marginLeft = (realWidth - cropWidth) / 2
+                        mCropView.setRectValue(true, marginLeft, 0, cropWidth + marginLeft, realHeight)
+                    }
+                    realWidth < realHeight -> {
+                        cropHeight = realHeight / 2
+                        marginTop = (realHeight - cropHeight) / 2
+                        mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight + marginTop)
+                    }
+                    else -> {
+                        mCropView.setRectValue(true, 0, 0, realWidth, realHeight)
+                    }
                 }
 
             }
@@ -180,32 +199,38 @@ class VideoCropContainer @JvmOverloads constructor(
             2 -> {
                     cropHeight=realWidth/16*9
                     marginTop= (realHeight - cropHeight)/2
+                    if (cropHeight+marginTop>realHeight){
+                        cropHeight=realHeight
+                        marginTop=0
+                    }
+
                     mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
             }
             //9:16
             3 -> {
-                if (realWidth > realHeight) {
-                    cropWidth = realHeight / 16 * 9
-                    marginLeft = (realWidth - cropWidth) / 2
+                    cropWidth=realHeight/16*9
+                    marginLeft=(realWidth-cropWidth)/2
                     mCropView.setRectValue(true, marginLeft, 0, cropWidth + marginLeft, realHeight)
-                } else {
-                    cropHeight=realWidth/9*16
-                    marginTop=(realHeight-cropHeight)/2
-                    mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
-                }
             }
             //4:3
             4 -> {
-                if (realWidth > realHeight) {
-                    var cropWidth = realHeight / 3 * 4
-                    val marginLeft= (realWidth - cropWidth)/2
-                    mCropView.setRectValue(true, marginLeft, 0, cropWidth+marginLeft, realHeight)
-                } else {
-                    var cropHeight= realWidth/ 3 * 4
-                    val marginTop= (realHeight - cropHeight)/2
-                    mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
+                when {
+                    realWidth > realHeight -> {
+                        var cropWidth = realHeight / 3 * 4
+                        val marginLeft= (realWidth - cropWidth)/2
+                        mCropView.setRectValue(true, marginLeft, 0, cropWidth+marginLeft, realHeight)
+                    }
+                    realWidth<realHeight -> {
+                        var cropHeight= realWidth/ 3 * 4
+                        val marginTop= (realHeight - cropHeight)/2
+                        mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
+                    }
+                    else -> {
+                        var cropHeight= realWidth/ 4 * 3
+                        val marginTop= (realHeight - cropHeight)/2
+                        mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
+                    }
                 }
-
             }
         }
     }
@@ -233,8 +258,11 @@ class VideoCropContainer @JvmOverloads constructor(
 
 
 
+
+    private var mSrcFile=""
     fun setVideoPath(path: String) {
         binding.mCropPlayerView.apply {
+            mSrcFile=path
             setUp(path, true, "")
             startPlayLogic()
         }

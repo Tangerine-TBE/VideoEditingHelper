@@ -1,6 +1,7 @@
 package com.twx.module_videoediting.domain
 
 import android.graphics.RectF
+import com.tencent.ugc.TXVideoEditConstants
 
 /**
  * @name VideoEditingHelper
@@ -10,5 +11,5 @@ import android.graphics.RectF
  * @time 2021/4/25 11:34:12
  * @class describe
  */
-data class CropConfig(val gho:Int=0,val orientation:Int=0,val rect: RectF) {
+data class CropConfig(val gho:Int=0,val orientation:Int=0,val rect: RectF,val widthRate:Float,val heightRate:Float) {
 }

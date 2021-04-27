@@ -1200,15 +1200,6 @@ int color abc_tint_switch_track 0x0
 int color accent_material_dark 0x0
 int color accent_material_light 0x0
 int color actionsheet_gray 0x0
-int color ali_feedback_black 0x0
-int color ali_feedback_color_white 0x0
-int color ali_feedback_default_title_color 0x0
-int color ali_feedback_grey_btn_default 0x0
-int color ali_feedback_halftransparentwhite 0x0
-int color ali_feedback_normal_title_bg 0x0
-int color ali_feedback_red 0x0
-int color ali_feedback_white 0x0
-int color ali_feedback_wxtribe_title_color 0x0
 int color androidx_core_ripple_material_light 0x0
 int color androidx_core_secondary_text_default_material_light 0x0
 int color background 0x0
@@ -1648,11 +1639,6 @@ int dimen abc_text_size_title_material_toolbar 0x0
 int dimen action_bar_size 0x0
 int dimen activity_horizontal_margin 0x0
 int dimen activity_vertical_margin 0x0
-int dimen ali_feedback_column_up_unit_margin 0x0
-int dimen ali_feedback_common_text_size 0x0
-int dimen ali_feedback_small_text_size 0x0
-int dimen ali_feedback_title_bar_height 0x0
-int dimen ali_feedback_title_middle_margin 0x0
 int dimen appcompat_dialog_background_inset 0x0
 int dimen audio_actionsheet_height 0x0
 int dimen audio_friend_border_margin_top 0x0
@@ -2191,17 +2177,6 @@ int drawable actionsheet_single_selector 0x0
 int drawable actionsheet_top_normal 0x0
 int drawable actionsheet_top_pressed 0x0
 int drawable actionsheet_top_selector 0x0
-int drawable ali_feedback_common_back_btn_bg 0x0
-int drawable ali_feedback_common_back_btn_normal 0x0
-int drawable ali_feedback_common_back_btn_pressed 0x0
-int drawable ali_feedback_commont_title_btn_text 0x0
-int drawable ali_feedback_ic_element_noresult 0x0
-int drawable ali_feedback_icon_back_white 0x0
-int drawable ali_feedback_icon_more 0x0
-int drawable ali_feedback_icon_redpoint 0x0
-int drawable ali_feedback_popup_bg 0x0
-int drawable ali_feedback_progress_bar_states 0x0
-int drawable ali_feedback_pub_btn_white_nor 0x0
 int drawable avd_hide_password 0x0
 int drawable avd_show_password 0x0
 int drawable bailan 0x0
@@ -2566,11 +2541,14 @@ int drawable shape_motion_spirit_press 0x0
 int drawable shape_motion_split_press 0x0
 int drawable shape_motion_win_shadow_press 0x0
 int drawable shape_picker_bg 0x0
+int drawable shape_popup_agreement_text_bg 0x0
+int drawable shape_popup_bg 0x0
 int drawable shape_popup_loading_view_bg 0x0
 int drawable shape_time_bg_normal 0x0
 int drawable shape_time_bg_selected 0x0
 int drawable shape_video_bottom_mask 0x0
 int drawable shape_video_top_mask 0x0
+int drawable splash_bg 0x0
 int drawable splash_pic 0x0
 int drawable swipe_menu_divider_recycler 0x0
 int drawable tcloud_logo 0x0
@@ -2707,7 +2685,6 @@ int id action_mode_bar_stub 0x0
 int id action_mode_close_button 0x0
 int id action_text 0x0
 int id actions 0x0
-int id activityRoot 0x0
 int id activity_chooser_view_content 0x0
 int id add 0x0
 int id add_paster_image 0x0
@@ -2744,6 +2721,7 @@ int id bgm_tv_name 0x0
 int id blocking 0x0
 int id bottom 0x0
 int id bounce 0x0
+int id btSure 0x0
 int id btn_back 0x0
 int id btn_bgm_confirm 0x0
 int id btn_bgm_delete 0x0
@@ -2839,6 +2817,7 @@ int id decelerateAndComplete 0x0
 int id decor_content_parent 0x0
 int id default_activity_button 0x0
 int id deltaRelative 0x0
+int id descriptions 0x0
 int id design_bottom_sheet 0x0
 int id design_menu_item_action_area 0x0
 int id design_menu_item_action_area_stub 0x0
@@ -2858,8 +2837,6 @@ int id easeOut 0x0
 int id edit_query 0x0
 int id end 0x0
 int id end_padder 0x0
-int id errorMsg 0x0
-int id error_view_refresh_btn 0x0
 int id exo_artwork 0x0
 int id exo_content_frame 0x0
 int id exo_controller_placeholder 0x0
@@ -2903,7 +2880,6 @@ int id honorRequest 0x0
 int id horizontalPickerViewFirst 0x0
 int id horizontalPickerViewSecond 0x0
 int id host_name 0x0
-int id hybird_container 0x0
 int id ic_cover 0x0
 int id icon 0x0
 int id icon_group 0x0
@@ -2917,6 +2893,7 @@ int id invisible 0x0
 int id italic 0x0
 int id item_list 0x0
 int id item_touch_helper_previous_elevation 0x0
+int id ivCancel 0x0
 int id iv_aspect 0x0
 int id iv_aspect_first 0x0
 int id iv_aspect_fourth 0x0
@@ -3084,6 +3061,7 @@ int id path 0x0
 int id pathId 0x0
 int id pathRelative 0x0
 int id percent 0x0
+int id permissionContainer 0x0
 int id permissionIcon 0x0
 int id permissionText 0x0
 int id permissionsLayout 0x0
@@ -3103,6 +3081,9 @@ int id progress_horizontal 0x0
 int id progress_img 0x0
 int id progress_time 0x0
 int id progressbar 0x0
+int id psHint 0x0
+int id psIcon 0x0
+int id psName 0x0
 int id publishLayout 0x0
 int id radio 0x0
 int id range_slider 0x0
@@ -3129,7 +3110,6 @@ int id record_speed_layout 0x0
 int id record_to_edit 0x0
 int id rectangles 0x0
 int id recycler_view 0x0
-int id red_point 0x0
 int id reverseSawtooth 0x0
 int id review_status 0x0
 int id rg_record_speed 0x0
@@ -3160,6 +3140,7 @@ int id save_non_transition_alpha 0x0
 int id save_overlay_view 0x0
 int id sawtooth 0x0
 int id scale 0x0
+int id scbAgreement 0x0
 int id screen 0x0
 int id scrollFilterView 0x0
 int id scrollIndicatorDown 0x0
@@ -3235,6 +3216,7 @@ int id text 0x0
 int id text2 0x0
 int id textSpacerNoButtons 0x0
 int id textSpacerNoTitle 0x0
+int id textView22 0x0
 int id textView_bgm_volume 0x0
 int id textWatcher 0x0
 int id text_input_end_icon 0x0
@@ -3261,11 +3243,7 @@ int id titleBar_layout 0x0
 int id titleDividerNoCustom 0x0
 int id titleId 0x0
 int id titleLayoutId 0x0
-int id title_back 0x0
-int id title_bar_shadow_view 0x0
-int id title_button 0x0
 int id title_template 0x0
-int id title_text 0x0
 int id title_tv 0x0
 int id top 0x0
 int id topPanel 0x0
@@ -3351,7 +3329,7 @@ int id view_tree_lifecycle_owner 0x0
 int id view_tree_view_model_store_owner 0x0
 int id visible 0x0
 int id webrtc_link_button 0x0
-int id webview_icon_back 0x0
+int id welcomeTitle 0x0
 int id withinBounds 0x0
 int id word_et_content 0x0
 int id word_tv_cancel 0x0
@@ -3431,8 +3409,6 @@ int layout activity_video_choose 0x0
 int layout activity_video_cut 0x0
 int layout activity_video_editer 0x0
 int layout activity_video_effect 0x0
-int layout ali_feedback_container_layout 0x0
-int layout ali_feedback_error 0x0
 int layout aspect_view 0x0
 int layout base_dialog_loading 0x0
 int layout beauty_panel 0x0
@@ -3479,6 +3455,7 @@ int layout item_bubble_img 0x0
 int layout item_edit_view 0x0
 int layout item_editer_bgm 0x0
 int layout item_log 0x0
+int layout item_permission_container 0x0
 int layout item_ugc_video 0x0
 int layout item_video_progress_thumbnail 0x0
 int layout item_videoedit_video 0x0
@@ -3551,6 +3528,7 @@ int layout picture_join_layout 0x0
 int layout picture_list_layout 0x0
 int layout picture_pick_layout 0x0
 int layout play_control_view 0x0
+int layout popup_agreement_window 0x0
 int layout popup_loading_window 0x0
 int layout publish_video_layout 0x0
 int layout record_bottom_layout 0x0
@@ -3597,6 +3575,7 @@ int mipmap icon_cut_left 0x0
 int mipmap icon_cut_right 0x0
 int mipmap icon_login_logo_false 0x0
 int mipmap icon_login_logo_true 0x0
+int mipmap icon_no_agreement 0x0
 int plurals mtrl_badge_content_description 0x0
 int string N_A 0x0
 int string TrackType_audio 0x0
@@ -4161,6 +4140,7 @@ int style Animation_AppCompat_DropDownUp 0x0
 int style Animation_AppCompat_Tooltip 0x0
 int style Animation_Design_BottomSheetDialog 0x0
 int style Animation_MaterialComponents_BottomSheetDialog 0x0
+int style AppStartTheme 0x0
 int style AppTheme 0x0
 int style BaseWhiteTransparentTheme 0x0
 int style Base_AlertDialog_AppCompat 0x0
@@ -4887,11 +4867,6 @@ int style Widget_MaterialComponents_Toolbar_PrimarySurface 0x0
 int style Widget_MaterialComponents_Toolbar_Surface 0x0
 int style Widget_MaterialComponents_Tooltip 0x0
 int style Widget_Support_CoordinatorLayout 0x0
-int style ali_feedback_common_title_left_btn_shadow 0x0
-int style ali_feedback_common_title_style 0x0
-int style ali_feedback_common_title_text_shadow 0x0
-int style ali_feedback_commont_title_right_btn_shadow 0x0
-int style ali_feedback_contentoverlay 0x0
 int style bottom_dialog 0x0
 int style dialog 0x0
 int style dialog_bottom_full 0x0
@@ -6773,7 +6748,6 @@ int styleable progressBar_arrowPointRadius 1
 int styleable progressBar_endFillColor 2
 int styleable progressBar_middleFillColor 3
 int styleable progressBar_startFillColor 4
-int xml alifb_provider_paths 0x0
 int xml file_paths 0x0
 int xml standalone_badge 0x0
 int xml standalone_badge_gravity_bottom_end 0x0
