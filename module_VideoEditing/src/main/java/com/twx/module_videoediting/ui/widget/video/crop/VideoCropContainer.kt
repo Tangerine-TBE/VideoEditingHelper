@@ -173,24 +173,23 @@ class VideoCropContainer @JvmOverloads constructor(
         var marginLeft: Int=0
         var marginTop: Int=0
         mCropTwoAdapter.setModelPosition(true,position)
+        val modelType=getCropModel(position)
         when (position) {
             //原比例
-            0 -> mCropView.setRectValue(true,0, 0, realWidth, realHeight)
+            0 -> mCropView.setRectValue(modelType,true,0, 0, realWidth, realHeight)
             //1:1
             1 -> {
                 when {
                     realWidth > realHeight -> {
-                        cropWidth = realWidth / 2
-                        marginLeft = (realWidth - cropWidth) / 2
-                        mCropView.setRectValue(true, marginLeft, 0, cropWidth + marginLeft, realHeight)
+                        marginLeft = (realWidth - realHeight) / 2
+                        mCropView.setRectValue(modelType,true, marginLeft, 0, realHeight + marginLeft, realHeight)
                     }
                     realWidth < realHeight -> {
-                        cropHeight = realHeight / 2
-                        marginTop = (realHeight - cropHeight) / 2
-                        mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight + marginTop)
+                        marginTop = (realHeight - realWidth) / 2
+                        mCropView.setRectValue(modelType,true, 0, marginTop, realWidth, realWidth + marginTop)
                     }
                     else -> {
-                        mCropView.setRectValue(true, 0, 0, realWidth, realHeight)
+                        mCropView.setRectValue(modelType,true, 0, 0, realWidth, realHeight)
                     }
                 }
 
@@ -203,14 +202,13 @@ class VideoCropContainer @JvmOverloads constructor(
                         cropHeight=realHeight
                         marginTop=0
                     }
-
-                    mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
+                    mCropView.setRectValue(modelType,true, 0, marginTop, realWidth, cropHeight+marginTop)
             }
             //9:16
             3 -> {
                     cropWidth=realHeight/16*9
                     marginLeft=(realWidth-cropWidth)/2
-                    mCropView.setRectValue(true, marginLeft, 0, cropWidth + marginLeft, realHeight)
+                    mCropView.setRectValue(modelType,true, marginLeft, 0, cropWidth + marginLeft, realHeight)
             }
             //4:3
             4 -> {
@@ -218,22 +216,33 @@ class VideoCropContainer @JvmOverloads constructor(
                     realWidth > realHeight -> {
                         var cropWidth = realHeight / 3 * 4
                         val marginLeft= (realWidth - cropWidth)/2
-                        mCropView.setRectValue(true, marginLeft, 0, cropWidth+marginLeft, realHeight)
+                        mCropView.setRectValue(modelType,true, marginLeft, 0, cropWidth+marginLeft, realHeight)
                     }
                     realWidth<realHeight -> {
                         var cropHeight= realWidth/ 3 * 4
                         val marginTop= (realHeight - cropHeight)/2
-                        mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
+                        mCropView.setRectValue(modelType,true, 0, marginTop, realWidth, cropHeight+marginTop)
                     }
                     else -> {
                         var cropHeight= realWidth/ 4 * 3
                         val marginTop= (realHeight - cropHeight)/2
-                        mCropView.setRectValue(true, 0, marginTop, realWidth, cropHeight+marginTop)
+                        mCropView.setRectValue(modelType,true, 0, marginTop, realWidth, cropHeight+marginTop)
                     }
                 }
             }
         }
     }
+
+
+    private fun getCropModel(position: Int)=
+        when(position){
+            0->CropView.CropMode.MODE_INIT
+            1->CropView.CropMode.MODE_11
+            2->CropView.CropMode.MODE_169
+            3->CropView.CropMode.MODE_916
+            4->CropView.CropMode.MODE_43
+            else->CropView.CropMode.MODE_INIT
+        }
 
 
 

@@ -353,31 +353,182 @@ public class CropView extends View {
                             downY = moveY;
                         }
                     }else{
-                        if (isLeft) {
-                            rectLeft += slideX;
-                            if (rectLeft < 0) rectLeft = 0;
-                            if (rectLeft > rectRight - cornerLength * 2)
-                                rectLeft = rectRight - cornerLength * 2;
-                        } else if (isRight) {
-                            rectRight += slideX;
-                            if (rectRight > measuredWidth )
-                                rectRight = measuredWidth;
-                            if (rectRight < rectLeft + cornerLength * 2)
-                                rectRight = rectLeft + cornerLength * 2;
+                        if (mode==CropMode.MODE_INIT){
+                            if (isLeft) {
+                                // LogUtils.i("----MODE_INIT--------------------------   "+event.getX()+"  "+rectLeft+"    "+cornerWidth+"     "+slideX);
+                                LogUtils.i("----MODE_INIT--------------------------   "+rectLeft+"  "+slideX);
+                                rectLeft += slideX;
+                                LogUtils.i("----MODE_INIT--------------------------   "+rectLeft);
+                                if (rectLeft < 0) rectLeft = 0;
+                                if (rectLeft > rectRight -cornerWidth)
+                                    rectLeft = rectRight -cornerWidth;
+                            }else if(isRight){
+                                rectRight += slideX;
+                                if (rectRight > measuredWidth )
+                                    rectRight = measuredWidth;
+                                if (rectRight < rectLeft +  cornerWidth)
+                                    rectRight = rectLeft + cornerWidth;
+                            }
+                            //改变边框的高度, 如果两个都满足(比如手指在边角位置),那么就呈现一种缩放状态
+                            if (isTop){
+                                rectTop += slideY;
+                                if (rectTop < 0) rectTop = 0;
+                                if (rectTop > rectBottom - cornerWidth)
+                                    rectTop = rectBottom - cornerWidth;
+                            }else if (isBottom){
+                                rectBottom += slideY;
+                                if (rectBottom > measuredHeight )
+                                    rectBottom = measuredHeight ;
+                                if (rectBottom < rectTop +cornerWidth)
+                                    rectBottom = rectTop +cornerWidth;
+                            }
+
+                        }else {
+                            if (isLeft) {
+                                switch (mode){
+                                    case MODE_11:
+                                        if (downX - moveX > 0) {
+                                            LogUtils.i("isLeft----方向左--------------------------   "+rectLeft);
+                                            rectBottom+=Math.abs(slideX);
+                                            if (rectBottom>maxHeight) {
+                                                rectBottom=maxHeight;
+                                                return true;
+                                            }
+                                        } else {
+                                            LogUtils.i("isLeft----方向右--------------------------   "+rectLeft);
+                                            rectBottom-=Math.abs(slideX);
+                                            if (rectBottom< rectTop + cornerWidth) {
+                                                rectBottom=rectTop + cornerWidth;
+                                            }
+                                        }
+                                        rectLeft += slideX;
+                                        if (rectLeft < 0){
+                                            rectLeft = 0;
+                                            rectBottom=rectRight+rectTop;
+                                        }
+                                        if (rectLeft > rectRight -cornerWidth)
+                                            rectLeft = rectRight -cornerWidth;
+
+                                        break;
+                                }
+                            } else if (isRight) {
+                                switch (mode){
+                                    case MODE_11:
+                                        if (downX - moveX > 0) {
+                                            LogUtils.i("isRight----方向左--------------------------   "+rectLeft);
+                                            rectBottom-=Math.abs(slideX);
+                                            if (rectBottom< rectTop + cornerWidth) {
+                                                rectBottom=rectTop + cornerWidth;
+                                            }
+
+                                        } else {
+                                            LogUtils.i("isRight----方向右--------------------------   "+rectLeft);
+                                            rectBottom+=Math.abs(slideX);
+                                            if (rectBottom>maxHeight) {
+                                                rectBottom=maxHeight;
+                                                return true;
+                                            }
+                                        }
+                                        rectRight += slideX;
+                                        if (rectRight > measuredWidth ){
+                                            rectRight = measuredWidth;
+                                            rectBottom=rectRight-rectLeft;
+                                        }
+                                        if (rectRight < rectLeft +  cornerWidth)
+                                            rectRight = rectLeft + cornerWidth;
+                                        break;
+                                }
+                            }
+
+                            else if (isTop) {
+                                switch (mode){
+                                    case MODE_11:
+                                        LogUtils.i("   左  "+rectLeft+"   右  "+rectRight+"   上  "+rectTop+"   下  "+rectBottom);
+                                        if (downY - moveY > 0) {
+                                            LogUtils.i("isTop----方向上--------------------------   "+rectLeft);
+                                            rectLeft-=Math.abs(slideY);
+                                            if (rectLeft<0){
+                                                rectLeft=0;
+                                                rectTop=rectBottom-rectRight;
+                                            }
+                                            if (rectLeft > rectRight -cornerWidth)
+                                                rectLeft = rectRight -cornerWidth;
+
+                                            rectTop += slideY;
+                                            if (rectTop < 0) {
+                                                rectTop = 0;
+                                                rectLeft=rectRight-rectBottom;
+                                            }
+
+                                        } else {
+                                            LogUtils.i("isTop----方向下--------------------------   " + rectLeft);
+                                            rectLeft+=Math.abs(slideY);
+                                            if (rectLeft > rectRight -cornerWidth)
+                                                rectLeft = rectRight -cornerWidth;
+
+                                            rectTop += slideY;
+                                            if (rectTop < 0) rectTop = 0;
+
+                                        }
+                                        if (rectTop > rectBottom - cornerWidth)
+                                            rectTop = rectBottom - cornerWidth;
+                                        break;
+
+                                }
+
+                            } else if (isBottom) {
+                                switch (mode){
+                                    case MODE_INIT:
+                                        rectBottom += slideY;
+                                        if (rectBottom > measuredHeight )
+                                            rectBottom = measuredHeight ;
+                                        if (rectBottom < rectTop +cornerWidth)
+                                            rectBottom = rectTop +cornerWidth;
+                                        break;
+                                    case MODE_11:
+                                        if (downY - moveY > 0) {
+                                            LogUtils.i("isBottom----方向上--------------------------   "+rectLeft);
+
+                                            rectRight-=Math.abs(slideY);
+                                            if (rectRight < rectLeft +  cornerWidth)
+                                                rectRight = rectLeft + cornerWidth;
+
+
+                                            rectBottom += slideY;
+                                            if (rectBottom > measuredHeight )
+                                                rectBottom = measuredHeight ;
+                                            if (rectBottom < rectTop +cornerWidth){
+                                                rectBottom = rectTop +cornerWidth;
+                                            }
+
+                                        } else {
+                                            LogUtils.i("isBottom----方向下--------------------------   "+rectLeft);
+                                            rectRight+=Math.abs(slideY);
+                                            if (rectRight<rectLeft+cornerWidth){
+                                                rectRight=rectLeft+cornerWidth;
+                                            }
+
+                                            if (rectRight>maxWidth){
+
+                                            }
+
+
+
+                                            rectBottom += slideY;
+                                            if (rectBottom >= maxHeight) {
+                                                rectBottom = maxHeight;
+                                                rectRight=rectBottom-rectTop+rectLeft;
+                                            }
+
+
+                                        }
+
+                                        break;
+                                }
+                            }
+
                         }
-                        //改变边框的高度, 如果两个都满足(比如手指在边角位置),那么就呈现一种缩放状态
-                        if (isTop) {
-                            rectTop += slideY;
-                            if (rectTop < 0) rectTop = 0;
-                            if (rectTop > rectBottom - cornerLength * 2)
-                                rectTop = rectBottom - cornerLength * 2;
-                        } else if (isBottom) {
-                            rectBottom += slideY;
-                            if (rectBottom > measuredHeight )
-                                rectBottom = measuredHeight ;
-                            if (rectBottom < rectTop + cornerLength * 2)
-                                rectBottom = rectTop + cornerLength * 2;
-                        }
+
                         invalidate();
                         downX = moveX;
                         downY = moveY;
@@ -437,23 +588,22 @@ public class CropView extends View {
         }
     }
 
+    private int cornerWidth;
     private void initParams() {
 
         measuredWidth = getMeasuredWidth();
         measuredHeight = getMeasuredHeight();
         if(aspect == -1){
+            cornerLength = measuredWidth / 6;
+            cornerWidth=cornerLength*2;
             if (isSpecial) {
-                cornerLength = measuredWidth / 6;
 
             } else {
-                cornerLength = measuredWidth / 6;
                 rectRight = measuredWidth;
                 rectLeft = 0;
                 rectTop = 0;
                 rectBottom = measuredHeight ;
             }
-
-
 
             LogUtils.i("---mCropView------------------------"+measuredWidth+"---------"+measuredHeight);
         }else{
@@ -492,12 +642,27 @@ public class CropView extends View {
 
     private boolean isSpecial;
 
-    public void setRectValue(boolean specialState,int left, int top, int right, int bottom){
+
+    public enum CropMode{
+        MODE_INIT,MODE_11,MODE_169,MODE_916,MODE_43
+    }
+
+    private CropMode mode=CropMode.MODE_INIT;
+
+
+    private int maxWidth;
+    private int maxHeight;
+
+
+    public void setRectValue(CropView.CropMode mode,boolean specialState,int left, int top, int right, int bottom){
+        this.mode=mode;
         isSpecial=specialState;
         rectLeft=left;
         rectTop=top;
         rectRight=right;
         rectBottom=bottom;
+        maxWidth=right-left;
+        maxHeight=bottom-top;
         invalidate();
     }
 

@@ -186,16 +186,18 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
     }
 
     override fun onVideoProgressSeekFinish(currentTimeMs: Long) {
+        currentTime=currentTimeMs
         PlayerManager.previewAtTime(currentTimeMs)
+        LogUtils.i("--onVideoProgressSeekFinish--------------${currentTimeMs}---------------")
     }
 
     override fun onPreviewProgress(time: Int) {
         currentTime=time.toLong()
-        LogUtils.i("--TWVideoEditCutContainer--------------${time}---------$i-------")
+        LogUtils.i("--TWVideoEditCutContainer--------------${time}---------------")
     }
 
     override fun onPreviewFinish() {
-
+        PlayerManager.restartPlay()
     }
 
 

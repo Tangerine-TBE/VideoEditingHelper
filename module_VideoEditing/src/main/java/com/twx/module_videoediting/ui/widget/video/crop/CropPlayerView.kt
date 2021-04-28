@@ -71,10 +71,10 @@ class CropPlayerView : StandardGSYVideoPlayer {
 
 
     fun getTextureView(block:(View)->Unit){
-        block(mTextureView.showView)
+        mTextureView?.let {
+            block(it.showView)
+        }
     }
-
-
 
 
     /**
@@ -82,24 +82,26 @@ class CropPlayerView : StandardGSYVideoPlayer {
      * 注意，暂停时
      */
     private fun resolveTransform() {
-        when (mTransformSize) {
-            1 -> {
-                val transform = Matrix()
-                transform.setScale(-1f, 1f, (mTextureView.width / 2).toFloat(), 0f)
-                mTextureView.setTransform(transform)
-                mTextureView.invalidate()
-            }
-            2 -> {
-                val transform = Matrix()
-                transform.setScale(1f, -1f, 0f, (mTextureView.height / 2).toFloat())
-                mTextureView.setTransform(transform)
-                mTextureView.invalidate()
-            }
-            0 -> {
-                val transform = Matrix()
-                transform.setScale(1f, 1f, (mTextureView.width / 2).toFloat(), 0f)
-                mTextureView.setTransform(transform)
-                mTextureView.invalidate()
+        mTextureView?.let {
+            when (mTransformSize) {
+                1 -> {
+                    val transform = Matrix()
+                    transform.setScale(-1f, 1f, (it.width / 2).toFloat(), 0f)
+                    it.setTransform(transform)
+                    it.invalidate()
+                }
+                2 -> {
+                    val transform = Matrix()
+                    transform.setScale(1f, -1f, 0f, (it.height / 2).toFloat())
+                    it.setTransform(transform)
+                    it.invalidate()
+                }
+                0 -> {
+                    val transform = Matrix()
+                    transform.setScale(1f, 1f, (mTextureView.width / 2).toFloat(), 0f)
+                    it.setTransform(transform)
+                    it.invalidate()
+                }
             }
         }
 
@@ -111,26 +113,29 @@ class CropPlayerView : StandardGSYVideoPlayer {
     fun getRotateState()=isRotate
 
     fun setRotation() {
-        isRotate=true
-        LogUtils.i("----setRotation---begin--${mTextureView.rotation}--------------")
-        if (mTextureView.rotation - mRotate == 270f) {
-            mTextureView.rotation = mRotate.toFloat()
-            mTextureView.requestLayout()
-        } else {
-            mTextureView.rotation = mTextureView.rotation + 90
-            mTextureView.requestLayout()
+        mTextureView?.let {
+            isRotate=true
+            LogUtils.i("----setRotation---begin--${mTextureView.rotation}--------------")
+            if (mTextureView.rotation - mRotate == 270f) {
+                mTextureView.rotation = mRotate.toFloat()
+                mTextureView.requestLayout()
+            } else {
+                mTextureView.rotation = mTextureView.rotation + 90
+                mTextureView.requestLayout()
+            }
+            mRotateValue= mTextureView.rotation
+            LogUtils.i("----setRotation--end---${mTextureView.rotation}--------------")
         }
-        mRotateValue= mTextureView.rotation
-        LogUtils.i("----setRotation--end---${mTextureView.rotation}--------------")
+
     }
 
 
     fun restoreVideoUi() {
         mTransformSize=0
         mRotateValue=0f
-        mTextureView.rotation = 0f
+        mTextureView?.rotation = 0f
         resolveTransform()
-        mTextureView.requestLayout()
+        mTextureView?.requestLayout()
     }
 
 }
