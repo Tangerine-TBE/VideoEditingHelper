@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 import com.twx.module_base.utils.LogUtils;
 import com.twx.module_videoediting.R;
 
@@ -387,13 +388,23 @@ public class CropView extends View {
                             if (isLeft) {
                                 switch (mode){
                                     case MODE_11:
+                                        rectLeft += slideX;
+
+                                        if (rectLeft > rectRight -cornerWidth)
+                                            rectLeft = rectRight -cornerWidth;
                                         if (downX - moveX > 0) {
                                             LogUtils.i("isLeft----方向左--------------------------   "+rectLeft);
                                             rectBottom+=Math.abs(slideX);
-                                            if (rectBottom>maxHeight) {
-                                                rectBottom=maxHeight;
-                                                return true;
+                                            if (rectBottom>measuredHeight) {
+                                                rectBottom=measuredHeight;
+                                                rectLeft=rectRight-rectBottom-rectTop;
                                             }
+
+                                            if (rectLeft < 0){
+                                                rectLeft = 0;
+                                                rectBottom=rectRight+rectTop;
+                                            }
+
                                         } else {
                                             LogUtils.i("isLeft----方向右--------------------------   "+rectLeft);
                                             rectBottom-=Math.abs(slideX);
@@ -401,19 +412,15 @@ public class CropView extends View {
                                                 rectBottom=rectTop + cornerWidth;
                                             }
                                         }
-                                        rectLeft += slideX;
-                                        if (rectLeft < 0){
-                                            rectLeft = 0;
-                                            rectBottom=rectRight+rectTop;
-                                        }
-                                        if (rectLeft > rectRight -cornerWidth)
-                                            rectLeft = rectRight -cornerWidth;
 
                                         break;
                                 }
                             } else if (isRight) {
                                 switch (mode){
                                     case MODE_11:
+                                        rectRight += slideX;
+                                        if (rectRight < rectLeft +  cornerWidth)
+                                            rectRight = rectLeft + cornerWidth;
                                         if (downX - moveX > 0) {
                                             LogUtils.i("isRight----方向左--------------------------   "+rectLeft);
                                             rectBottom-=Math.abs(slideX);
@@ -424,18 +431,18 @@ public class CropView extends View {
                                         } else {
                                             LogUtils.i("isRight----方向右--------------------------   "+rectLeft);
                                             rectBottom+=Math.abs(slideX);
-                                            if (rectBottom>maxHeight) {
-                                                rectBottom=maxHeight;
-                                                return true;
+
+                                            if (rectRight > measuredWidth ){
+                                                rectRight = measuredWidth;
+                                                rectBottom=rectRight-rectLeft;
+                                            }
+
+                                            if (rectBottom>measuredHeight) {
+                                                rectBottom=measuredHeight;
+                                                rectRight=rectBottom-rectTop+rectLeft;
                                             }
                                         }
-                                        rectRight += slideX;
-                                        if (rectRight > measuredWidth ){
-                                            rectRight = measuredWidth;
-                                            rectBottom=rectRight-rectLeft;
-                                        }
-                                        if (rectRight < rectLeft +  cornerWidth)
-                                            rectRight = rectLeft + cornerWidth;
+
                                         break;
                                 }
                             }
@@ -508,17 +515,19 @@ public class CropView extends View {
                                                 rectRight=rectLeft+cornerWidth;
                                             }
 
-                                            if (rectRight>maxWidth){
-
-                                            }
-
-
-
                                             rectBottom += slideY;
                                             if (rectBottom >= maxHeight) {
                                                 rectBottom = maxHeight;
                                                 rectRight=rectBottom-rectTop+rectLeft;
                                             }
+
+                                            if (rectRight>measuredWidth){
+                                                rectRight=measuredWidth;
+                                                rectBottom=rectRight-rectLeft+rectTop;
+                                            }
+
+
+
 
 
                                         }
