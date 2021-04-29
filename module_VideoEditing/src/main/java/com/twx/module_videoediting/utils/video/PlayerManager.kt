@@ -93,7 +93,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
 
     }
 
-    fun resumePlay() {
+     fun resumePlay() {
         mVideoEditerSDK.apply {
             if (mCurrentState == PlayState.STATE_NONE || mCurrentState == PlayState.STATE_STOP) {
                 startPlay()
@@ -140,6 +140,19 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
             mCurrentState = PlayState.STATE_PREVIEW_AT_TIME
         }
     }
+
+
+    fun previewAtTime2(timeMs:Long){
+        mVideoEditerSDK?.apply {
+            isPreviewFinish = false
+            editer.previewAtTime(timeMs)
+            mPreviewAtTime = timeMs
+            LogUtils.i("------previewAtTime-------playmanager----------$timeMs------")
+            mCurrentState = PlayState.STATE_PREVIEW_AT_TIME
+        }
+    }
+
+
 
     /**
      * 添加预览监听

@@ -82,7 +82,7 @@ class VideoDivisionContainer @JvmOverloads constructor(
     }
 
     override fun continuePlay() {
-        PlayerManager.resumePlay()
+        PlayerManager.playVideo(false)
     }
 
 }

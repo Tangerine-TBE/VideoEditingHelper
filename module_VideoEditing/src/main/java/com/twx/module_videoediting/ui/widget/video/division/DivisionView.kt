@@ -98,7 +98,7 @@ class DivisionView @JvmOverloads constructor(
 
             }
             MotionEvent.ACTION_UP->{
-                updatePosition()
+                //updatePosition()
                 mOnDivisionTimeListener?.continuePlay()
             }
         }
