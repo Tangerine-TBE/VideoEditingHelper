@@ -20,6 +20,7 @@ import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.domain.ValueJoinList
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.video.cut.ExportAdapter
+import com.twx.module_videoediting.ui.fragment.FileFragment
 import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.cancelMake
@@ -59,7 +60,7 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
             loadingPopup.setTitle("视频预加载中...")
 
             viewThemeColor(themeState, videoExportContainer,exportHint)
-            setStatusBarDistance(this@ExportActivity, exportTitleBar, LayoutType.CONSTRAINTLAYOUT)
+            setStatusBarDistance(this@ExportActivity, exportTitleBar, LayoutType.LINEARLAYOUT)
 
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
                 mVideoPath=it
@@ -88,14 +89,15 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
     private var openAction = 0
     override fun initEvent() {
         binding.apply {
+            myVideo.setOnClickListener {
+                MainViewActivity.toFileFragment(this@ExportActivity)
+            }
+
+
             exportTitleBar.setBarEventAction(this@ExportActivity) {
                 if (!TextUtils.isEmpty(mVideoPath)) {
                     IntentUtils.shareVideo(this@ExportActivity, File(mVideoPath),"分享视频")
                 }
-            }
-
-            myVideoBt.setOnClickListener {
-
             }
 
 
@@ -118,6 +120,13 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
                             mVideoPath
                         )
                     }
+                    7->toOtherActivity<CropActivity>(this@ExportActivity,true) {
+                        putExtra(
+                                Constants.KEY_VIDEO_PATH,
+                                mVideoPath
+                        )
+                    }
+
                 }
             }
 

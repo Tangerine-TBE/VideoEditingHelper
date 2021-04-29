@@ -212,6 +212,7 @@ class VideoCropContainer @JvmOverloads constructor(
             }
             //4:3
             4 -> {
+
                 when {
                     realWidth > realHeight -> {
                         var cropWidth = realHeight / 3 * 4
@@ -219,7 +220,7 @@ class VideoCropContainer @JvmOverloads constructor(
                         mCropView.setRectValue(modelType,true, marginLeft, 0, cropWidth+marginLeft, realHeight)
                     }
                     realWidth<realHeight -> {
-                        var cropHeight= realWidth/ 3 * 4
+                        var cropHeight= realWidth/ 4 * 3
                         val marginTop= (realHeight - cropHeight)/2
                         mCropView.setRectValue(modelType,true, 0, marginTop, realWidth, cropHeight+marginTop)
                     }

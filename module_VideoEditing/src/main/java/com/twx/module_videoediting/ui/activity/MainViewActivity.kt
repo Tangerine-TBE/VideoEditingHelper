@@ -131,13 +131,15 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
 
     override fun onResume() {
         super.onResume()
-
-        val id = intent.getIntExtra(Constants.KEY_FRAGMENT_ID, -1)
-        LogUtils.i("----onResume-----------   $id  ---------------")
-        when(id) {
-            1->{
-                mNavigationAdapter.setSelectPosition(1)
-                showFragment(mFileFragment)
+        intent.apply {
+            val id = getIntExtra(Constants.KEY_FRAGMENT_ID, -1)
+            LogUtils.i("----onResume-----------   $id  ---------------")
+            when(id) {
+                1->{
+                    mNavigationAdapter.setSelectPosition(1)
+                    showFragment(mFileFragment)
+                    putExtra(Constants.KEY_FRAGMENT_ID, -1)
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ package com.twx.module_videoediting.utils
 
 import android.content.ContentUris
 import android.content.Context
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.content.contentValuesOf
@@ -152,5 +153,13 @@ object FileUtils {
             AlbumSaver.getInstance(context).saveVideoToDCIM()
         }
     }
+
+    fun getVideoDuration(videoPath:String) =  MediaMetadataRetriever().apply {
+        setDataSource(videoPath)
+        }.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+
+
+
+
 
 }

@@ -53,10 +53,12 @@ public class CropView extends View {
         super(context, attrs, defStyleAttr);
         init();
     }
+
     public CropView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
+
     public CropView(Context context) {
         super(context);
         init();
@@ -74,7 +76,6 @@ public class CropView extends View {
     }
 
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -83,17 +84,17 @@ public class CropView extends View {
 
                 downX = event.getX();
                 downY = event.getY();
-                if(downX >= rectLeft && downX <= rectRight && downY >= rectTop && downY <= rectBottom){
+                if (downX >= rectLeft && downX <= rectRight && downY >= rectTop && downY <= rectBottom) {
                     //判断手指的范围在左面还是右面
-                    int w = (int) ((rectRight - rectLeft)/3);
-                    if (downX >= rectLeft && downX <= rectLeft+w) {
+                    int w = (int) ((rectRight - rectLeft) / 3);
+                    if (downX >= rectLeft && downX <= rectLeft + w) {
                         isLeft = true;
                     } else if (downX <= rectRight && downX >= rectRight - w) {
                         isRight = true;
                     }
                     //判断手指的范围在上面还是下面
-                    int h = (int) ((rectBottom - rectTop)/3);
-                    if (downY >= rectTop && downY <= rectTop+h) {
+                    int h = (int) ((rectBottom - rectTop) / 3);
+                    if (downY >= rectTop && downY <= rectTop + h) {
                         isTop = true;
                     } else if (downY <= rectBottom && downY >= rectBottom - h) {
                         isBottom = true;
@@ -122,7 +123,7 @@ public class CropView extends View {
                         rectRight -= slideX;
                     }
                     //同时改变top和bottom值, 达到上下移动的效果
-                    if (rectTop < 0 || rectBottom > measuredHeight ) {//判断y轴的移动边界
+                    if (rectTop < 0 || rectBottom > measuredHeight) {//判断y轴的移动边界
                         rectTop -= slideY;
                         rectBottom -= slideY;
                     }
@@ -131,83 +132,83 @@ public class CropView extends View {
                     downX = moveX;
                     downY = moveY;
                 } else {
-                    if(aspect != -1){
-                        if(isLeft && (isTop || isBottom)){
-                            if(!isSlideLeft && !isSlideTop && !isSlideBottom){
+                    if (aspect != -1) {
+                        if (isLeft && (isTop || isBottom)) {
+                            if (!isSlideLeft && !isSlideTop && !isSlideBottom) {
                                 float x = Math.abs(slideX);
                                 float y = Math.abs(slideY);
-                                if(x > y && x > 10){
+                                if (x > y && x > 10) {
                                     isSlideLeft = true;
-                                }else if(x < y && y >10){
-                                    if(isTop){
+                                } else if (x < y && y > 10) {
+                                    if (isTop) {
                                         isSlideTop = true;
-                                    }else{
+                                    } else {
                                         isSlideBottom = true;
                                     }
                                 }
                             }
-                        }else if (isRight && (isTop || isBottom)){
-                            if(!isSlideRight && !isSlideTop && !isSlideBottom){
+                        } else if (isRight && (isTop || isBottom)) {
+                            if (!isSlideRight && !isSlideTop && !isSlideBottom) {
                                 float x = Math.abs(slideX);
                                 float y = Math.abs(slideY);
-                                if(x > y && x > 10){
+                                if (x > y && x > 10) {
                                     isSlideRight = true;
-                                }else if(x < y && y >10){
-                                    if(isTop){
+                                } else if (x < y && y > 10) {
+                                    if (isTop) {
                                         isSlideTop = true;
-                                    }else{
+                                    } else {
                                         isSlideBottom = true;
                                     }
                                 }
                             }
-                        }else if(isLeft && !isSlideLeft){
+                        } else if (isLeft && !isSlideLeft) {
                             isSlideLeft = true;
-                        }else if(isRight && !isSlideLeft){
+                        } else if (isRight && !isSlideLeft) {
                             isSlideRight = true;
-                        }else if(isTop && !isSlideTop){
+                        } else if (isTop && !isSlideTop) {
                             isSlideTop = true;
-                        }else if(isBottom && !isSlideBottom){
+                        } else if (isBottom && !isSlideBottom) {
                             isSlideBottom = true;
                         }
                         if (isSlideLeft) {
                             rectLeft += slideX;
                             if (rectLeft < 0) rectLeft = 0;
                             float w = rectRight - rectLeft;
-                            if(w < cornerLength * 2){
+                            if (w < cornerLength * 2) {
                                 w = cornerLength * 2;
                                 rectLeft = rectRight - w;
                             }
-                            float h = w/aspect;
-                            if(h < cornerLength * 2){
+                            float h = w / aspect;
+                            if (h < cornerLength * 2) {
                                 h = cornerLength * 2;
-                                w = h *aspect;
+                                w = h * aspect;
                                 rectLeft = rectRight - w;
                             }
-                            if(isTop){
+                            if (isTop) {
                                 rectBottom = rectTop + h;
-                            }else if(isBottom){
+                            } else if (isBottom) {
                                 rectTop = rectBottom - h;
-                            }else{
+                            } else {
                                 float rh = rectBottom - rectTop;
-                                float t = (rh - h)/2;
+                                float t = (rh - h) / 2;
                                 rectTop += t;
                                 rectBottom -= t;
                             }
-                            if(rectTop < 0){
+                            if (rectTop < 0) {
                                 rectTop = 0;
                                 rectBottom = h;
-                                if(rectBottom > measuredHeight){
-                                    rectBottom =  measuredHeight;
+                                if (rectBottom > measuredHeight) {
+                                    rectBottom = measuredHeight;
                                 }
-                                w = rectBottom *aspect;
+                                w = rectBottom * aspect;
                                 rectLeft = rectRight - w;
-                            }else if(rectBottom > measuredHeight){
+                            } else if (rectBottom > measuredHeight) {
                                 rectBottom = measuredHeight;
                                 rectTop = measuredHeight - h;
-                                if(rectTop < 0){
+                                if (rectTop < 0) {
                                     rectTop = 0;
                                 }
-                                w = (rectBottom - rectTop) *aspect;
+                                w = (rectBottom - rectTop) * aspect;
                                 rectLeft = rectRight - w;
                             }
                             invalidate();
@@ -215,91 +216,91 @@ public class CropView extends View {
                             downY = moveY;
                         } else if (isSlideRight) {
                             rectRight += slideX;
-                            if (rectRight > measuredWidth )
+                            if (rectRight > measuredWidth)
                                 rectRight = measuredWidth;
                             float w = rectRight - rectLeft;
-                            if(w < cornerLength * 2){
+                            if (w < cornerLength * 2) {
                                 w = cornerLength * 2;
                                 rectRight = rectLeft + w;
                             }
-                            float h = w/aspect;
-                            if(h < cornerLength * 2){
+                            float h = w / aspect;
+                            if (h < cornerLength * 2) {
                                 h = cornerLength * 2;
-                                w = h *aspect;
+                                w = h * aspect;
                                 rectRight = rectLeft + w;
                             }
 
-                            if(isTop){
+                            if (isTop) {
                                 rectBottom = rectTop + h;
-                            }else if(isBottom){
+                            } else if (isBottom) {
                                 rectTop = rectBottom - h;
-                            }else{
+                            } else {
                                 float rh = rectBottom - rectTop;
-                                float t = (rh - h)/2;
+                                float t = (rh - h) / 2;
                                 rectTop += t;
                                 rectBottom -= t;
                             }
-                            if(rectTop < 0){
+                            if (rectTop < 0) {
                                 rectTop = 0;
                                 rectBottom = h;
-                                if(rectBottom > measuredHeight){
-                                    rectBottom =  measuredHeight;
+                                if (rectBottom > measuredHeight) {
+                                    rectBottom = measuredHeight;
                                 }
-                                w = rectBottom *aspect;
+                                w = rectBottom * aspect;
                                 rectRight = rectLeft + w;
-                            }else if(rectBottom > measuredHeight){
+                            } else if (rectBottom > measuredHeight) {
                                 rectBottom = measuredHeight;
                                 rectTop = measuredHeight - h;
-                                if(rectTop < 0){
+                                if (rectTop < 0) {
                                     rectTop = 0;
                                 }
-                                w = (rectBottom - rectTop) *aspect;
+                                w = (rectBottom - rectTop) * aspect;
                                 rectRight = rectLeft + w;
                             }
                             invalidate();
                             downX = moveX;
                             downY = moveY;
-                        }else if (isSlideTop) {
+                        } else if (isSlideTop) {
                             rectTop += slideY;
                             if (rectTop < 0) rectTop = 0;
                             float h = rectBottom - rectTop;
-                            if(h < cornerLength * 2){
+                            if (h < cornerLength * 2) {
                                 h = cornerLength * 2;
                                 rectTop = rectBottom - h;
                             }
-                            float w = h*aspect;
-                            if(w < cornerLength * 2){
+                            float w = h * aspect;
+                            if (w < cornerLength * 2) {
                                 w = cornerLength * 2;
-                                h = w /aspect;
+                                h = w / aspect;
                                 rectTop = rectBottom - h;
                             }
 
-                            if(isLeft){
+                            if (isLeft) {
                                 rectRight = rectLeft + w;
-                            }else if(isRight){
+                            } else if (isRight) {
                                 rectLeft = rectRight - w;
-                            }else{
+                            } else {
                                 float rw = rectRight - rectLeft;
-                                float t = (rw - w)/2;
+                                float t = (rw - w) / 2;
                                 rectLeft += t;
                                 rectRight -= t;
                             }
-                            if(rectLeft < 0){
+                            if (rectLeft < 0) {
                                 rectLeft = 0;
                                 rectRight = w;
-                                if(rectRight > measuredWidth){
+                                if (rectRight > measuredWidth) {
                                     rectRight = measuredWidth;
                                 }
-                                h = rectRight /aspect;
+                                h = rectRight / aspect;
                                 rectTop = rectBottom - h;
-                            }else if(rectRight > measuredWidth){
+                            } else if (rectRight > measuredWidth) {
                                 rectRight = measuredWidth;
                                 rectLeft = measuredWidth - w;
-                                if(rectLeft < 0){
+                                if (rectLeft < 0) {
                                     rectLeft = 0;
                                     w = measuredWidth;
                                 }
-                                h = w /aspect;
+                                h = w / aspect;
                                 rectTop = rectBottom - h;
                             }
                             invalidate();
@@ -307,235 +308,298 @@ public class CropView extends View {
                             downY = moveY;
                         } else if (isSlideBottom) {
                             rectBottom += slideY;
-                            if (rectBottom > measuredHeight )
-                                rectBottom = measuredHeight ;
+                            if (rectBottom > measuredHeight)
+                                rectBottom = measuredHeight;
                             float h = rectBottom - rectTop;
-                            if(h < cornerLength * 2){
+                            if (h < cornerLength * 2) {
                                 h = cornerLength * 2;
                                 rectBottom = rectTop + h;
                             }
-                            float w = h*aspect;
-                            if(w < cornerLength * 2){
+                            float w = h * aspect;
+                            if (w < cornerLength * 2) {
                                 w = cornerLength * 2;
-                                h = w /aspect;
+                                h = w / aspect;
                                 rectBottom = rectTop + h;
                             }
 
-                            if(isLeft){
+                            if (isLeft) {
                                 rectRight = rectLeft + w;
-                            }else if(isRight){
+                            } else if (isRight) {
                                 rectLeft = rectRight - w;
-                            }else{
+                            } else {
                                 float rw = rectRight - rectLeft;
-                                float t = (rw - w)/2;
+                                float t = (rw - w) / 2;
                                 rectLeft += t;
                                 rectRight -= t;
                             }
-                            if(rectLeft < 0){
+                            if (rectLeft < 0) {
                                 rectLeft = 0;
                                 rectRight = w;
-                                if(rectRight > measuredWidth){
+                                if (rectRight > measuredWidth) {
                                     rectRight = measuredWidth;
                                 }
-                                h = rectRight /aspect;
+                                h = rectRight / aspect;
                                 rectBottom = rectTop + h;
-                            }else if(rectRight > measuredWidth){
+                            } else if (rectRight > measuredWidth) {
                                 rectRight = measuredWidth;
                                 rectLeft = measuredWidth - w;
-                                if(rectLeft < 0){
+                                if (rectLeft < 0) {
                                     rectLeft = 0;
                                     w = measuredWidth;
                                 }
-                                h = w /aspect;
+                                h = w / aspect;
                                 rectBottom = rectTop + h;
                             }
                             invalidate();
                             downX = moveX;
                             downY = moveY;
                         }
-                    }else{
-                        if (mode==CropMode.MODE_INIT){
+                    } else {
+                        if (mode == CropMode.MODE_INIT) {
                             if (isLeft) {
-                                // LogUtils.i("----MODE_INIT--------------------------   "+event.getX()+"  "+rectLeft+"    "+cornerWidth+"     "+slideX);
-                                LogUtils.i("----MODE_INIT--------------------------   "+rectLeft+"  "+slideX);
                                 rectLeft += slideX;
-                                LogUtils.i("----MODE_INIT--------------------------   "+rectLeft);
                                 if (rectLeft < 0) rectLeft = 0;
-                                if (rectLeft > rectRight -cornerWidth)
-                                    rectLeft = rectRight -cornerWidth;
-                            }else if(isRight){
+                                if (rectLeft > rectRight - cornerWidth)
+                                    rectLeft = rectRight - cornerWidth;
+                            } else if (isRight) {
                                 rectRight += slideX;
-                                if (rectRight > measuredWidth )
+                                if (rectRight > measuredWidth)
                                     rectRight = measuredWidth;
-                                if (rectRight < rectLeft +  cornerWidth)
+                                if (rectRight < rectLeft + cornerWidth)
                                     rectRight = rectLeft + cornerWidth;
                             }
                             //改变边框的高度, 如果两个都满足(比如手指在边角位置),那么就呈现一种缩放状态
-                            if (isTop){
+                            if (isTop) {
                                 rectTop += slideY;
                                 if (rectTop < 0) rectTop = 0;
                                 if (rectTop > rectBottom - cornerWidth)
                                     rectTop = rectBottom - cornerWidth;
-                            }else if (isBottom){
+                            } else if (isBottom) {
                                 rectBottom += slideY;
-                                if (rectBottom > measuredHeight )
-                                    rectBottom = measuredHeight ;
-                                if (rectBottom < rectTop +cornerWidth)
-                                    rectBottom = rectTop +cornerWidth;
+                                if (rectBottom > measuredHeight)
+                                    rectBottom = measuredHeight;
+                                if (rectBottom < rectTop + cornerWidth)
+                                    rectBottom = rectTop + cornerWidth;
                             }
 
-                        }else {
+                        } else {
+                            boolean isMotionLeft = downX - moveX > 0;
+                            boolean isVertical = measuredHeight > measuredWidth;
                             if (isLeft) {
-                                switch (mode){
+                                rectLeft += slideX;
+                                switch (mode) {
+                                    //1:1模式------------------------------------
                                     case MODE_11:
-                                        rectLeft += slideX;
-
-                                        if (rectLeft > rectRight -cornerWidth)
-                                            rectLeft = rectRight -cornerWidth;
-                                        if (downX - moveX > 0) {
-                                            LogUtils.i("isLeft----方向左--------------------------   "+rectLeft);
-                                            rectBottom+=Math.abs(slideX);
-                                            if (rectBottom>measuredHeight) {
-                                                rectBottom=measuredHeight;
-                                                rectLeft=rectRight-rectBottom-rectTop;
-                                            }
-
-                                            if (rectLeft < 0){
-                                                rectLeft = 0;
-                                                rectBottom=rectRight+rectTop;
+                                        if (isMotionLeft) {
+                                            rectBottom += Math.abs(slideX);
+                                            //超出底部高
+                                            if (rectBottom >= measuredHeight) {
+                                                rectBottom = measuredHeight;
+                                                rectLeft = rectRight - (rectBottom - rectTop);
+                                            } else {
+                                                //超出左边边界
+                                                if (rectLeft < 0) {
+                                                    rectLeft = 0;
+                                                    rectBottom = rectRight + rectTop;
+                                                }
                                             }
 
                                         } else {
-                                            LogUtils.i("isLeft----方向右--------------------------   "+rectLeft);
-                                            rectBottom-=Math.abs(slideX);
-                                            if (rectBottom< rectTop + cornerWidth) {
-                                                rectBottom=rectTop + cornerWidth;
+                                            rectBottom -= Math.abs(slideX);
+                                            //大于边框长度
+                                            if (rectLeft > rectRight - cornerWidth) {
+                                                rectLeft = rectRight - cornerWidth;
+                                                rectBottom = (rectRight - rectLeft) + rectTop;
                                             }
-                                        }
 
+                                        }
+                                        break;
+                                    //16:9模式------------------------------------
+                                    case MODE_169:
+                                        if (isMotionLeft) {
+                                            rectBottom += Math.abs(slideX / 16 * 9);
+                                            //超出底部高
+                                            if (rectBottom >= measuredHeight) {
+                                                rectBottom = measuredHeight;
+                                                rectLeft = rectRight - ((rectBottom - rectTop) / 9 * 16);
+                                            } else {
+                                                //超出左边边界
+                                                if (rectLeft < 0) {
+                                                    rectLeft = 0;
+                                                    rectBottom = (rectRight / 16) * 9 + rectTop;
+                                                }
+                                            }
+
+                                        } else {
+                                            rectBottom -= Math.abs(slideX / 16 * 9);
+                                            int min = (measuredWidth / 16) * 6;
+                                            if (rectLeft > rectRight - min) {
+                                                rectLeft = rectRight - min;
+                                                rectBottom = ((min / 16) * 9) + rectTop;
+                                            }
+
+                                        }
+                                        break;
+                                    //9:16模式------------------------------------
+                                    case MODE_916:
+                                        if (isMotionLeft) {
+                                            rectBottom += Math.abs((slideX / 9) * 16);
+                                            //超出底部高
+                                            if (rectBottom >= measuredHeight) {
+                                                rectBottom = measuredHeight;
+                                                rectLeft = rectRight - (((rectBottom - rectTop) / 16) * 9);
+                                            } else {
+                                                //超出左边边界
+                                                if (rectLeft < 0) {
+                                                    rectLeft = 0;
+                                                    rectBottom = (rectRight / 9) * 16 + rectTop;
+                                                }
+                                            }
+
+                                        } else {
+                                            rectBottom -= Math.abs((slideX / 9) * 16);
+                                            int min = (measuredHeight / 16) * 5;
+                                            if (rectLeft > rectRight - min) {
+                                                rectLeft = rectRight - min;
+                                                rectBottom = ((min / 9) * 16) + rectTop;
+                                            }
+
+                                        }
+                                        break;
+                                    //4:3模式------------------------------------
+                                    case MODE_43:
+                                        if (isMotionLeft) {
+                                            rectBottom += Math.abs(slideX / 4 * 3);
+                                            //超出底部高
+                                            if (rectBottom >= measuredHeight) {
+                                                rectBottom = measuredHeight;
+                                                rectLeft = rectRight - ((rectBottom - rectTop) / 3 * 4);
+                                            } else {
+                                                //超出左边边界
+                                                if (rectLeft < 0) {
+                                                    rectLeft = 0;
+                                                    rectBottom = (rectRight / 4) * 3 + rectTop;
+                                                }
+                                            }
+
+                                        } else {
+                                            rectBottom -= Math.abs(slideX / 4 * 3);
+                                            int min = (measuredWidth / 4) * 1;
+                                            if (rectLeft > rectRight - min) {
+                                                rectLeft = rectRight - min;
+                                                rectBottom = ((min / 4) * 3) + rectTop;
+                                            }
+
+                                        }
                                         break;
                                 }
                             } else if (isRight) {
-                                switch (mode){
+                                rectRight += slideX;
+                                switch (mode) {
                                     case MODE_11:
-                                        rectRight += slideX;
-                                        if (rectRight < rectLeft +  cornerWidth)
-                                            rectRight = rectLeft + cornerWidth;
-                                        if (downX - moveX > 0) {
-                                            LogUtils.i("isRight----方向左--------------------------   "+rectLeft);
-                                            rectBottom-=Math.abs(slideX);
-                                            if (rectBottom< rectTop + cornerWidth) {
-                                                rectBottom=rectTop + cornerWidth;
-                                            }
-
-                                        } else {
-                                            LogUtils.i("isRight----方向右--------------------------   "+rectLeft);
-                                            rectBottom+=Math.abs(slideX);
-
-                                            if (rectRight > measuredWidth ){
-                                                rectRight = measuredWidth;
-                                                rectBottom=rectRight-rectLeft;
-                                            }
-
-                                            if (rectBottom>measuredHeight) {
-                                                rectBottom=measuredHeight;
-                                                rectRight=rectBottom-rectTop+rectLeft;
-                                            }
-                                        }
-
-                                        break;
-                                }
-                            }
-
-                            else if (isTop) {
-                                switch (mode){
-                                    case MODE_11:
-                                        LogUtils.i("   左  "+rectLeft+"   右  "+rectRight+"   上  "+rectTop+"   下  "+rectBottom);
-                                        if (downY - moveY > 0) {
-                                            LogUtils.i("isTop----方向上--------------------------   "+rectLeft);
-                                            rectLeft-=Math.abs(slideY);
-                                            if (rectLeft<0){
-                                                rectLeft=0;
-                                                rectTop=rectBottom-rectRight;
-                                            }
-                                            if (rectLeft > rectRight -cornerWidth)
-                                                rectLeft = rectRight -cornerWidth;
-
-                                            rectTop += slideY;
-                                            if (rectTop < 0) {
-                                                rectTop = 0;
-                                                rectLeft=rectRight-rectBottom;
-                                            }
-
-                                        } else {
-                                            LogUtils.i("isTop----方向下--------------------------   " + rectLeft);
-                                            rectLeft+=Math.abs(slideY);
-                                            if (rectLeft > rectRight -cornerWidth)
-                                                rectLeft = rectRight -cornerWidth;
-
-                                            rectTop += slideY;
-                                            if (rectTop < 0) rectTop = 0;
-
-                                        }
-                                        if (rectTop > rectBottom - cornerWidth)
-                                            rectTop = rectBottom - cornerWidth;
-                                        break;
-
-                                }
-
-                            } else if (isBottom) {
-                                switch (mode){
-                                    case MODE_INIT:
-                                        rectBottom += slideY;
-                                        if (rectBottom > measuredHeight )
-                                            rectBottom = measuredHeight ;
-                                        if (rectBottom < rectTop +cornerWidth)
-                                            rectBottom = rectTop +cornerWidth;
-                                        break;
-                                    case MODE_11:
-                                        if (downY - moveY > 0) {
-                                            LogUtils.i("isBottom----方向上--------------------------   "+rectLeft);
-
-                                            rectRight-=Math.abs(slideY);
-                                            if (rectRight < rectLeft +  cornerWidth)
+                                        if (isMotionLeft) {
+                                            LogUtils.i("isRight----方向左--------------------------   " + rectLeft);
+                                            rectBottom -= Math.abs(slideX);
+                                            if (rectRight < rectLeft + cornerWidth) {
                                                 rectRight = rectLeft + cornerWidth;
-
-
-                                            rectBottom += slideY;
-                                            if (rectBottom > measuredHeight )
-                                                rectBottom = measuredHeight ;
-                                            if (rectBottom < rectTop +cornerWidth){
-                                                rectBottom = rectTop +cornerWidth;
+                                                rectBottom = (rectRight - rectLeft) + rectTop;
                                             }
 
                                         } else {
-                                            LogUtils.i("isBottom----方向下--------------------------   "+rectLeft);
-                                            rectRight+=Math.abs(slideY);
-                                            if (rectRight<rectLeft+cornerWidth){
-                                                rectRight=rectLeft+cornerWidth;
+                                            LogUtils.i("isRight----方向右--------------------------   " + rectLeft);
+                                            rectBottom += Math.abs(slideX);
+                                            //大于边界
+                                            if (rectRight > measuredWidth) {
+                                                rectRight = measuredWidth;
+                                                rectBottom = rectTop + (rectRight - rectLeft);
+                                            } else {
+                                                //大于底部高
+                                                if (rectBottom > measuredHeight) {
+                                                    rectBottom = measuredHeight;
+                                                    rectRight = (rectBottom - rectTop) + rectLeft;
+                                                }
                                             }
-
-                                            rectBottom += slideY;
-                                            if (rectBottom >= maxHeight) {
-                                                rectBottom = maxHeight;
-                                                rectRight=rectBottom-rectTop+rectLeft;
-                                            }
-
-                                            if (rectRight>measuredWidth){
-                                                rectRight=measuredWidth;
-                                                rectBottom=rectRight-rectLeft+rectTop;
-                                            }
-
-
-
-
-
                                         }
+                                        break;
+                                    //16:9模式------------------------------------
+                                    case MODE_169:
+                                        if (isMotionLeft) {
+                                            LogUtils.i("isRight-169---方向左--------------------------   " + rectLeft);
+                                            rectBottom -= Math.abs(slideX / 16 * 9);
+                                            int min = (measuredWidth / 16) * 6;
+                                            if (rectRight <= rectLeft + min) {
+                                                rectRight = rectLeft + min;
+                                                rectBottom = ((min / 16) * 9) + rectTop;
+                                            }
 
+                                        } else {
+                                            LogUtils.i("isRight-169---方向右--------------------------   " + rectLeft);
+                                            rectBottom += Math.abs(slideX / 16 * 9);
+
+                                            if (rectBottom >= measuredHeight) {
+                                                rectBottom = measuredHeight;
+                                                rectRight = rectLeft + (((rectBottom - rectTop) / 9) * 16);
+                                            } else {
+                                                if (rectRight > measuredWidth) {
+                                                    rectRight = measuredWidth;
+                                                    rectBottom = ((rectRight - rectLeft) / 16) * 9 + rectTop;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    //9:16模式------------------------------------
+                                    case MODE_916:
+                                        if (isMotionLeft) {
+                                            LogUtils.i("isRight-169---方向左--------------------------   " + rectLeft);
+                                            rectBottom -= Math.abs((slideX / 9) * 16);
+                                            int min = (measuredHeight / 16) * 5;
+                                            if (rectRight <= rectLeft + min) {
+                                                rectRight = rectLeft + min;
+                                                rectBottom = ((min / 9) * 16) + rectTop;
+                                            }
+
+                                        } else {
+                                            LogUtils.i("isRight-169---方向右--------------------------   " + rectLeft);
+                                            rectBottom += Math.abs((slideX / 9) * 16);
+                                            if (rectBottom >= measuredHeight) {
+                                                rectBottom = measuredHeight;
+                                                rectRight = rectLeft + (((rectBottom - rectTop) / 16) * 9);
+                                            } else {
+                                                if (rectRight > measuredWidth) {
+                                                    rectRight = measuredWidth;
+                                                    rectBottom = ((rectRight - rectLeft) / 9) * 16 + rectTop;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    //4:3模式------------------------------------
+                                    case MODE_43:
+                                        if (isMotionLeft) {
+                                            LogUtils.i("isRight-169---方向左--------------------------   " + rectLeft);
+                                            rectBottom -= Math.abs(slideX / 4 * 3);
+                                            int min = (measuredWidth / 4) * 1;
+                                            if (rectRight <= rectLeft + min) {
+                                                rectRight = rectLeft + min;
+                                                rectBottom = ((min / 4) * 3) + rectTop;
+                                            }
+
+                                        } else {
+                                            LogUtils.i("isRight-169---方向右--------------------------   " + rectLeft);
+                                            rectBottom += Math.abs(slideX / 4 * 3);
+
+                                            if (rectBottom >= measuredHeight) {
+                                                rectBottom = measuredHeight;
+                                                rectRight = rectLeft + (((rectBottom - rectTop) / 3) * 4);
+                                            } else {
+                                                if (rectRight > measuredWidth) {
+                                                    rectRight = measuredWidth;
+                                                    rectBottom = ((rectRight - rectLeft) / 4) * 3 + rectTop;
+                                                }
+                                            }
+                                        }
                                         break;
                                 }
                             }
-
                         }
 
                         invalidate();
@@ -566,15 +630,15 @@ public class CropView extends View {
     public float[] getCutArr() {
 
         float[] arr = new float[4];
-        arr[0] = rectLeft ;
-        arr[1] = rectTop ;
-        arr[2] = rectRight ;
-        arr[3] = rectBottom ;
+        arr[0] = rectLeft;
+        arr[1] = rectTop;
+        arr[2] = rectRight;
+        arr[3] = rectBottom;
         return arr;
     }
 
-    public RectF getRectValue(){
-        return new RectF(rectLeft,rectTop,rectRight,rectBottom);
+    public RectF getRectValue() {
+        return new RectF(rectLeft, rectTop, rectRight, rectBottom);
     }
 
 
@@ -585,9 +649,11 @@ public class CropView extends View {
     public int getRectHeight() {
         return (int) (measuredHeight);
     }
-    public void setAspect(float aspect){
+
+    public void setAspect(float aspect) {
         this.aspect = aspect;
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -598,41 +664,42 @@ public class CropView extends View {
     }
 
     private int cornerWidth;
+
     private void initParams() {
 
         measuredWidth = getMeasuredWidth();
         measuredHeight = getMeasuredHeight();
-        if(aspect == -1){
+        if (aspect == -1) {
             cornerLength = measuredWidth / 6;
-            cornerWidth=cornerLength*2;
+            cornerWidth = cornerLength * 2;
             if (isSpecial) {
 
             } else {
                 rectRight = measuredWidth;
                 rectLeft = 0;
                 rectTop = 0;
-                rectBottom = measuredHeight ;
+                rectBottom = measuredHeight;
             }
 
-            LogUtils.i("---mCropView------------------------"+measuredWidth+"---------"+measuredHeight);
-        }else{
-            float vh = measuredWidth*1.0f/measuredHeight;
-            if(aspect > 1){
+            LogUtils.i("---mCropView------------------------" + measuredWidth + "---------" + measuredHeight);
+        } else {
+            float vh = measuredWidth * 1.0f / measuredHeight;
+            if (aspect > 1) {
                 cornerLength = measuredWidth / 6;
-            }else{
+            } else {
                 cornerLength = measuredHeight / 6;
             }
-            if(aspect > vh){
+            if (aspect > vh) {
                 rectLeft = 0;
                 rectRight = measuredWidth;
-                float h = measuredWidth/aspect;
-                rectTop = (measuredHeight - h)/2;
+                float h = measuredWidth / aspect;
+                rectTop = (measuredHeight - h) / 2;
                 rectBottom = rectTop + h;
-            }else{
+            } else {
                 rectTop = 0;
                 rectBottom = measuredHeight;
-                float w = measuredHeight*aspect;
-                rectLeft = (measuredWidth - w)/2;
+                float w = measuredHeight * aspect;
+                rectLeft = (measuredWidth - w) / 2;
                 rectRight = rectLeft + w;
             }
         }
@@ -652,26 +719,26 @@ public class CropView extends View {
     private boolean isSpecial;
 
 
-    public enum CropMode{
-        MODE_INIT,MODE_11,MODE_169,MODE_916,MODE_43
+    public enum CropMode {
+        MODE_INIT, MODE_11, MODE_169, MODE_916, MODE_43
     }
 
-    private CropMode mode=CropMode.MODE_INIT;
+    private CropMode mode = CropMode.MODE_INIT;
 
 
     private int maxWidth;
     private int maxHeight;
 
 
-    public void setRectValue(CropView.CropMode mode,boolean specialState,int left, int top, int right, int bottom){
-        this.mode=mode;
-        isSpecial=specialState;
-        rectLeft=left;
-        rectTop=top;
-        rectRight=right;
-        rectBottom=bottom;
-        maxWidth=right-left;
-        maxHeight=bottom-top;
+    public void setRectValue(CropView.CropMode mode, boolean specialState, int left, int top, int right, int bottom) {
+        this.mode = mode;
+        isSpecial = specialState;
+        rectLeft = left;
+        rectTop = top;
+        rectRight = right;
+        rectBottom = bottom;
+        maxWidth = right - left;
+        maxHeight = bottom - top;
         invalidate();
     }
 

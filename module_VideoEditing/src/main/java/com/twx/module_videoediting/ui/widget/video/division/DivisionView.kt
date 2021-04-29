@@ -92,18 +92,28 @@ class DivisionView @JvmOverloads constructor(
         moveX = event.x
         LogUtils.i("---- event.x--------------${ event.x}------------")
         when (event.action) {
-            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP-> {
-                if (moveX<0){
-                    moveX=0f
-                }else if (moveX>mWidth-paddingDis){
-                    moveX= mWidth-paddingDis.toFloat()
-                }
+            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_DOWN-> {
+                updatePosition()
                 mOnDivisionTimeListener?.divisionTime(((moveX/(mWidth-paddingDis))* mTotalTime).toLong())
-                invalidate()
+
+            }
+            MotionEvent.ACTION_UP->{
+                updatePosition()
+                mOnDivisionTimeListener?.continuePlay()
             }
         }
+        invalidate()
         return true
     }
+
+    private fun updatePosition() {
+        if (moveX < 0) {
+            moveX = 0f
+        } else if (moveX > mWidth - paddingDis) {
+            moveX = mWidth - paddingDis.toFloat()
+        }
+    }
+
     private fun drawShear(canvas: Canvas) {
         mShearBitmap.let {
             srcShear.apply {
@@ -138,6 +148,8 @@ class DivisionView @JvmOverloads constructor(
 
     interface OnDivisionTimeListener{
         fun divisionTime(time:Long)
+
+        fun continuePlay();
     }
 
     private var mOnDivisionTimeListener:OnDivisionTimeListener?=null

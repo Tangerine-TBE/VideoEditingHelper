@@ -160,7 +160,9 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 .imageSpanCount(3)// 每行显示个数 int
                 .maxSelectNum(maxSelectNum)
                 .minSelectNum(minSelectNum)
-                .videoMaxSecond(3600)
+                .previewVideo(false)
+                .previewImage(false)
+                .videoMaxSecond(1800)
                 .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                 .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
                 .isCamera(false)// 是否显示拍照按钮 true or false

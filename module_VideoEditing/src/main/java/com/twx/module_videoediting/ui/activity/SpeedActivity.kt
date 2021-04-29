@@ -4,11 +4,13 @@ import android.net.Uri
 import android.text.TextUtils
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.tencent.qcloud.ugckit.utils.VideoPathUtil
 import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.LayoutType
+import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.setStatusBarDistance
 import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
@@ -51,7 +53,9 @@ class SpeedActivity : BaseViewActivity<ActivitySpeedBinding>() {
             //获取视频路径播放
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
                 mSrcFile = it
+                LogUtils.i("----getVideoDuration--------------------${FileUtils.getVideoDuration(mSrcFile)}---------------")
                 playerView.player = player.apply {
+                    repeatMode=Player.REPEAT_MODE_ALL
                     setMediaItem(MediaItem.fromUri(Uri.parse(it)))
                     prepare()
                     play()

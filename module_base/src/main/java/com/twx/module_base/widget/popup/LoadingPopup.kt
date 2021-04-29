@@ -1,5 +1,6 @@
 package com.twx.module_base.widget.popup
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import com.twx.module_base.R
@@ -39,6 +40,11 @@ class LoadingPopup(activity: FragmentActivity?):BasePopup<PopupLoadingWindowBind
             block()
             dismiss()
         }
+    }
+
+    override fun showPopupView(view: View, gravity: Int, x: Int, y: Int) {
+        super.showPopupView(view, gravity, x, y)
+        mView.loadingView.setProgress(0)
     }
 
 }
