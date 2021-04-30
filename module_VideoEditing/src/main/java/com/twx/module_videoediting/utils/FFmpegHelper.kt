@@ -36,8 +36,14 @@ object FFmpegHelper {
 
 
     fun changeVideoSpeed(speed:Float=1.0f,srcFile:String,targetFile:String): Array<String?>{
-        var command = "ffmpeg -y -i %s -filter_complex [0:v]setpts=%s*PTS[v];[0:a]atempo=%s[a] -map [v] -map [a] %s"
-        command = String.format(command, srcFile,(1/speed).toString(),if (speed>2.0) "2.0" else speed.toString(),targetFile)
+       /* var command = "ffmpeg -y -i %s -filter_complex [0:v]setpts=%s*PTS[v];[0:a]atempo=%s[a] -map [v] -map [a] %s"
+        command = String.format(command, srcFile,(1/speed).toString(),if (speed>2.0) "2.0" else speed.toString(),targetFile)*/
+        var command=if (speed > 2.0) {
+            "ffmpeg -y -i %s -filter_complex [0:v]setpts=%s*PTS[v];[0:a]atempo=2.0,atempo=%s[a] -map [a] -map [v] %s"
+        } else {
+            "ffmpeg -y -i %s -filter_complex [0:v]setpts=%s*PTS[v];[0:a]atempo=%s[a] -map [a] -map [v] %s"
+        }
+        command=String.format(command, srcFile,(1/speed).toString(),if (speed>2.0) (speed/2).toString() else speed.toString(),targetFile)
         LogUtils.i("-FFmpegHelper---changeVideoSpeed------- $command")
         return command.split(" ").toTypedArray()
     }

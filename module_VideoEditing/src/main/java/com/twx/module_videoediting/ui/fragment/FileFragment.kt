@@ -1,19 +1,20 @@
 package com.twx.module_videoediting.ui.fragment
 
 import android.net.Uri
+import android.text.Html
 import android.text.TextUtils
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tamsiree.rxkit.view.RxToast
 import com.twx.module_base.base.BaseVmFragment
 import com.twx.module_base.utils.IntentUtils
 import com.twx.module_base.utils.LogUtils
+import com.twx.module_base.utils.viewThemeColor
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.FragmentFileBinding
-import com.twx.module_videoediting.livedata.ThemeChangeLiveData
-import com.twx.module_base.utils.viewThemeColor
-import com.twx.module_videoediting.domain.ItemBean
 import com.twx.module_videoediting.domain.MediaInformation
+import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.livedata.VideoFileLiveData
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.activity.ExportActivity
@@ -21,9 +22,7 @@ import com.twx.module_videoediting.ui.adapter.recycleview.VideoFileAdapter
 import com.twx.module_videoediting.ui.popup.InputPopup
 import com.twx.module_videoediting.ui.popup.ItemSelectPopup
 import com.twx.module_videoediting.ui.popup.RemindDeletePopup
-import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.viewmodel.MainViewModel
-import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -71,6 +70,7 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
                 adapter = mVideoFileAdapter
             }
 
+
         }
 
     }
@@ -85,11 +85,25 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
                 val that = this@FileFragment
                 ThemeChangeLiveData.observe(that, {
                     viewThemeColor(it, fileTitle, fileEdit, fileSelectAll)
+                    noFileHint.apply {
+                        setCompoundDrawablesWithIntrinsicBounds(null, ContextCompat.getDrawable(requireContext(), if (it) R.mipmap.icon_no_file_ture else R.mipmap.icon_no_file), null, null)
+                        val str1 = "<font color =${if (it) "'#808080'" else "'#ffffff'"}><big>您的视频空空的~</big></font><br><font color =${if (it) "'#D4D4D4'" else "'#808080'"}>赶紧去试一试吧</font>"
+                        text = Html.fromHtml(str1)
+                    }
+
                 })
 
                 VideoFileLiveData.observe(that, {
                     if (!getEditAction_()) {
                         setVideoList(it)
+                        if (it.size > 0) {
+                            showView(videoFileContainer)
+                            goneView(noFileHint)
+                        } else {
+                            showView(noFileHint)
+                            goneView(videoFileContainer)
+                        }
+
                     }
                 })
 
@@ -114,6 +128,7 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
                 })
 
                 currentVideoList.observe(that, {
+                    LogUtils.i("-----currentVideoList------------${it.size}-------------")
                     mVideoFileAdapter.setItemList(it)
                 })
 
@@ -178,7 +193,7 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
                     if (viewModel.getEditAction_()) {
                         viewModel.setSelectAllState(mVideoFileAdapter.getSelectState())
                     } else {
-                        ExportActivity.toExportPage(activity,false,item.path)
+                        ExportActivity.toExportPage(activity, false, item.path)
                     }
                 }
 
@@ -234,7 +249,7 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
                  doItemAction {
                      mCurrentVideoList.remove(it)
                      mVideoFileAdapter.setItemList(mCurrentVideoList)
-                     viewModel.deleteMediaFile(Uri.parse(it.uri),it.path)
+                     viewModel.deleteMediaFile(Uri.parse(it.uri), it.path)
                  }
             }
         }

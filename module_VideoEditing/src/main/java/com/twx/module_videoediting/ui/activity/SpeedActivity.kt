@@ -28,6 +28,7 @@ class SpeedActivity : BaseViewActivity<ActivitySpeedBinding>() {
     private var mSpeed = 1.0f
     private val callback by lazy {
         ffCallback(onComplete = {
+            LogUtils.i("---SpeedActivity--------------${ FileUtils.getVideoDuration(mVideoOutputPath)}---------------------")
             FileUtils.saveAlbum(this, mVideoOutputPath)
             ExportActivity.toExportPage(this, true, mVideoOutputPath)
         }, onProgress = {

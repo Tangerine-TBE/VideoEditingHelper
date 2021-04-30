@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -57,9 +58,26 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="28dp"
             android:overScrollMode="never"
+            android:visibility="@{data.currentVideoList.size()>0?View.VISIBLE:View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fileTitle" />
+
+
+        <TextView
+            android:id="@+id/noFileHint"
+            android:visibility="@{data.currentVideoList.size()>0?View.GONE:View.VISIBLE}"
+            android:drawableTop="@mipmap/icon_no_file"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:drawablePadding="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 
 
         <TextView
