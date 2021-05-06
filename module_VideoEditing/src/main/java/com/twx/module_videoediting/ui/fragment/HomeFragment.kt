@@ -42,6 +42,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
 
 
+
     private val mHomeBottomAdapter by lazy {
         HomeBottomAdapter()
     }
@@ -96,6 +97,9 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         const val ACTION_REVERSE = 5
         const val ACTION_SPEED = 6
         const val ACTION_CROP = 7
+
+        const val CUT_COUNT=6
+
     }
 
     private var openAction = -1
@@ -162,7 +166,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 .minSelectNum(minSelectNum)
                 .previewVideo(false)
                 .previewImage(false)
-                .videoMaxSecond(1800)
+                .videoMaxSecond(600)
                 .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                 .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
                 .isCamera(false)// 是否显示拍照按钮 true or false
@@ -178,7 +182,8 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
             if (it.size > 0) {
                 val path = it[0].path
                 when (requestCode) {
-                    ACTION_CUT, ACTION_REVERSE, ACTION_TAGS -> preVideo(path, false)
+                    ACTION_CUT-> preVideo(path, true,CUT_COUNT)
+                     ACTION_REVERSE, ACTION_TAGS -> preVideo(path, true)
                     ACTION_DIVISION -> preVideo(path, true)
                     ACTION_MUSIC -> toOtherActivity<MusicActivity>(activity) {
                         putExtra(
@@ -192,7 +197,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                             mediaInfo.add(MediaInformation(path = it.path, duration = it.duration))
                             LogUtils.i("---ACTION_JOINT------${it.path}-----------------")
                         }
-                        toOtherActivity<ReadyJoinActivity>(activity) {
+                        toOtherActivity<JoinActivity>(activity) {
                             putExtra(
                                     Constants.KEY_VIDEO_PATH,
                                     Gson().toJson(ValueJoinList(mediaInfo))
@@ -218,7 +223,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
     }
 
 
-    private fun preVideo(videoPath: String, isSpecial: Boolean) {
+    private fun preVideo(videoPath: String, isSpecial: Boolean,count:Int=4) {
         mLoadingPopup.showPopupView(binding.bottomContainer)
         mVideoEditorHelper.apply {
             releaseSDK()
@@ -230,7 +235,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
             stopProcess()
             setOnUpdateUIListener(this@HomeFragment)
             if (isSpecial) {
-                startSpecialProcess()
+                startSpecialProcess(count)
             } else {
                 startNormalProcess()
             }

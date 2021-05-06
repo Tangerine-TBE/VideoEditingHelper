@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.tencent.qcloud.ugckit.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TCVideoEditerAdapter extends RecyclerView.Adapter<TCVideoEditerAdapter.ViewHolder> {
     private final Context mContext;
@@ -49,6 +50,13 @@ public class TCVideoEditerAdapter extends RecyclerView.Adapter<TCVideoEditerAdap
         data.add(b);
         notifyItemInserted(position);
     }
+
+    public void setThumbnailList(List<Bitmap> list) {
+        data.clear();
+        data.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     public void clearAllBitmap() {
         data.clear();

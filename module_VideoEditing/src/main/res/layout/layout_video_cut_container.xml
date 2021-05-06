@@ -22,6 +22,7 @@
 
     <include
         android:id="@+id/cutControl"
+        android:layout_marginTop="10dp"
         layout="@layout/layout_cut_view_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

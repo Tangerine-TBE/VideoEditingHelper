@@ -1,20 +1,21 @@
 package com.twx.module_videoediting.utils
 
 import android.app.Activity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.tencent.qcloud.ugckit.basic.UGCKitResult
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit
 import com.tencent.qcloud.ugckit.utils.DateTimeUtil
 import com.twx.module_base.base.BaseApplication
+import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.widget.popup.LoadingPopup
-import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_videoediting.ui.activity.ExportActivity
 import com.twx.module_videoediting.ui.widget.TitleBar
 import com.twx.module_videoediting.ui.widget.video.cut.IVideoCut
 import io.microshow.rxffmpeg.RxFFmpegInvoke
-
 
 
 fun TitleBar.setBarEventAction(activity: Activity?, block: () -> Unit){
@@ -76,13 +77,13 @@ fun videoTimeInterval(duration: Long):Int{
 }
 
 //输出视频
-fun outPutVideo(loadingPopup:LoadingPopup,activity: Activity?)=
+fun outPutVideo(loadingPopup: LoadingPopup, activity: Activity?)=
     object: IVideoCut.OnCutListener{
         override fun onCutterCompleted(ugcKitResult: UGCKitResult) {
             if (ugcKitResult.errorCode == 0) {
                 LogUtils.i("-------onCutterCompleted----------------${ugcKitResult.outputPath}--")
-                toOtherActivity<ExportActivity>(activity,true){
-                    putExtra(Constants.KEY_VIDEO_PATH,ugcKitResult.outputPath)
+                toOtherActivity<ExportActivity>(activity, true){
+                    putExtra(Constants.KEY_VIDEO_PATH, ugcKitResult.outputPath)
                 }
                 loadingPopup.dismiss()
                 MakeBackLiveData.setMakeFinishState(true)
@@ -93,13 +94,13 @@ fun outPutVideo(loadingPopup:LoadingPopup,activity: Activity?)=
         }
         override fun onCutterProgress(progress: Float) {
             LogUtils.i("-----onCutterProgress---${Thread.currentThread().name}----------${(progress * 100).toInt()}-------------")
-            loadingPopup.setProgress((progress*100).toInt())
+            loadingPopup.setProgress((progress * 100).toInt())
             MakeBackLiveData.setMakeFinishState(false)
         }
 }
 
 //取消制作
-fun cancelMake(isProcess:Boolean) {
+fun cancelMake(isProcess: Boolean) {
     if (isProcess) {
         ProcessKit.getInstance().stopProcess()
     } else {
@@ -109,7 +110,7 @@ fun cancelMake(isProcess:Boolean) {
 }
 
 
-fun ffCallback(onProgress:(Int)->Unit={},onComplete:()->Unit={},onCancel:()->Unit={})=
+fun ffCallback(onProgress: (Int) -> Unit = {}, onComplete: () -> Unit = {}, onCancel: () -> Unit = {})=
     object : RxFFmpegInvoke.IFFmpegListener{
         override fun onFinish() {
             LogUtils.i("-ffCallback--onFinish-------------- ")
@@ -139,4 +140,7 @@ fun ffCallback(onProgress:(Int)->Unit={},onComplete:()->Unit={},onCancel:()->Uni
         }
 
     }
+
+      fun <T>String.formatList(): T = Gson().fromJson(this, object : TypeToken<List<T>>(){}.type)
+
 

@@ -83,13 +83,13 @@ public class ProcessKit extends BaseGenerateKit implements TXVideoEditer.TXVideo
     }
 
 
-    public void startSpecialProcess(){
+    public void startSpecialProcess(int count){
         VideoEditerSDK videoEditor = VideoEditerSDK.getInstance();
         videoEditor.clearThumbnails();
         long cutterStartTime = videoEditor.getCutterStartTime();
         long cutterEndTime =videoEditor.getCutterEndTime();
         TXVideoEditConstants.TXThumbnail thumbnail = new TXVideoEditConstants.TXThumbnail();
-        thumbnail.count = 4;
+        thumbnail.count = count;
         thumbnail.width = 100;
         thumbnail.height = 100;
         TXVideoEditer editer = videoEditor.getEditer();

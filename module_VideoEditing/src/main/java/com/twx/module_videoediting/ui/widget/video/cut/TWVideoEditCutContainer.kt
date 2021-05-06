@@ -1,6 +1,7 @@
 package com.twx.module_videoediting.ui.widget.video.cut
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
@@ -8,9 +9,11 @@ import com.tencent.qcloud.ugckit.UGCKitImpl
 import com.tencent.qcloud.ugckit.basic.JumpActivityMgr
 import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener
 import com.tencent.qcloud.ugckit.basic.UGCKitResult
+import com.tencent.qcloud.ugckit.component.slider.RangeSlider
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.VideoGenerateKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
+import com.tencent.qcloud.ugckit.module.effect.utils.Edit
 import com.tencent.qcloud.ugckit.module.effect.utils.PlayState
 import com.tencent.qcloud.ugckit.utils.DialogUtil
 import com.tencent.qcloud.ugckit.utils.TelephonyUtil
@@ -34,7 +37,7 @@ import com.twx.module_videoediting.utils.videoTimeInterval
  */
 class TWVideoEditCutContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : BaseVideoEditUi(context, attrs, defStyleAttr), IVideoCut, ICutView.VideoProgressSeekListener, PlayerManager.OnPreviewListener {
+) : BaseVideoEditUi(context, attrs, defStyleAttr), IVideoCut, ICutView.VideoProgressSeekListener, PlayerManager.OnPreviewListener, Edit.OnCutChangeListener {
     private val binding = DataBindingUtil.inflate<LayoutVideoCutContainerBinding>(
         LayoutInflater.from(context),
         R.layout.layout_video_cut_container,
@@ -42,9 +45,6 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
         true
     )
 
-    private val totalTime= mVideoEditorHelper.txVideoInfo.duration
-    private  var backTime:Long=0L
-    private  var goTime:Long=0L
     private var currentTime=0L
 
     init {
@@ -82,35 +82,9 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
                 }
 
 
-                mVideoPlayerView.apply {
-                    backContainer.setOnClickListener {
-                        i--
-                        backTime=currentTime-1000
-                        if (backTime < 1000) {
-                            backTime = 0
-                        }
-                        PlayerManager.previewAtTime(backTime)
-                        showCutTime()
-                    }
-
-
-                    goContainer.setOnClickListener {
-                        i++
-                        goTime+=1000
-                        if (goTime >totalTime) {
-                            goTime =totalTime
-                        }
-                        PlayerManager.previewAtTime(goTime)
-                        showCutTime()
-                    }
-                }
-
             }
         }
     }
-
-    private var i=0
-
 
     override fun initPlayerLayout() {
         mVideoEditorHelper.let {
@@ -164,9 +138,20 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
             // 初始化缩略图列表，裁剪缩略图
             val interval = videoTimeInterval(info.duration)
             binding.cutControl.mCutViewLayout.apply {
-                setTotalDuration(info.duration)
+              /*  setTotalDuration(info.duration)
                 setAllThumbnailListWidth((info.duration / interval).toInt())
-                setThumbnailList(mVideoEditorHelper.allThumbnailList)
+                setThumbnailList(mVideoEditorHelper.allThumbnailList)*/
+            }
+
+            binding.cutControl.videoCutLayout.apply {
+                setCutChangeListener(this@TWVideoEditCutContainer)
+              //  setCount((info.duration / interval).toInt())
+                setMediaFileInfo(mVideoEditorHelper.txVideoInfo)
+                val list = ArrayList<Bitmap>()
+                mVideoEditorHelper.allThumbnailList.forEach {
+                    list.add(it.bitmap)
+                }
+                addBitmapList(list)
             }
 
         }
@@ -199,6 +184,25 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
 
     override fun onPreviewFinish() {
         PlayerManager.restartPlay()
+    }
+
+    override fun onCutClick() {
+
+    }
+
+    override fun onCutChangeKeyDown() {
+        LogUtils.i("--onCutChangeKeyDown------------------")
+    }
+
+    override fun onCutChangeKeyUp(startTime: Long, endTime: Long, type: Int) {
+        if (type == RangeSlider.TYPE_LEFT) {
+            PlayerManager.previewAtTime(startTime)
+        } else {
+            PlayerManager.previewAtTime(endTime)
+        }
+        LogUtils.i("--onCutChangeKeyUp--------------${startTime}----${endTime}-----------")
+        mVideoEditorHelper.setCutterStartTime(startTime,endTime)
+        binding.showCutTime()
     }
 
 

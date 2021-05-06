@@ -45,7 +45,6 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
             if (hasFocus) {
                 sp.apply {
                     if (getBoolean(Constants.IS_FIRST, true)) {
-                        //陪伴天数计数
                         mAgreementPopup?.showPopupView(binding.mAdContainer)
                         showConut++
                     } else {

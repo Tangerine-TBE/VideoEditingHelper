@@ -21,7 +21,7 @@ class VideoApplication : BaseApplication() {
     override fun initData() {
         PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
         TXUGCBase.getInstance().setLicence(this, ugcLicenceUrl, ugcKey)
-        val string = TXUGCBase.getInstance().getLicenceInfo(this)
+        TXUGCBase.getInstance().getLicenceInfo(this)
         UGCKit.init(this);
     }
 }

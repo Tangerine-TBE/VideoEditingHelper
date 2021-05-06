@@ -1,40 +1,71 @@
 package com.twx.module_videoediting.ui.activity
 
+import android.graphics.Bitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.tencent.ugc.TXVideoEditConstants
+import com.tencent.ugc.TXVideoEditer
+import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityJoinBinding
 import com.twx.module_videoediting.domain.ValueJoinList
+import com.twx.module_videoediting.ui.adapter.recycleview.video.join.JoinCutAdapter
 import com.twx.module_videoediting.ui.widget.video.join.IVideoJoin
+import com.twx.module_videoediting.ui.widget.video.join.JoinEditorManager
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.utils.setBarEventAction
+import com.twx.module_videoediting.utils.video.PlayerManager
 
 class JoinActivity : BaseViewActivity<ActivityJoinBinding>() {
-
-
     override fun getLayoutView(): Int = R.layout.activity_join
+
+    private val mJoinCutAdapter by lazy {
+        JoinCutAdapter()
+    }
 
     override fun initView() {
         binding.apply {
             viewThemeColor(themeState, joinContainer)
             setStatusBarDistance(this@JoinActivity, joinTitleBar, LayoutType.CONSTRAINTLAYOUT)
-            lifecycle.addObserver(mVideoJoinContainer)
+         //   lifecycle.addObserver(mVideoJoinContainer)
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let { it ->
                 gsonHelper<ValueJoinList>(it)?.let { it ->
                     if (it.joinList.size>0){
                         LogUtils.i("---JoinActivity---------${it.joinList}------")
-                        val  videoList = ArrayList<String>()
                         it.joinList.forEach {
-                            videoList.add(it.path)
+                           // JoinEditorManager.createEditor(it.path)
                         }
-                        mVideoJoinContainer.setVideoSourceList(videoList){finish()}
+
+                        TXVideoEditer(this@JoinActivity).apply {
+                            val videoFileInfo = TXVideoInfoReader.getInstance(this@JoinActivity).getVideoFileInfo(it.joinList[0].path)
+                            setCutFromTime(0,videoFileInfo.duration)
+                            getThumbnail(4,100,100,false,object :TXVideoEditer.TXThumbnailListener{
+                                override fun onThumbnail(p0: Int, p1: Long, p2: Bitmap?) {
+                                    LogUtils.i("---getThumbnail--------$p0}------")
+                                }
+
+                            })
+                            mVideoJoinPlayerControl.initPlayerLayoutTest(this,videoFileInfo.duration)
+                        }
+
+
+
+                 //      mVideoJoinPlayerControl.initPlayerLayout(JoinEditorManager.getEditorList()[0])
+
                     }
                 }
             }
+
+
+            cutViewContainer.apply {
+                layoutManager=LinearLayoutManager(context)
+                adapter=mJoinCutAdapter
+            }
         }
+
 
     }
 
@@ -42,8 +73,8 @@ class JoinActivity : BaseViewActivity<ActivityJoinBinding>() {
 
     override fun initEvent() {
         binding.apply {
-            joinTitleBar.setBarEventAction(this@JoinActivity) {
-                mVideoJoinContainer.startGenerateVideo()
+    /*        joinTitleBar.setBarEventAction(this@JoinActivity) {
+               mVideoJoinContainer.startGenerateVideo()
                 loadingPopup.showPopupView(joinContainer)
             }
 
@@ -74,10 +105,15 @@ class JoinActivity : BaseViewActivity<ActivityJoinBinding>() {
             loadingPopup.cancelMake {
                 mVideoJoinContainer.stopGenerateVideo()
                 MakeBackLiveData.setMakeFinishState(true)
-            }
+            }*/
 
         }
 
+    }
+
+    override fun release() {
+        super.release()
+        JoinEditorManager.release()
     }
 
 

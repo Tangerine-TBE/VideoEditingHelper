@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ugc_item_thumb_height">
+        android:layout_height="70dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             seekbar:leftThumbDrawable="?attr/editerCutSliderLeftIcon"
             seekbar:leftThumbIndex="0"
-            seekbar:lineColor="?attr/editerCutViewColor"
+            seekbar:lineColor="@color/theme_color"
             seekbar:lineHeight="3dp"
             seekbar:rightThumbDrawable="?attr/editerCutSliderRightIcon"
             seekbar:thumbWidth="10dp"

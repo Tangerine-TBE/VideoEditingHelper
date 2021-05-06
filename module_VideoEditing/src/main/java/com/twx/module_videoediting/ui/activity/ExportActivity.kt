@@ -102,11 +102,11 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
 
 
             mExportAdapter.setOnItemClickListener { adapter, view, position ->
+                openAction=position
                 when(position){
-                    0,2,3,5->{
-                        openAction=position
-                        preVideo()
-                    }
+                    0->  preVideo(true,HomeFragment.CUT_COUNT)
+                    2->  preVideo(true)
+                    3,5-> preVideo(false)
                     1-> openMediaSelect(4, 1, PictureConfig.MULTIPLE)
                     4->toOtherActivity<MusicActivity>(this@ExportActivity,true) {
                         putExtra(
@@ -147,7 +147,7 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
             .imageSpanCount(3)// 每行显示个数 int
             .maxSelectNum(maxSelectNum)
             .minSelectNum(minSelectNum)
-            .videoMaxSecond(3600)
+            .videoMaxSecond(600)
             .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
             .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
             .isCamera(false)// 是否显示拍照按钮 true or false
@@ -177,12 +177,16 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
     }
 
 
-    private fun preVideo(){
+    private fun preVideo(isSpecial: Boolean,count:Int=4){
         loadingPopup.showPopupView(binding.videoExportContainer)
         mProcessHelper.apply {
             stopProcess()
             setOnUpdateUIListener(this@ExportActivity)
-            startNormalProcess()
+            if (isSpecial) {
+                startSpecialProcess(count)
+            } else {
+                startNormalProcess()
+            }
         }
     }
 
