@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoEditer
+import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutVideoContainerBinding
 import com.twx.module_videoediting.domain.VideoEditorInfo
+import com.twx.module_videoediting.ui.widget.video.join.JoinHelper
 
 /**
  * @name VideoEditingHelper
@@ -29,31 +31,16 @@ class VideoJoinPlayerControl @JvmOverloads constructor(
     )
 
 
-    fun initPlayerLayout(videoEditorInfo:VideoEditorInfo){
-        videoEditorInfo.apply {
+    fun initPlayerLayout(joinHelper: JoinHelper) {
             val param = TXVideoEditConstants.TXPreviewParam()
             param.videoView = binding.mVideoPlayerView
             param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE
-            joinHelper.getEditor().initWithPreview(param)
-            joinHelper.getEditor().startPlayFromTime(0,joinHelper.getVideoInfo().duration)
-            joinHelper.getEditor().setTXVideoPreviewListener(this@VideoJoinPlayerControl)
-        }
-
+            joinHelper.getEditor()?.apply {
+                initWithPreview(param)
+                startPlayFromTime(0, joinHelper.getVideoInfo()?.duration?:0)
+                setTXVideoPreviewListener(this@VideoJoinPlayerControl)
+            }
     }
-
-    fun initPlayerLayoutTest(videoEditorInfo:TXVideoEditer,duration:Long){
-        videoEditorInfo.apply {
-            val param = TXVideoEditConstants.TXPreviewParam()
-            param.videoView = binding.mVideoPlayerView
-            param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE
-            videoEditorInfo.initWithPreview(param)
-            videoEditorInfo.startPlayFromTime(0,duration)
-            videoEditorInfo.setTXVideoPreviewListener(this@VideoJoinPlayerControl)
-        }
-
-    }
-
-
 
 
     override fun onPreviewProgress(time: Int) {

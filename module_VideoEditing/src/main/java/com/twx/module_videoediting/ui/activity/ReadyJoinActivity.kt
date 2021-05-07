@@ -1,69 +1,100 @@
 package com.twx.module_videoediting.ui.activity
 
+import android.graphics.Bitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.tencent.ugc.TXVideoEditer
+import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityReadyJoinBinding
 import com.twx.module_videoediting.domain.ValueJoinList
+import com.twx.module_videoediting.domain.VideoEditorInfo
 import com.twx.module_videoediting.ui.adapter.recycleview.video.join.JoinAdapter
+import com.twx.module_videoediting.ui.adapter.recycleview.video.join.JoinCutAdapter
+import com.twx.module_videoediting.ui.widget.video.join.JoinEditorManager
+import com.twx.module_videoediting.ui.widget.video.join.JoinHelper
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.yanzhenjie.recyclerview.touch.OnItemMoveListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
 
-    private val mJoinAdapter by lazy {
-        JoinAdapter()
+    private val mJoinCutAdapter by lazy {
+        JoinCutAdapter()
     }
 
-    override fun getLayoutView(): Int=R.layout.activity_ready_join
 
-
-
+    override fun getLayoutView(): Int = R.layout.activity_ready_join
     override fun initView() {
         binding.apply {
             viewThemeColor(themeState, readyJoinContainer)
             setStatusBarDistance(this@ReadyJoinActivity, readyJoinTitleBar, LayoutType.CONSTRAINTLAYOUT)
-            joinContainer.apply {
-                val divider: GridItemDecoration = GridItemDecoration.Builder(this@ReadyJoinActivity)
-                    .setColorResource(R.color.color_divider)
-                    .setShowLastLine(false)
-                    .build()
-                addItemDecoration(divider)
-
-                layoutManager=LinearLayoutManager(this@ReadyJoinActivity)
-                adapter=mJoinAdapter
-                isLongPressDragEnabled=true
-                isItemViewSwipeEnabled=true
+            cutViewContainer.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = mJoinCutAdapter
             }
+
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let { it ->
-                gsonHelper<ValueJoinList>(it)?.let {
-                    if (it.joinList.size>0){
-                        mJoinAdapter.setItemList(it.joinList)
+                gsonHelper<ValueJoinList>(it)?.joinList?.let { it ->
+                    if (it.size > 0) {
+                        it.forEach {
+                            JoinEditorManager.createEditor(it.path)
+                        }
+                        mVideoJoinPlayerControl.initPlayerLayout(JoinEditorManager.getEditorList()[1].joinHelper)
+
+                        getThumbnail()
                     }
                 }
             }
         }
     }
 
+    private fun  getThumbnail(){
+        mScope.launch {
+            if (JoinEditorManager.getEditorList().size > count) {
+                JoinEditorManager.getEditorList()[count].joinHelper.getEditor()
+                    .getThumbnail(6, 100, 100, true) { i, j, k ->
+                        if (i == 6 - 1) {
+                            JoinEditorManager.getEditorList()[count].joinHelper.getBitmapList()
+                                .add(k)
+                            count++
+                            getThumbnail()
+                        }
+                        LogUtils.i("---getThumbnail----00----------$i---$j--$count-")
+                    }
+            } else {
+                mScope.launch (Dispatchers.Main){
+                    mJoinCutAdapter.setVideoEditorInfo(JoinEditorManager.getEditorList())
+                    LogUtils.i("---getThumbnail---end    end     end-")
+                }
+            }
+        }
+    }
+
+    private var count=0
 
     override fun initEvent() {
         binding.apply {
-            readyJoinTitleBar.setBarEventAction(this@ReadyJoinActivity){
-                if (mJoinAdapter.getData().size >= 2) {
-                    toOtherActivity<JoinActivity>(this@ReadyJoinActivity){
-                        putExtra(Constants.KEY_VIDEO_PATH,Gson().toJson(ValueJoinList(mJoinAdapter.getData())))
-                    }
-                } else {
-                    showToast("必须选择两个以上的视频文件")
-                }
+            readyJoinTitleBar.setBarEventAction(this@ReadyJoinActivity) {
+                /*   if (mJoinAdapter.getData().size >= 2) {
+                       toOtherActivity<JoinActivity>(this@ReadyJoinActivity){
+                           putExtra(Constants.KEY_VIDEO_PATH,Gson().toJson(ValueJoinList(mJoinAdapter.getData())))
+                       }
+                   } else {
+                       showToast("必须选择两个以上的视频文件")
+                   }*/
             }
 
-            joinContainer.setOnItemMoveListener(object : OnItemMoveListener {
+/*            joinContainer.setOnItemMoveListener(object : OnItemMoveListener {
                 override fun onItemMove(
                     srcHolder: RecyclerView.ViewHolder,
                     targetHolder: RecyclerView.ViewHolder
@@ -84,9 +115,21 @@ class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
                     mJoinAdapter.getData().removeAt(position)
                     mJoinAdapter.notifyItemRemoved(position)
                 }
+            })*/
+
+            mJoinCutAdapter.setOnListener(object : JoinCutAdapter.OnListener {
+                override fun selectClick(videoEditorInfo: VideoEditorInfo) {
+                    mVideoJoinPlayerControl.initPlayerLayout(videoEditorInfo.joinHelper)
+                }
             })
 
+
         }
+    }
+
+    override fun release() {
+        super.release()
+        JoinEditorManager.release()
     }
 
 }

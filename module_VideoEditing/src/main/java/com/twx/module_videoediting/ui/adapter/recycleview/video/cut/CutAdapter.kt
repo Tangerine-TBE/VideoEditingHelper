@@ -19,7 +19,7 @@ import com.twx.module_videoediting.ui.fragment.HomeFragment
  * @time 2021/5/6 13:46:25
  * @class describe
  */
-class CutAdapter:RecyclerView.Adapter<CutAdapter.MyHolder>(){
+class CutAdapter(private val count:Int=HomeFragment.CUT_COUNT):RecyclerView.Adapter<CutAdapter.MyHolder>(){
     private val dataList: MutableList<Bitmap> = ArrayList()
 
     class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -32,7 +32,7 @@ class CutAdapter:RecyclerView.Adapter<CutAdapter.MyHolder>(){
     override fun getItemCount(): Int=dataList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
-        val screenWidth = (RxDeviceTool.getScreenWidth(parent.context)-SizeUtils.dip2px(parent.context,50f))/HomeFragment.CUT_COUNT
+        val screenWidth = (RxDeviceTool.getScreenWidth(parent.context)-SizeUtils.dip2px(parent.context,50f))/count
         val view = ImageView(parent.context)
         view.layoutParams = ViewGroup.LayoutParams(screenWidth,  ViewGroup.LayoutParams.MATCH_PARENT)
         view.scaleType = ImageView.ScaleType.CENTER_CROP

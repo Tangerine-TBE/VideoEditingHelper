@@ -195,9 +195,9 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                         val mediaInfo = ArrayList<MediaInformation>()
                         it.forEach {
                             mediaInfo.add(MediaInformation(path = it.path, duration = it.duration))
-                            LogUtils.i("---ACTION_JOINT------${it.path}-----------------")
+                            LogUtils.i("---JOINT------${it.path}------${it.duration}-----------")
                         }
-                        toOtherActivity<JoinActivity>(activity) {
+                        toOtherActivity<ReadyJoinActivity>(activity) {
                             putExtra(
                                     Constants.KEY_VIDEO_PATH,
                                     Gson().toJson(ValueJoinList(mediaInfo))

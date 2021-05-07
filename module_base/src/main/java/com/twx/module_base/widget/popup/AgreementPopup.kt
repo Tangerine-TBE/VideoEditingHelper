@@ -66,9 +66,6 @@ class AgreementPopup(activity: FragmentActivity):
             descriptions.movementMethod= LinkMovementMethod.getInstance()
         }
 
-
-
-
     }
 
     override fun initEvent() {

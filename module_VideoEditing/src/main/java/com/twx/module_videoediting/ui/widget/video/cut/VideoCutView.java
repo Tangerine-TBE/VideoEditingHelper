@@ -19,6 +19,9 @@ import com.tencent.qcloud.ugckit.module.effect.time.TCVideoEditerAdapter;
 import com.tencent.qcloud.ugckit.module.effect.utils.Edit;
 import com.tencent.rtmp.TXLog;
 import com.tencent.ugc.TXVideoEditConstants;
+import com.tencent.ugc.TXVideoEditer;
+import com.twx.module_base.base.BaseApplication;
+import com.twx.module_base.utils.LogUtils;
 import com.twx.module_videoediting.R;
 import com.twx.module_videoediting.ui.adapter.recycleview.video.cut.CutAdapter;
 
@@ -152,4 +155,12 @@ public class VideoCutView extends RelativeLayout implements com.tencent.qcloud.u
     }
 
 
+    public void  setVideoEditor(TXVideoEditer videoEditor){
+                videoEditor.getThumbnail(6, 100, 100, true, (index, times, bitmap) -> {
+                    LogUtils.i(times+"setVideoEditor--------------------"+index);
+                    BaseApplication.mHandler.post(() -> {
+                        mAdapter.setBitmap(bitmap,index);
+                    });
+                });
+    }
 }

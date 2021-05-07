@@ -5,6 +5,7 @@ import com.tencent.ugc.TXVideoEditConstants
 import com.tencent.ugc.TXVideoEditer
 import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseApplication
+import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.domain.VideoEditorInfo
 
 /**
@@ -34,7 +35,9 @@ object JoinEditorManager {
 
 
     fun release(){
+        editorList.forEach {
+            it.joinHelper.getEditor()?.release()
+        }
         editorList.clear()
     }
-
 }
