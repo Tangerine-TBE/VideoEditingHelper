@@ -74,6 +74,7 @@ open class BaseActivity:FragmentActivity() {
 
 
     open fun release() {
+
         loadingPopup.dismiss()
     }
 

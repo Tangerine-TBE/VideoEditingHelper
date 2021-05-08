@@ -2,24 +2,19 @@ package com.twx.module_videoediting.ui.activity
 
 import android.graphics.Bitmap
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
+import com.shuyu.gsyvideoplayer.GSYVideoManager
+import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
 import com.tencent.ugc.TXVideoEditer
-import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityReadyJoinBinding
+import com.twx.module_videoediting.domain.JoinData
 import com.twx.module_videoediting.domain.ValueJoinList
-import com.twx.module_videoediting.domain.VideoEditorInfo
-import com.twx.module_videoediting.ui.adapter.recycleview.video.join.JoinAdapter
 import com.twx.module_videoediting.ui.adapter.recycleview.video.join.JoinCutAdapter
-import com.twx.module_videoediting.ui.widget.video.join.JoinEditorManager
 import com.twx.module_videoediting.ui.widget.video.join.JoinHelper
 import com.twx.module_videoediting.utils.Constants
-import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.utils.setBarEventAction
-import com.yanzhenjie.recyclerview.touch.OnItemMoveListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,10 +22,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
-
+    private var count=0
     private val mJoinCutAdapter by lazy {
         JoinCutAdapter()
     }
+   // private val editorList = ArrayList<JoinHelper>()
+    private val pathList = ArrayList<String>()
+    private val editorList = ArrayList<TXVideoEditer>()
+    private val bitmapList =  ArrayList<MutableList<Bitmap>>()
+
 
 
     override fun getLayoutView(): Int = R.layout.activity_ready_join
@@ -38,6 +38,7 @@ class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
         binding.apply {
             viewThemeColor(themeState, readyJoinContainer)
             setStatusBarDistance(this@ReadyJoinActivity, readyJoinTitleBar, LayoutType.CONSTRAINTLAYOUT)
+
             cutViewContainer.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = mJoinCutAdapter
@@ -47,10 +48,10 @@ class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
                 gsonHelper<ValueJoinList>(it)?.joinList?.let { it ->
                     if (it.size > 0) {
                         it.forEach {
-                            JoinEditorManager.createEditor(it.path)
+                            pathList.add(it.path)
                         }
-                        mVideoJoinPlayerControl.initPlayerLayout(JoinEditorManager.getEditorList()[1].joinHelper)
-
+                        initPlayer(it[0].path)
+                        mLoadingDialog.show()
                         getThumbnail()
                     }
                 }
@@ -58,29 +59,58 @@ class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
         }
     }
 
+
+
+
+
+    private fun ActivityReadyJoinBinding.initPlayer(path: String) {
+        //初始好播放器
+        GSYVideoOptionBuilder()
+                .setIsTouchWiget(false)
+                .setNeedLockFull(false)
+                .setRotateWithSystem(false)
+                .setAutoFullWithSize(false)
+                .setRotateViewAuto(false)
+                .setShowFullAnimation(false)
+                .setLooping(true)
+                .build(mJoinPlayerView)
+           setVideoPath(path)
+    }
+
+
+    private fun setVideoPath(path: String){
+        binding.mJoinPlayerView.apply {
+            setUp(path, true, "")
+            startPlayLogic()
+        }
+    }
+
+
     private fun  getThumbnail(){
         mScope.launch {
-            if (JoinEditorManager.getEditorList().size > count) {
-                JoinEditorManager.getEditorList()[count].joinHelper.getEditor()
-                    .getThumbnail(6, 100, 100, true) { i, j, k ->
-                        if (i == 6 - 1) {
-                            JoinEditorManager.getEditorList()[count].joinHelper.getBitmapList()
-                                .add(k)
-                            count++
-                            getThumbnail()
-                        }
+            if (pathList.size > count) {
+                bitmapList.add(arrayListOf())
+                TXVideoEditer(this@ReadyJoinActivity).apply {
+                    setVideoPath(pathList[count])
+                }.getThumbnail(6, 100, 100, true) { i, j, k ->
+                    bitmapList[count].add(k)
+                    if (i >= 5) {
+                        count++
+                        getThumbnail()
+                    }
                         LogUtils.i("---getThumbnail----00----------$i---$j--$count-")
                     }
             } else {
-                mScope.launch (Dispatchers.Main){
-                    mJoinCutAdapter.setVideoEditorInfo(JoinEditorManager.getEditorList())
+               withContext(Dispatchers.Main){
+                   mJoinCutAdapter.setJoinData(JoinData(bitmapList, pathList))
+                   mLoadingDialog.dismiss()
                     LogUtils.i("---getThumbnail---end    end     end-")
                 }
             }
         }
     }
 
-    private var count=0
+
 
     override fun initEvent() {
         binding.apply {
@@ -118,8 +148,9 @@ class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
             })*/
 
             mJoinCutAdapter.setOnListener(object : JoinCutAdapter.OnListener {
-                override fun selectClick(videoEditorInfo: VideoEditorInfo) {
-                    mVideoJoinPlayerControl.initPlayerLayout(videoEditorInfo.joinHelper)
+                override fun selectClick(data: JoinData, position: Int,startTime:Long) {
+                    binding.mJoinPlayerView.seekOnStart=startTime
+                    setVideoPath(data.pathList[position])
                 }
             })
 
@@ -127,9 +158,24 @@ class ReadyJoinActivity : BaseViewActivity<ActivityReadyJoinBinding>() {
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        binding.mJoinPlayerView.onVideoResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.mJoinPlayerView.onVideoPause()
+    }
+
+
+
     override fun release() {
         super.release()
-        JoinEditorManager.release()
+        mLoadingDialog.dismiss()
+        binding.mJoinPlayerView.release()
+        GSYVideoManager.releaseAllVideos()
     }
 
 }

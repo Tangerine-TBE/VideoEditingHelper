@@ -125,6 +125,13 @@ public class VideoCutView extends RelativeLayout implements com.tencent.qcloud.u
     }
 
     @Override
+    public void onClick() {
+        if (mRangeChangeListener != null) {
+            mRangeChangeListener.onCutClick();
+        }
+    }
+
+    @Override
     public void onKeyDown(int type) {
         if (mRangeChangeListener != null) {
             mRangeChangeListener.onCutChangeKeyDown();

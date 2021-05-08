@@ -109,6 +109,11 @@ public class RecordMusicPannel extends RelativeLayout implements IRecordMusicPan
     }
 
     @Override
+    public void onClick() {
+
+    }
+
+    @Override
     public void onKeyDown(int type) {
 
     }

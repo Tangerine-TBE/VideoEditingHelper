@@ -226,6 +226,10 @@ public class RangeSlider extends ViewGroup {
         rightValueAnimator.start();
     }
 
+    private long startTime=0;
+    private long endTime=0;
+
+
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
         if (!isEnabled()) {
@@ -235,10 +239,11 @@ public class RangeSlider extends ViewGroup {
         boolean handle = false;
 
         switch (event.getAction()) {
-
             case MotionEvent.ACTION_DOWN:
                 int x = (int) event.getX();
                 int y = (int) event.getY();
+
+                startTime=System.currentTimeMillis();
 
                 mLastX = mOriginalX = x;
                 mIsDragging = false;
@@ -255,11 +260,25 @@ public class RangeSlider extends ViewGroup {
                     if (mRangeChangeListener != null) {
                         mRangeChangeListener.onKeyDown(TYPE_RIGHT);
                     }
+                } else {
+                    handle = true;
                 }
+
                 break;
 
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
+                endTime=System.currentTimeMillis();
+                if (endTime-startTime<500) {
+                    if (!isMove) {
+                        if (mRangeChangeListener != null) {
+                            mRangeChangeListener.onClick();
+                        }
+                        isMove=false;
+                    }
+
+                }
+
                 mIsDragging = false;
                 mOriginalX = mLastX = 0;
                 getParent().requestDisallowInterceptTouchEvent(false);
@@ -282,7 +301,9 @@ public class RangeSlider extends ViewGroup {
 
             case MotionEvent.ACTION_MOVE:
                 x = (int) event.getX();
-
+                if ( x - mLastX>100) {
+                    isMove=true;
+                }
                 if (!mIsDragging && Math.abs(x - mOriginalX) > mTouchSlop) {
                     mIsDragging = true;
                 }
@@ -307,6 +328,8 @@ public class RangeSlider extends ViewGroup {
 
         return handle;
     }
+
+    private boolean isMove=false;
 
     private boolean isValidTickCount(int tickCount) {
         return (tickCount > 1);
@@ -476,6 +499,9 @@ public class RangeSlider extends ViewGroup {
     }
 
     public interface OnRangeChangeListener {
+
+        void onClick();
+
         void onKeyDown(int type);
 
         void onKeyUp(int type, int leftPinIndex, int rightPinIndex);

@@ -1,20 +1,13 @@
 package com.twx.module_videoediting.ui.activity
 
-import android.graphics.Bitmap
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.tencent.ugc.TXVideoEditConstants
-import com.tencent.ugc.TXVideoEditer
-import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityJoinBinding
-import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.domain.ValueJoinList
-import com.twx.module_videoediting.ui.adapter.recycleview.video.join.JoinCutAdapter
 import com.twx.module_videoediting.ui.widget.video.join.IVideoJoin
-import com.twx.module_videoediting.ui.widget.video.join.JoinEditorManager
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.FileUtils
 import com.twx.module_videoediting.utils.formatList

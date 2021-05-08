@@ -5,9 +5,11 @@ import android.graphics.Matrix
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
+import com.shuyu.gsyvideoplayer.utils.Debuger
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
+import moe.codeest.enviews.ENDownloadView
 
 /**
  * @name VideoEditingHelper
@@ -37,6 +39,79 @@ class CropPlayerView : StandardGSYVideoPlayer {
                 }
                 else -> {
                     imageView.setImageResource(R.mipmap.icon_player_start)
+                }
+            }
+        }
+    }
+
+
+    override fun changeUiToNormal() {
+
+        if (!mLockCurScreen) {
+            Debuger.printfLog("changeUiToNormal")
+            setViewShowState(mTopContainer, VISIBLE)
+            setViewShowState(mBottomContainer, INVISIBLE)
+            setViewShowState(mStartButton, VISIBLE)
+            setViewShowState(mLoadingProgressBar, INVISIBLE)
+            setViewShowState(mThumbImageViewLayout, VISIBLE)
+            setViewShowState(mBottomProgressBar, INVISIBLE)
+            setViewShowState(mLockScreen, if (mIfCurrentIsFullscreen&&mNeedLockFull) VISIBLE else GONE)
+            updateStartImage()
+            if (mLoadingProgressBar is ENDownloadView) {
+                (mLoadingProgressBar as ENDownloadView).reset()
+            }
+        }
+    }
+
+    override fun changeUiToPlayingShow() {
+        if (!mLockCurScreen) {
+            setViewShowState(mTopContainer, VISIBLE)
+            setViewShowState(mBottomContainer, VISIBLE)
+            setViewShowState(mStartButton, VISIBLE)
+            setViewShowState(mLoadingProgressBar, INVISIBLE)
+            setViewShowState(mThumbImageViewLayout, INVISIBLE)
+            setViewShowState(mBottomProgressBar, INVISIBLE)
+            setViewShowState(mLockScreen, if (mIfCurrentIsFullscreen&&mNeedLockFull) VISIBLE else GONE)
+            if (mLoadingProgressBar is ENDownloadView) {
+                (mLoadingProgressBar as ENDownloadView).reset()
+            }
+            updateStartImage()
+        }
+    }
+
+
+    override fun changeUiToPreparingShow() {
+        if (!mLockCurScreen) {
+            setViewShowState(mTopContainer, VISIBLE)
+            setViewShowState(mBottomContainer, VISIBLE)
+            setViewShowState(mStartButton, VISIBLE)
+            setViewShowState(mLoadingProgressBar, VISIBLE)
+            setViewShowState(mThumbImageViewLayout, INVISIBLE)
+            setViewShowState(mBottomProgressBar, INVISIBLE)
+            setViewShowState(mLockScreen, if (mIfCurrentIsFullscreen&&mNeedLockFull) VISIBLE else GONE)
+            if (mLoadingProgressBar is ENDownloadView) {
+                val enDownloadView = mLoadingProgressBar as ENDownloadView
+                if (enDownloadView.currentState == ENDownloadView.STATE_PRE) {
+                    (mLoadingProgressBar as ENDownloadView).start()
+                }
+            }
+        }
+
+    }
+
+    override fun changeUiToPlayingBufferingShow() {
+        if (!mLockCurScreen) {
+            setViewShowState(mTopContainer, VISIBLE)
+            setViewShowState(mBottomContainer, VISIBLE)
+            setViewShowState(mStartButton, VISIBLE)
+            setViewShowState(mLoadingProgressBar, VISIBLE)
+            setViewShowState(mThumbImageViewLayout, INVISIBLE)
+            setViewShowState(mBottomProgressBar, INVISIBLE)
+            setViewShowState(mLockScreen, if (mIfCurrentIsFullscreen&&mNeedLockFull) VISIBLE else GONE)
+            if (mLoadingProgressBar is ENDownloadView) {
+                val enDownloadView = mLoadingProgressBar as ENDownloadView
+                if (enDownloadView.currentState == ENDownloadView.STATE_PRE) {
+                    (mLoadingProgressBar as ENDownloadView).start()
                 }
             }
         }

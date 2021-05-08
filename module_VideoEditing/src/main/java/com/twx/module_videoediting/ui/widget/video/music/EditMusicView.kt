@@ -87,6 +87,10 @@ class EditMusicView @JvmOverloads constructor(
 
     }
 
+    override fun onClick() {
+
+    }
+
     override fun onKeyDown(type: Int) {
 
     }

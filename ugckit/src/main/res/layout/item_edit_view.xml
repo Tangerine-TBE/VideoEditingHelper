@@ -12,6 +12,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
+            android:layout_below="@+id/startTimes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
@@ -20,8 +21,11 @@
 
         <com.tencent.qcloud.ugckit.component.slider.RangeSlider
             android:id="@+id/range_slider"
+            android:layout_below="@+id/startTimes"
+            android:layout_alignTop="@+id/recycler_view"
+            android:layout_alignBottom="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             seekbar:leftThumbDrawable="?attr/editerCutSliderLeftIcon"
             seekbar:leftThumbIndex="0"
             seekbar:lineColor="@color/theme_color"
@@ -29,5 +33,21 @@
             seekbar:rightThumbDrawable="?attr/editerCutSliderRightIcon"
             seekbar:thumbWidth="10dp"
             seekbar:tickCount="100" />
+
+        <TextView
+            android:id="@+id/startTimes"
+            android:text="66666"
+            android:visibility="gone"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+
+        <TextView
+            android:id="@+id/endTimes"
+            android:text="66666"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
     </RelativeLayout>
 </layout>

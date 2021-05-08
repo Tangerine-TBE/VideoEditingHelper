@@ -198,15 +198,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
             } else if (mCurrentState == PlayState.STATE_PAUSE) {
                 resumePlay()
             } else if (mCurrentState == PlayState.STATE_PREVIEW_AT_TIME) {
-              /*  if ((mPreviewAtTime >= cutterEndTime || mPreviewAtTime <= cutterStartTime) && !isMotionFilter) {
-                    startPlay(cutterStartTime, cutterEndTime)
-                } else if (!VideoEditerSDK.getInstance().isReverse) {
-                    startPlay(mPreviewAtTime, cutterEndTime)
-                } else {
-                    startPlay(cutterStartTime, mPreviewAtTime)
-                }*/
                 val totalDuration = txVideoInfo.duration
-                LogUtils.i("--playVideo---$mPreviewAtTime-------$totalDuration----------")
                 if (mPreviewAtTime >=totalDuration) {
                     startPlay(0, totalDuration)
                 }else if (!isReverse)

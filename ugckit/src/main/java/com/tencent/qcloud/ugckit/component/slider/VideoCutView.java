@@ -168,6 +168,11 @@ public class VideoCutView extends RelativeLayout implements RangeSlider.OnRangeC
     }
 
     @Override
+    public void onClick() {
+
+    }
+
+    @Override
     public void onKeyDown(int type) {
         if (mRangeChangeListener != null) {
             mRangeChangeListener.onCutChangeKeyDown();

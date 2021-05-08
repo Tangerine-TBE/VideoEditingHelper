@@ -120,6 +120,11 @@ public class TCEditMusicPannel extends RelativeLayout implements IEditMusicPanne
         mMusicChangeListener = volumeChangeListener;
     }
 
+    @Override
+    public void onClick() {
+
+    }
+
     /******** RangeSlider callback start *********/
     @Override
     public void onKeyDown(int type) {

@@ -6,19 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.tencent.qcloud.ugckit.module.cut.IVideoCutLayout
+import com.tencent.qcloud.ugckit.component.slider.RangeSlider
+import com.tencent.qcloud.ugckit.module.effect.utils.Edit
 import com.tencent.ugc.TXVideoEditer
+import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemJoinCutContainerBinding
-import com.twx.module_videoediting.domain.VideoEditorInfo
-import com.twx.module_videoediting.ui.widget.video.cut.VideoCutView
-import com.twx.module_videoediting.ui.widget.video.join.JoinEditorManager
+import com.twx.module_videoediting.domain.JoinData
 import com.twx.module_videoediting.ui.widget.video.join.JoinHelper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * @name VideoEditingHelper
@@ -31,13 +27,29 @@ import kotlinx.coroutines.launch
 class JoinCutAdapter : RecyclerView.Adapter<JoinCutAdapter.MyHolder>() {
 
    inner class MyHolder(itemView: View,val itemBinding:ItemJoinCutContainerBinding) : RecyclerView.ViewHolder(itemView) {
-       fun setItemData(videoEditorInfo: VideoEditorInfo, position: Int) {
+       fun setItemData(data: JoinData?, position: Int) {
            itemBinding?.apply {
-               cutSliderView.setMediaFileInfo(videoEditorInfo.joinHelper.getVideoInfo())
-               cutSliderView.addBitmapList(videoEditorInfo.joinHelper.getBitmapList())
-                itemView.setOnClickListener {
-                //    mOnListener?.selectClick(videoEditorInfo)
-                }
+              //
+               data?.apply {
+                   cutSliderView.setMediaFileInfo(TXVideoInfoReader.getInstance(cutSliderView.context).getVideoFileInfo(data.pathList[position]))
+                   cutSliderView.addBitmapList(data.bitmapList[position])
+                   cutSliderView.setCutChangeListener(object : Edit.OnCutChangeListener {
+                       override fun onCutClick() {
+                           // LogUtils.i("-----adapterPosition--------${adapterPosition}----------------")
+                       }
+
+                       override fun onCutChangeKeyDown() {
+                           LogUtils.i("-----adapterPosition--------${adapterPosition}----------------")
+                       }
+
+                       override fun onCutChangeKeyUp(startTime: Long, endTime: Long, type: Int) {
+                           mOnListener?.selectClick(data, position,startTime)
+                       }
+
+                   })
+
+               }
+
            }
        }
 
@@ -50,25 +62,24 @@ class JoinCutAdapter : RecyclerView.Adapter<JoinCutAdapter.MyHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        holder.setIsRecyclable(false)
-        holder.setItemData(editorList[position],position)
+        holder.setItemData(mJoinData,position)
     }
 
-    override fun getItemCount(): Int =editorList.size
+    override fun getItemCount(): Int =mJoinData?.pathList?.size?:0
 
 
-    private val mList = ArrayList<Bitmap>()
+    private val mList = ArrayList<MutableList<Bitmap>>()
     private val mEditerList = ArrayList<TXVideoEditer>()
-    private val editorList = ArrayList<VideoEditorInfo>()
+    private val editorList = ArrayList<JoinHelper>()
 
-    fun setBitmap(list:MutableList<Bitmap>){
+    fun setBitmap(list:MutableList<MutableList<Bitmap>>){
         mList.clear()
         mList.addAll(list)
         notifyDataSetChanged()
     }
 
 
-    fun setVideoEditorInfo(list:MutableList<VideoEditorInfo>){
+    fun setVideoEditorInfo(list:MutableList<JoinHelper>){
         editorList.clear()
         editorList.addAll(list)
         notifyDataSetChanged()
@@ -80,6 +91,14 @@ class JoinCutAdapter : RecyclerView.Adapter<JoinCutAdapter.MyHolder>() {
         notifyDataSetChanged()
     }
 
+    private var mJoinData: JoinData?=null
+
+    fun setJoinData(data:JoinData){
+        mJoinData=data
+        notifyDataSetChanged()
+    }
+
+
 
     private var mOnListener:OnListener?=null
 
@@ -88,8 +107,12 @@ class JoinCutAdapter : RecyclerView.Adapter<JoinCutAdapter.MyHolder>() {
     }
 
     interface OnListener{
-        fun selectClick(videoEditorInfo: VideoEditorInfo)
+        fun selectClick(data: JoinData, position: Int,startTime:Long)
+
+
     }
+
+
 
 
 }

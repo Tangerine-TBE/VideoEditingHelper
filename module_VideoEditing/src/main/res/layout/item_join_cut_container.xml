@@ -6,9 +6,10 @@
 
     </data>
 
-    <LinearLayout
-        android:id="@+id/cutContainer"
+    <RelativeLayout
+
         android:orientation="vertical"
+        android:background="@color/blue"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,5 +19,12 @@
             android:id="@+id/cutSliderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </LinearLayout>
+
+        <View
+            android:id="@+id/cutContainer"
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"/>
+
+    </RelativeLayout>
 </layout>

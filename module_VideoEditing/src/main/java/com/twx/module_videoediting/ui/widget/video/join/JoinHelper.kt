@@ -20,17 +20,26 @@ import kotlinx.coroutines.withContext
  * @time 2021/5/6 16:30:46
  * @class describe
  */
-class JoinHelper(val path:String){
+class JoinHelper{
 
     private var mStartTime=0L
     private var mEndTime=0L
-    private var mVideoInfo:TXVideoEditConstants.TXVideoInfo = TXVideoInfoReader.getInstance(BaseApplication.application).getVideoFileInfo(path)
+    private lateinit var mVideoInfo:TXVideoEditConstants.TXVideoInfo
     private var mBitmapList = ArrayList<Bitmap>()
-    private var mEditor:TXVideoEditer = TXVideoEditer(BaseApplication.application).apply {
-        setVideoPath(path)
-        setCutFromTime(0,mVideoInfo.duration)
-        LogUtils.i("JoinHelper--$path-----------${mVideoInfo.duration}----------")
-    }
+    private lateinit var mEditor:TXVideoEditer
+
+
+     fun  initData(path:String){
+         mVideoInfo= TXVideoInfoReader.getInstance(BaseApplication.application).getVideoFileInfo(path)
+         GlobalScope.launch {
+             mEditor= TXVideoEditer(BaseApplication.application).apply {
+                  setVideoPath(path)
+                 setCutFromTime(0,mVideoInfo.duration)
+                 LogUtils.i("JoinHelper--$path-----------${mVideoInfo.duration}----------")
+             }
+         }
+
+   }
 
 
     fun setCutTime(startTime:Long,endTime:Long){
@@ -42,5 +51,6 @@ class JoinHelper(val path:String){
     fun getEndTime()=mEndTime
     fun getEditor()=mEditor
     fun getVideoInfo(): TXVideoEditConstants.TXVideoInfo? =mVideoInfo
-    fun getBitmapList()= mBitmapList
+    fun getBitmapList()=
+            mBitmapList
 }
