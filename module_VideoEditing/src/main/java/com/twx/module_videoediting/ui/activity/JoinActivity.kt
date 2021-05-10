@@ -10,7 +10,7 @@ import com.twx.module_videoediting.domain.ValueJoinList
 import com.twx.module_videoediting.ui.widget.video.join.IVideoJoin
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.FileUtils
-import com.twx.module_videoediting.utils.formatList
+
 import com.twx.module_videoediting.utils.setBarEventAction
 import com.twx.module_videoediting.utils.video.PlayerManager
 

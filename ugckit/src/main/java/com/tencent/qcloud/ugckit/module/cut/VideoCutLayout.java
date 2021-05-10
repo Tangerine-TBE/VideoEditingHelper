@@ -92,6 +92,11 @@ public class VideoCutLayout extends RelativeLayout implements IVideoCutLayout, V
     }
 
     @Override
+    public void onDeleteItem() {
+
+    }
+
+    @Override
     public void setVideoInfo(@NonNull TXVideoEditConstants.TXVideoInfo videoInfo) {
         mRotation = 0;
 

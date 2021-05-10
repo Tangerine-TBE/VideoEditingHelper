@@ -19,6 +19,7 @@ object Constants {
 
     //------------------to Fragment key
     const val KEY_FRAGMENT_ID="KEY_FRAGMENT_ID"
+    const val KEY_VIDEO_LIST="KEY_VIDEO_LIST"
 
 
     //------------------to Activity key

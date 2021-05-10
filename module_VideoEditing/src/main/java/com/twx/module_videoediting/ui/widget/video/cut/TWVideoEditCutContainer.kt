@@ -167,6 +167,7 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
 
 
     override fun onVideoProgressSeek(currentTimeMs: Long) {
+        currentTime=currentTimeMs
         PlayerManager.previewAtTime(currentTimeMs)
     }
 
@@ -196,13 +197,17 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
 
     override fun onCutChangeKeyUp(startTime: Long, endTime: Long, type: Int) {
         if (type == RangeSlider.TYPE_LEFT) {
-            PlayerManager.previewAtTime(startTime)
+            PlayerManager.startPlay(startTime,endTime)
         } else {
-            PlayerManager.previewAtTime(endTime)
+            PlayerManager.startPlay(startTime,endTime)
         }
         LogUtils.i("--onCutChangeKeyUp--------------${startTime}----${endTime}-----------")
         mVideoEditorHelper.setCutterStartTime(startTime,endTime)
         binding.showCutTime()
+    }
+
+    override fun onDeleteItem() {
+
     }
 
 

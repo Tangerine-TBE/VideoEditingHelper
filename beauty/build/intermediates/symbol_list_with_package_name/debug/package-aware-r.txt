@@ -1347,6 +1347,7 @@ dimen disabled_alpha_material_light
 dimen dp_10
 dimen dp_4
 dimen dp_40
+dimen dp_70
 dimen exo_media_button_height
 dimen exo_media_button_width
 dimen fastscroll_default_thickness

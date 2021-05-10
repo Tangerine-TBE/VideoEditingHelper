@@ -1711,6 +1711,7 @@ int dimen disabled_alpha_material_light 0x0
 int dimen dp_10 0x0
 int dimen dp_4 0x0
 int dimen dp_40 0x0
+int dimen dp_70 0x0
 int dimen exo_media_button_height 0x0
 int dimen exo_media_button_width 0x0
 int dimen fastscroll_default_thickness 0x0

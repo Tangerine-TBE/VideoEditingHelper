@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seekbar="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_below="@+id/cutTimes"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:overScrollMode="never"
+            android:layout_marginLeft="@dimen/ugc_cut_margin"
+            android:layout_marginRight="@dimen/ugc_cut_margin" />
+
+        <com.tencent.qcloud.ugckit.component.slider.RangeSlider
+            android:id="@+id/range_slider"
+            android:layout_below="@+id/cutTimes"
+            android:layout_alignTop="@+id/recycler_view"
+            android:layout_alignBottom="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            seekbar:leftThumbDrawable="?attr/editerCutSliderLeftIcon"
+            seekbar:leftThumbIndex="0"
+            seekbar:lineColor="@color/theme_color"
+            seekbar:lineHeight="3dp"
+            seekbar:rightThumbDrawable="?attr/editerCutSliderRightIcon"
+            seekbar:thumbWidth="10dp"
+            seekbar:tickCount="100" />
+
+        <TextView
+            android:id="@+id/cutTimes"
+            android:text="66666"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"/>
+
+        <ImageView
+            android:id="@+id/mDeleteImage"
+            android:layout_width="wrap_content"
+            android:layout_alignTop="@+id/cutTimes"
+            android:layout_alignBottom="@+id/cutTimes"
+            android:src="@drawable/icon_join_cancel"
+            android:layout_alignParentRight="true"
+            android:layout_height="20dp"/>
+
+    </RelativeLayout>
+</layout>

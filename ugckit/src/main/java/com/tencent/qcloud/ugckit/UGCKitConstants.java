@@ -43,6 +43,9 @@ public class UGCKitConstants {
 
     public static final String DEFAULT_MEDIA_OUT_PATH = "Twx_Video_File";      // TWX编辑器输出目录
 
+    public static final String READY_JOIN_OUT_PATH = "Twx_Join_Ready_Video_File";      // TWX编辑器输出目录
+
+
 
 
 

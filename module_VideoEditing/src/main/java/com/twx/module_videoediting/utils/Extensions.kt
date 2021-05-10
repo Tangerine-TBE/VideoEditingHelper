@@ -141,6 +141,6 @@ fun ffCallback(onProgress: (Int) -> Unit = {}, onComplete: () -> Unit = {}, onCa
 
     }
 
-      fun <T>String.formatList():List<T> = Gson().fromJson(this, object : TypeToken<List<T>>(){}.type)
+
 
 

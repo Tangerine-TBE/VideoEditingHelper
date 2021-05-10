@@ -1,20 +1,17 @@
 package com.twx.module_videoediting.ui.adapter.recycleview.video.join
 
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.tencent.qcloud.ugckit.component.slider.RangeSlider
 import com.tencent.qcloud.ugckit.module.effect.utils.Edit
-import com.tencent.ugc.TXVideoEditer
 import com.tencent.ugc.TXVideoInfoReader
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ItemJoinCutContainerBinding
-import com.twx.module_videoediting.domain.JoinData
-import com.twx.module_videoediting.ui.widget.video.join.JoinHelper
+import com.twx.module_videoediting.databinding.ItemJoinCutTwoContainerBinding
+import com.twx.module_videoediting.domain.ReadyJoinInfo
 
 /**
  * @name VideoEditingHelper
@@ -26,92 +23,94 @@ import com.twx.module_videoediting.ui.widget.video.join.JoinHelper
  */
 class JoinCutAdapter : RecyclerView.Adapter<JoinCutAdapter.MyHolder>() {
 
-   inner class MyHolder(itemView: View,val itemBinding:ItemJoinCutContainerBinding) : RecyclerView.ViewHolder(itemView) {
-       fun setItemData(data: JoinData?, position: Int) {
-           itemBinding?.apply {
-              //
-               data?.apply {
-                   cutSliderView.setMediaFileInfo(TXVideoInfoReader.getInstance(cutSliderView.context).getVideoFileInfo(data.pathList[position]))
-                   cutSliderView.addBitmapList(data.bitmapList[position])
-                   cutSliderView.setCutChangeListener(object : Edit.OnCutChangeListener {
-                       override fun onCutClick() {
-                           // LogUtils.i("-----adapterPosition--------${adapterPosition}----------------")
-                       }
+    inner class MyHolder(itemView: View, val itemBinding: ItemJoinCutContainerBinding) : RecyclerView.ViewHolder(itemView) {
+        fun setItemData(data: ReadyJoinInfo, position: Int) {
+            itemBinding?.apply {
+                data?.apply {
+                    cutSliderView.setMediaFileInfo(TXVideoInfoReader.getInstance(cutSliderView.context).getVideoFileInfo(data.videoPath))
+                    cutSliderView.addBitmapList(data.bitmapList)
+                    cutSliderView.setCutChangeListener(object : Edit.OnCutChangeListener {
+                        override fun onCutClick() {
+                            if (mReadyList.size > adapterPosition) {
+                                mOnListener?.click(mReadyList[adapterPosition])
+                            }
 
-                       override fun onCutChangeKeyDown() {
-                           LogUtils.i("-----adapterPosition--------${adapterPosition}----------------")
-                       }
+                        }
 
-                       override fun onCutChangeKeyUp(startTime: Long, endTime: Long, type: Int) {
-                           mOnListener?.selectClick(data, position,startTime)
-                       }
+                        override fun onCutChangeKeyDown() {
 
-                   })
+                        }
 
-               }
+                        override fun onCutChangeKeyUp(startTime: Long, endTime: Long, type: Int) {
+                            if (mReadyList.size > adapterPosition) {
+                                mReadyList[adapterPosition].let {
+                                    it.cutStartTime = startTime
+                                    it.cutEndTime = endTime
+                                    mOnListener?.selectClick(it, position, type)
+                                }
+                                LogUtils.i("-----readyJoinInfo---${mReadyList.hashCode()}-----${mReadyList[position].videoPath}---------------")
+                            }
+                        }
 
-           }
-       }
-
-
-   }
+                        override fun onDeleteItem() {
+                            if (mReadyList.size > adapterPosition) {
+                                mReadyList.removeAt(adapterPosition)
+                                notifyItemRemoved(adapterPosition)
+                                mOnListener?.deleteItem(mReadyList)
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val itemBinding = DataBindingUtil.inflate<ItemJoinCutContainerBinding>(LayoutInflater.from(parent.context), R.layout.item_join_cut_container, parent, false)
-        return MyHolder(itemBinding.root,itemBinding)
+    //    val itemBindingSpecial= DataBindingUtil.inflate<ItemJoinCutTwoContainerBinding>(LayoutInflater.from(parent.context), R.layout.item_join_cut_two_container, parent, false)
+        return MyHolder(itemBinding.root, itemBinding)
+
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        holder.setItemData(mJoinData,position)
+        holder.setItemData(mReadyList[position], position)
     }
 
-    override fun getItemCount(): Int =mJoinData?.pathList?.size?:0
+    override fun getItemCount(): Int = mReadyList.size
 
 
-    private val mList = ArrayList<MutableList<Bitmap>>()
-    private val mEditerList = ArrayList<TXVideoEditer>()
-    private val editorList = ArrayList<JoinHelper>()
+    private val mReadyList = ArrayList<ReadyJoinInfo>()
 
-    fun setBitmap(list:MutableList<MutableList<Bitmap>>){
-        mList.clear()
-        mList.addAll(list)
+    fun setReadyJoinList(list: MutableList<ReadyJoinInfo>) {
+        mReadyList.clear()
+        mReadyList.addAll(list)
         notifyDataSetChanged()
     }
 
+    fun getReadyJoinList() = mReadyList
 
-    fun setVideoEditorInfo(list:MutableList<JoinHelper>){
-        editorList.clear()
-        editorList.addAll(list)
-        notifyDataSetChanged()
-    }
 
-    fun setTXVideoEditer(list:MutableList<TXVideoEditer>){
-        mEditerList.clear()
-        mEditerList.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    private var mJoinData: JoinData?=null
-
-    fun setJoinData(data:JoinData){
-        mJoinData=data
-        notifyDataSetChanged()
+    companion object{
+        const val NORMAL_HOLDER=1
+        const val SPECIAL_HOLDER=2
     }
 
 
 
-    private var mOnListener:OnListener?=null
 
-    fun setOnListener(listener:OnListener){
-        mOnListener=listener
+
+
+    private var mOnListener: OnListener? = null
+    fun setOnListener(listener: OnListener) {
+        mOnListener = listener
     }
+    interface OnListener {
+        fun selectClick(data: ReadyJoinInfo, position: Int, slideType: Int)
 
-    interface OnListener{
-        fun selectClick(data: JoinData, position: Int,startTime:Long)
+        fun click(data: ReadyJoinInfo)
 
-
+        fun deleteItem(list: MutableList<ReadyJoinInfo>)
     }
-
 
 
 

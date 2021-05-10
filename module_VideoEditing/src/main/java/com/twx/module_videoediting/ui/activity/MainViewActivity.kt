@@ -5,11 +5,18 @@ import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.luck.picture.lib.PictureSelector
+import com.luck.picture.lib.config.PictureConfig
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityHomeBinding
+import com.twx.module_videoediting.domain.MediaInformation
+import com.twx.module_videoediting.domain.ReadyJoinInfo
+import com.twx.module_videoediting.domain.ValueJoinList
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
 import com.twx.module_videoediting.livedata.VideoFileLiveData
 import com.twx.module_videoediting.repository.DataProvider
@@ -19,6 +26,7 @@ import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.ui.fragment.SetFragment
 import com.twx.module_videoediting.ui.popup.ExitPoPupWindow
 import com.twx.module_videoediting.utils.Constants
+
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
 class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>() {
@@ -30,6 +38,15 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                                 }
         }
 
+        fun toAddJoinActivity(activity: FragmentActivity?,videoList:String){
+            toOtherActivity<MainViewActivity>(activity,true){
+                putExtra(Constants.KEY_FRAGMENT_ID,2)
+                putExtra(Constants.KEY_VIDEO_LIST,videoList)
+            }
+        }
+
+
+
   }
 
     private val mExitPoPupWindow by lazy {
@@ -40,6 +57,9 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
     private val mSetFragment by lazy {  SetFragment() }
     private val mNavigationAdapter by lazy {
         NavigationAdapter()
+    }
+    private val mVideoList by lazy {
+        ArrayList<MediaInformation>()
     }
 
     override fun getViewModelClass(): Class<MainViewModel> {
@@ -129,6 +149,8 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
     }
 
 
+
+
     override fun onResume() {
         super.onResume()
         intent.apply {
@@ -138,15 +160,73 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                 1->{
                     mNavigationAdapter.setSelectPosition(1)
                     showFragment(mFileFragment)
-                    putExtra(Constants.KEY_FRAGMENT_ID, -1)
                 }
+                2 -> {
+                    val videoStr = getStringExtra(Constants.KEY_VIDEO_LIST)
+                    Gson().fromJson<List<ReadyJoinInfo>>(videoStr, object : TypeToken<List<ReadyJoinInfo>>() {}.type)?.let { it ->
+                        mVideoList.clear()
+                        if (it.isNotEmpty()) {
+                            it.forEach {
+                                mVideoList.add(MediaInformation(path = it.videoPath))
+                            }
+                            openMediaSelect(maxSelectNum = 5 - it.size)
+                        } else {
+                            openMediaSelect(minSelectNum = 2, maxSelectNum = 5 - it.size)
+                        }
+                    }
+
+                }
+            }
+            putExtra(Constants.KEY_FRAGMENT_ID, -1)
+        }
+    }
+
+
+
+
+    private fun openMediaSelect(
+            action: Int=0,
+            maxSelectNum: Int = 1,
+            minSelectNum: Int = 1,
+            selectionMode: Int = PictureConfig.MULTIPLE,
+    ) {
+        PictureSelector.create(this)
+                .openGallery(PictureConfig.TYPE_VIDEO)
+                .imageSpanCount(3)// 每行显示个数 int
+                .maxSelectNum(maxSelectNum)
+                .minSelectNum(minSelectNum)
+                .previewVideo(false)
+                .previewImage(false)
+                .videoMaxSecond(600)
+                .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
+                .isCamera(false)// 是否显示拍照按钮 true or false
+                .isZoomAnim(false)
+                .forResult(action);//结果回调onActivityResult code
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==0) {
+            PictureSelector.obtainMultipleResult(data)?.let { it ->
+               if (it.size>0){
+                   it.forEach {
+                       mVideoList.add(MediaInformation(path = it .path))
+                   }
+                   toOtherActivity<ReadyJoinActivity>(this) {
+                       putExtra(
+                               Constants.KEY_VIDEO_PATH,
+                               Gson().toJson(ValueJoinList(mVideoList))
+                       )
+                   }
+               }
             }
         }
     }
 
+
     override fun release() {
         mExitPoPupWindow.dismiss()
     }
-
-
 }

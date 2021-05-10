@@ -7,8 +7,7 @@ import android.graphics.Bitmap
  * @class name：com.twx.module_videoediting.domain
  * @class describe
  * @author wujinming QQ:1245074510
- * @time 2021/5/8 15:29:30
+ * @time 2021/5/10 9:38:06
  * @class describe
  */
-data class JoinData(val bitmapList:MutableList<MutableList<Bitmap>>,val pathList:MutableList<String>){
-}
+data class ReadyJoinInfo(var bitmapList:MutableList<Bitmap>, var videoPath:String, var cutStartTime:Long, var cutEndTime:Long)

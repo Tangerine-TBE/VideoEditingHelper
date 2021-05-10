@@ -16,5 +16,8 @@ public class Edit {
          * @param type      TCVideoEditerActivity#TYPE_CUT/ TYPE_REPEAT
          */
         void onCutChangeKeyUp(long startTime, long endTime, int type);
+
+        void onDeleteItem();
+
     }
 }

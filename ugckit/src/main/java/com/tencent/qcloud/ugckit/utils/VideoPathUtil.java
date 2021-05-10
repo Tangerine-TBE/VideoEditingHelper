@@ -21,6 +21,26 @@ public class VideoPathUtil {
     public static String createPath(){
         return  Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + UGCKitConstants.DEFAULT_MEDIA_OUT_PATH;
     }
+    public static String createJoinPath(){
+        return  Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + UGCKitConstants.READY_JOIN_OUT_PATH;
+    }
+
+
+    public static String generateJoinVideoPath(int index) {
+        String outputPath = createJoinPath();
+        File outputFolder = new File(outputPath);
+        if (!outputFolder.exists()) {
+            outputFolder.mkdirs();
+        }
+        String current = String.valueOf(System.currentTimeMillis() / 1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String time = sdf.format(new Date(Long.valueOf(current + "000")));
+        String saveFileName = String.format(index+"TWXVideo_%s.mp4", time);
+        return outputFolder + "/" + saveFileName;
+    }
+
+
+
     /**
      * 生成编辑后输出视频路径
      *

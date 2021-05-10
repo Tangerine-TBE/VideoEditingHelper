@@ -22,6 +22,8 @@ import com.tencent.ugc.TXVideoEditConstants;
 import com.tencent.ugc.TXVideoEditer;
 import com.tencent.ugc.TXVideoEditer.TXVideoGenerateListener;
 
+import java.util.List;
+
 /**
  * 视频生成管理
  */
@@ -112,6 +114,11 @@ public class VideoGenerateKit extends BaseGenerateKit implements TXVideoGenerate
             }
         }
     }
+
+
+
+
+
 
     /**
      * 停止合成视频[包括一些异常操作导致的合成取消]
