@@ -267,6 +267,7 @@ public class RangeSlider extends ViewGroup {
                 break;
 
             case MotionEvent.ACTION_CANCEL:
+                break;
             case MotionEvent.ACTION_UP:
                 endTime=System.currentTimeMillis();
                 if (endTime-startTime<500) {
@@ -301,9 +302,11 @@ public class RangeSlider extends ViewGroup {
 
             case MotionEvent.ACTION_MOVE:
                 x = (int) event.getX();
+
                 if ( x - mLastX>100) {
                     isMove=true;
                 }
+
                 if (!mIsDragging && Math.abs(x - mOriginalX) > mTouchSlop) {
                     mIsDragging = true;
                 }

@@ -6,6 +6,15 @@
         </shape>
     </item>
 
+    <item android:gravity="fill">
+        <bitmap android:src="@mipmap/icon_splash_bg"/>
+
+    </item>
+
+    <item android:gravity="center|right" android:top="40dp">
+        <bitmap android:src="@mipmap/icon_logo_hint"/>
+
+    </item>
 
 
 

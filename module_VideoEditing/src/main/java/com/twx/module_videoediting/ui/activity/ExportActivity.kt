@@ -147,6 +147,7 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
             .imageSpanCount(3)// 每行显示个数 int
             .maxSelectNum(maxSelectNum)
             .minSelectNum(minSelectNum)
+                .previewVideo(false)
             .videoMaxSecond(600)
             .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
             .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回

@@ -61,11 +61,11 @@ open class BaseApplication : Application() {
             FeedbackAPI.setAppExtInfo(jsonObject)
 */
         }
-        //友盟
+        //友盟 609b9d5c53b6726499fab726
         UMConfigure.init(
             applicationContext,
             UMConfigure.DEVICE_TYPE_PHONE,
-            "01a1119aa055917f8816f3a"
+            "601a1119aa055917f8816f3a"
         )
         UMConfigure.setLogEnabled(true)
         initData()

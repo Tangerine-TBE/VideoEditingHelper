@@ -166,7 +166,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
                 .minSelectNum(minSelectNum)
                 .previewVideo(false)
                 .previewImage(false)
-                .videoMaxSecond(600)
+                .videoMaxSecond(1200)
                 .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                 .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
                 .isCamera(false)// 是否显示拍照按钮 true or false

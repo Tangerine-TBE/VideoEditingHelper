@@ -18,7 +18,6 @@ import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.domain.ReadyJoinInfo
 import com.twx.module_videoediting.domain.ValueJoinList
 import com.twx.module_videoediting.livedata.ThemeChangeLiveData
-import com.twx.module_videoediting.livedata.VideoFileLiveData
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.NavigationAdapter
 import com.twx.module_videoediting.ui.fragment.FileFragment

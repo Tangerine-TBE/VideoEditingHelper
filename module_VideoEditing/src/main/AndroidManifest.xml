@@ -6,7 +6,6 @@
         <activity android:name=".ui.activity.CropActivity" android:launchMode="singleTop" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.activity.TagsActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.SpeedActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.JoinActivity"    android:launchMode="singleTop" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.ReadyJoinActivity"  android:theme="@style/EditerActivityTheme"  android:launchMode="singleTop" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.DivisionActivity" android:launchMode="singleTop" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.SelectMediaActivity" android:launchMode="singleTop" android:screenOrientation="portrait"/>

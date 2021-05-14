@@ -7,7 +7,6 @@ import com.twx.module_base.base.BaseViewModel
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.domain.ValueReName
-import com.twx.module_videoediting.livedata.VideoFileLiveData
 import com.twx.module_videoediting.utils.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

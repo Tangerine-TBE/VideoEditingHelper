@@ -1,8 +1,13 @@
 package com.twx.module_videoediting.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.tencent.qcloud.ugckit.utils.VideoPathUtil
 import com.twx.module_base.base.BaseViewModel
 import com.twx.module_videoediting.domain.ReadyJoinInfo
+import com.twx.module_videoediting.utils.FileUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * @name VideoEditingHelper
@@ -22,6 +27,17 @@ class ReadyJoinViewModel:BaseViewModel() {
 
     fun setReadyList(list: MutableList<ReadyJoinInfo>){
         readyList.value=list
+    }
+
+
+    fun deleteDirectory(){
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                FileUtils.deleteDirectory(VideoPathUtil.createJoinPath())
+            }catch (e:Exception){
+
+            }
+        }
     }
 
 }

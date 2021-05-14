@@ -67,7 +67,6 @@ class JoinCutAdapter : RecyclerView.Adapter<JoinCutAdapter.MyHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val itemBinding = DataBindingUtil.inflate<ItemJoinCutContainerBinding>(LayoutInflater.from(parent.context), R.layout.item_join_cut_container, parent, false)
-    //    val itemBindingSpecial= DataBindingUtil.inflate<ItemJoinCutTwoContainerBinding>(LayoutInflater.from(parent.context), R.layout.item_join_cut_two_container, parent, false)
         return MyHolder(itemBinding.root, itemBinding)
 
     }
@@ -88,14 +87,6 @@ class JoinCutAdapter : RecyclerView.Adapter<JoinCutAdapter.MyHolder>() {
     }
 
     fun getReadyJoinList() = mReadyList
-
-
-    companion object{
-        const val NORMAL_HOLDER=1
-        const val SPECIAL_HOLDER=2
-    }
-
-
 
 
 

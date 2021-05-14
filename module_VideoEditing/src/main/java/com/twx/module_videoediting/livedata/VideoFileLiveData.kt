@@ -1,6 +1,7 @@
 package com.twx.module_videoediting.livedata
 
 import com.twx.module_base.base.BaseLiveData
+import com.twx.module_base.utils.lacksPermissions
 import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.utils.FileUtils
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +27,9 @@ object VideoFileLiveData:BaseLiveData<MutableList<MediaInformation>>() {
     override fun onActive() {
         super.onActive()
         mScope.launch (Dispatchers.IO){
-         postValue(FileUtils.getAllVideo())
+            if (lacksPermissions()) {
+                postValue(FileUtils.getAllVideo())
+            }
         }
     }
 

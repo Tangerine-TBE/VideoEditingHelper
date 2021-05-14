@@ -37,6 +37,8 @@ class AgreementPopup(activity: FragmentActivity):
         ItemBean( title = "储存", hint = "获取手机的音视频信息"),
     )
 
+    private val mAppName=PackageUtil.getAppMetaData(activity, Constants.APP_NAME)
+
     private val textColor=ContextCompat.getColor(mView.root.context,R.color.theme_color)
 
     private val mPermissionAdapter by lazy {
@@ -49,7 +51,7 @@ class AgreementPopup(activity: FragmentActivity):
 
 
         mView.apply {
-            welcomeTitle.text="欢迎使用${PackageUtil.getAppMetaData(activity, Constants.APP_NAME)}"
+            welcomeTitle.text="欢迎使用${mAppName}"
             permissionContainer.layoutManager = LinearLayoutManager(activity)
             permissionContainer.adapter = mPermissionAdapter
             mPermissionAdapter.setList(permissionList)
@@ -70,19 +72,13 @@ class AgreementPopup(activity: FragmentActivity):
 
     override fun initEvent() {
         mView.apply {
-            ivCancel?.setOnClickListener {
-                dismiss()
-                mListener?.cancel()
-
+            btCancel?.setOnClickListener {
+                showToast("您需要同意后才能继续使${mAppName}提供的服务")
             }
 
             btSure?.setOnClickListener {
-                if (scbAgreement.isChecked) {
                     dismiss()
                     mListener?.sure()
-                } else {
-                        showToast("请确保您已同意本应用的隐私政策和用户协议")
-                }
             }
 
         }

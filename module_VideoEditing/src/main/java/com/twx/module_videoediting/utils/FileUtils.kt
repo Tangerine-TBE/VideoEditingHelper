@@ -15,7 +15,9 @@ import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.tools.RxTimeTool
 
 import com.twx.module_videoediting.domain.MediaInformation
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 
 import java.io.File
 import java.text.SimpleDateFormat
@@ -160,6 +162,21 @@ object FileUtils {
 
 
 
+    suspend fun deleteDirectory(path: String){
+        coroutineScope {
+            val file = File(path)
+            if (file.isDirectory) {
+                val listFiles = file.listFiles()
+                listFiles.forEach {
+                    File(it.absolutePath).apply {
+                        if (exists()) {
+                            delete()
+                        }
+                    }
+                   }
+            }
 
+        }
+    }
 
 }
