@@ -36,8 +36,8 @@ class VideoEditPlayerControl @JvmOverloads constructor(
         val param = TXVideoEditConstants.TXPreviewParam()
         param.videoView = binding.mPlayerView
         param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE
-        mVideoEditorHelper.editer.initWithPreview(param)
-        maxDuration= mVideoEditorHelper.txVideoInfo.duration
+        mVideoEditorHelper?.editer?.initWithPreview(param)
+        maxDuration= mVideoEditorHelper?.txVideoInfo?.duration?:0L
         binding.playerControl.progressBar.max=maxDuration.toInt()
         //添加播放状态监听
         PlayerManager.addOnPlayStateListener(this)

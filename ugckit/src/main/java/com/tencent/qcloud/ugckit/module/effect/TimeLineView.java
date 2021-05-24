@@ -71,17 +71,21 @@ public class TimeLineView extends RelativeLayout implements ITimeLineView, Video
         mActivity.getWindowManager().getDefaultDisplay().getSize(point);
         int screenWidth = point.x;
 
-        LogUtils.i("----initVideoProgressLayout------------------------------"+screenWidth);
-        List<Bitmap> thumbnailList = VideoEditerSDK.getInstance().getAllThumbnails();
-        mVideoProgressView.setViewWidth(screenWidth);
-        mVideoProgressView.setThumbnailData(thumbnailList);
+        VideoEditerSDK editerSDK = VideoEditerSDK.getInstance();
+        if (editerSDK != null) {
+            LogUtils.i("----initVideoProgressLayout------------------------------"+screenWidth);
+            List<Bitmap> thumbnailList =editerSDK.getAllThumbnails();
+            mVideoProgressView.setViewWidth(screenWidth);
+            mVideoProgressView.setThumbnailData(thumbnailList);
 
-        // TODO:设置裁剪时长
-        long duration = VideoEditerSDK.getInstance().getVideoDuration();
-        mVideoProgressController = new VideoProgressController(duration);
-        mVideoProgressController.setVideoProgressView(mVideoProgressView);
-        mVideoProgressController.setVideoProgressSeekListener(this);
-        mVideoProgressController.setVideoProgressDisplayWidth(screenWidth);
+            // TODO:设置裁剪时长
+            long duration = editerSDK.getVideoDuration();
+            mVideoProgressController = new VideoProgressController(duration);
+            mVideoProgressController.setVideoProgressView(mVideoProgressView);
+            mVideoProgressController.setVideoProgressSeekListener(this);
+            mVideoProgressController.setVideoProgressDisplayWidth(screenWidth);
+        }
+
     }
 
     @Override

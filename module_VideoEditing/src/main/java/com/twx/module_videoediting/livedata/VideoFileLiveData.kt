@@ -17,12 +17,6 @@ import kotlinx.coroutines.launch
  */
 object VideoFileLiveData:BaseLiveData<MutableList<MediaInformation>>() {
 
-    fun refreshData(){
-        mScope.launch (Dispatchers.IO){
-            postValue(FileUtils.getAllVideo())
-        }
-    }
-
 
     override fun onActive() {
         super.onActive()

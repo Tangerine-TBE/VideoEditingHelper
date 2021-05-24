@@ -87,27 +87,6 @@ object FileUtils {
         return videoList
     }
 
-    /**
-     * 获取音频文件
-     * @return MutableList<MediaInformation>
-     */
-    fun getAllImage(): MutableList<MediaInformation> {
-        val videoList = ArrayList<MediaInformation>()
-        contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, "${MediaStore.MediaColumns.DATE_ADDED} desc")?.apply {
-            while (moveToNext()) {
-                val id = getLong(getColumnIndexOrThrow(MediaStore.MediaColumns._ID))
-                val uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
-                val name = getString(getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME))//名字
-                val path = getString(getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)) // 路径
-                   LogUtils.i("---getAllAudio----${name}-------${path}        ---       ${uri}---")
-                videoList.add(MediaInformation(id, name, 0L,
-                    "${RxTimeTool.date2String(Date(File(path).lastModified()), SimpleDateFormat("yyyy-MM-dd"))}", uri.toString(), path,null))
-            }
-            close()
-        }
-        return videoList
-    }
-
 
     /**
      * 重命名文件
@@ -155,11 +134,6 @@ object FileUtils {
             AlbumSaver.getInstance(context).saveVideoToDCIM()
         }
     }
-
-    fun getVideoDuration(videoPath:String) =  MediaMetadataRetriever().apply {
-        setDataSource(videoPath)
-        }.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-
 
 
     suspend fun deleteDirectory(path: String){

@@ -28,7 +28,6 @@ class SpeedActivity : BaseViewActivity<ActivitySpeedBinding>() {
     private var mSpeed = 1.0f
     private val callback by lazy {
         ffCallback(onComplete = {
-            LogUtils.i("---SpeedActivity--------------${ FileUtils.getVideoDuration(mVideoOutputPath)}---------------------")
             FileUtils.saveAlbum(this, mVideoOutputPath)
             ExportActivity.toExportPage(this, true, mVideoOutputPath)
         }, onProgress = {
@@ -54,7 +53,6 @@ class SpeedActivity : BaseViewActivity<ActivitySpeedBinding>() {
             //获取视频路径播放
             intent.getStringExtra(Constants.KEY_VIDEO_PATH)?.let {
                 mSrcFile = it
-                LogUtils.i("----getVideoDuration--------------------${FileUtils.getVideoDuration(mSrcFile)}---------------")
                 playerView.player = player.apply {
                     repeatMode=Player.REPEAT_MODE_ALL
                     setMediaItem(MediaItem.fromUri(Uri.parse(it)))

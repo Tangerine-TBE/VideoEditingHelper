@@ -42,9 +42,9 @@ class VideoCutPlayerControl @JvmOverloads constructor(
         val param = TXPreviewParam()
         param.videoView = binding.mVideoPlayerView
         param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE
-        mVideoEditorHelper.editer?.initWithPreview(param)
+        mVideoEditorHelper?.editer?.initWithPreview(param)
         mDuration=  formatDuration(mVideoEditorHelper.txVideoInfo.duration)
-        textTime=mVideoEditorHelper.txVideoInfo.duration
+        textTime=mVideoEditorHelper?.txVideoInfo?.duration?:0L
         //添加播放状态监听
         PlayerManager.addOnPlayStateListener(this)
         PlayerManager.addOnPreviewListener(this)

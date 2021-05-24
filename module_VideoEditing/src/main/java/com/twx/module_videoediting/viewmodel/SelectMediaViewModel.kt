@@ -3,6 +3,7 @@ package com.twx.module_videoediting.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.twx.module_base.base.BaseViewModel
+import com.twx.module_base.utils.lacksPermissions
 import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.utils.FileUtils
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +27,9 @@ class SelectMediaViewModel:BaseViewModel() {
 
     fun getAudioData(){
         viewModelScope.launch(Dispatchers.IO) {
-            audioList.postValue(FileUtils.getAllAudio())
+            if (lacksPermissions()) {
+                audioList.postValue(FileUtils.getAllAudio())
+            }
         }
     }
 
