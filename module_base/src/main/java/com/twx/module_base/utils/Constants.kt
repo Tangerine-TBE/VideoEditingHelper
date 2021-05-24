@@ -10,6 +10,7 @@ package com.twx.module_base.utils
  */
 object Constants {
 
+    const val SP_AGREE="SP_AGREE"
     const val SP_CORE_TYPE="SP_CORE_TYPE"
 
     // 打开类型
@@ -33,6 +34,7 @@ object Constants {
     const val SET_DEAL1="set_deal1"
 
     const val APP_NAME="APP_NAME"
+    const val CHANNEL="CHANNEL"
 
 
      val MIME_MapTable = arrayOf(arrayOf(".3gp", "video/3gpp"),

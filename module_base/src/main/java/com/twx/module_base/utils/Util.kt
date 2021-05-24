@@ -17,13 +17,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.twx.module_base.base.BaseApplication
-import com.twx.module_base.widget.LoadingDialog
-import com.twx.module_base.widget.MyToolbar
 import com.google.gson.Gson
 import com.permissionx.guolindev.PermissionX
 import com.tamsiree.rxkit.view.RxToast
-import com.twx.module_base.base.BasePopup
+import com.twx.module_base.base.BaseApplication
+import com.twx.module_base.widget.LoadingDialog
+import com.twx.module_base.widget.MyToolbar
+import com.umeng.commonsdk.UMConfigure
 import java.util.*
 
 
@@ -35,6 +35,10 @@ import java.util.*
  * @time 2021/1/8 13:32:53
  * @class describe
  */
+
+fun initUm(context: Context){
+    UMConfigure.init(context, UMConfigure.DEVICE_TYPE_PHONE,"601a1119aa055917f8816f3a")
+}
 
 
 //跳转Activity

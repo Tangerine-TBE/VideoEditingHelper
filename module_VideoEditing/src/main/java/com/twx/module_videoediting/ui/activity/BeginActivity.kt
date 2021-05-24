@@ -6,7 +6,7 @@ import com.twx.module_base.base.BasePopup
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.Constants
 import com.twx.module_base.utils.MyStatusBarUtil
-import com.twx.module_base.utils.checkAppPermission
+import com.twx.module_base.utils.initUm
 import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.widget.popup.AgreementPopup
 import com.twx.module_videoediting.R
@@ -60,6 +60,8 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
     override fun initEvent() {
         mAgreementPopup.setOnActionClickListener(object : BasePopup.OnActionClickListener {
             override fun sure() {
+                sp.putBoolean(Constants.SP_AGREE,true)
+                initUm(this@BeginActivity)
                 goHome()
             }
 
