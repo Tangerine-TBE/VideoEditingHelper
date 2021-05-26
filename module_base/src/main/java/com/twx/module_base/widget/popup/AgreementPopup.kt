@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tamsiree.rxkit.view.RxToast
 import com.twx.module_base.R
 import com.twx.module_base.activity.DealViewActivity
 import com.twx.module_base.adapter.PermissionAdapter
@@ -79,6 +78,7 @@ class AgreementPopup(activity: FragmentActivity):
             btSure?.setOnClickListener {
                     dismiss()
                     mListener?.sure()
+
             }
 
         }

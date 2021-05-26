@@ -6,9 +6,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.view.marginRight
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
@@ -73,6 +71,10 @@ class VideoCropContainer @JvmOverloads constructor(
                     .setShowFullAnimation(false)
                     .setLooping(true)
                     .build(mCropPlayerView)
+
+            if (PackageUtil.getAppMetaData(context,Constants.CHANNEL)=="_huawei") {
+                cropOneContainer.visibility=View.GONE
+            }
 
             cropOneContainer.apply {
                 layoutManager = GridLayoutManager(context, 4)

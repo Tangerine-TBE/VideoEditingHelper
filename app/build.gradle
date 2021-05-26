@@ -107,7 +107,7 @@ android {
         _vivo {
 
             manifestPlaceholders = [
-                    app_name_channel: "短视频剪辑助手",
+                    app_name_channel: "视频高清剪辑专家",
                     CHANNEL_VALUE:"_vivo"]
         }
         _360 {
