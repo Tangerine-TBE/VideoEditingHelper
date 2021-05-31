@@ -8,9 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tamsiree.rxkit.view.RxToast
 import com.twx.module_base.base.BaseVmFragment
-import com.twx.module_base.utils.IntentUtils
-import com.twx.module_base.utils.LogUtils
-import com.twx.module_base.utils.viewThemeColor
+import com.twx.module_base.utils.*
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.FragmentFileBinding
 import com.twx.module_videoediting.domain.MediaInformation
@@ -55,7 +53,8 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
     private val mReNamePopup by lazy {
         InputPopup(activity)
     }
-
+    private val mDeleteSelectList = ArrayList<MediaInformation>()
+    private val mCurrentVideoList = ArrayList<MediaInformation>()
     override fun getChildLayout(): Int = R.layout.fragment_file
     override fun getViewModelClass(): Class<MainViewModel> {
         return MainViewModel::class.java
@@ -69,14 +68,23 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
                 layoutManager = GridLayoutManager(activity, 2)
                 adapter = mVideoFileAdapter
             }
-
-
         }
 
     }
 
-    private val mDeleteSelectList = ArrayList<MediaInformation>()
-    private val mCurrentVideoList = ArrayList<MediaInformation>()
+    override fun onResume() {
+        super.onResume()
+        getVideoInfo()
+    }
+
+
+    private fun getVideoInfo() {
+        checkAppPermission(HomeFragment.askAllPermissionLis, {
+            VideoFileLiveData.getVideoInfo()
+        }, {
+            showToast("权限不足，无法为您读取视频信息")
+        }, fragment = this@FileFragment)
+    }
 
 
     override fun observerData() {

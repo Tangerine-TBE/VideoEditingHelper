@@ -1,7 +1,16 @@
 package com.twx.module_videoediting.viewmodel
 
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.module_ad.repository.AdRepository
+import com.example.module_ad.utils.Contents
+import com.google.gson.Gson
 import com.twx.module_base.base.BaseViewModel
+import com.twx.module_base.extensions.exAwait
+import com.twx.module_base.utils.LogUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 /**
@@ -14,7 +23,12 @@ import com.twx.module_base.base.BaseViewModel
  */
 class BeginViewModel : BaseViewModel() {
 
-/*    val loadAdState by lazy {
+    //网络请求进度
+    enum class RequestNetState{
+        SUCCESS,ERROR,LOADING,EMPTY
+    }
+
+    val loadAdState by lazy {
         MutableLiveData<RequestNetState>()
     }
 
@@ -38,7 +52,7 @@ class BeginViewModel : BaseViewModel() {
                 }
             })
         }
-    }*/
+    }
 
 
 }

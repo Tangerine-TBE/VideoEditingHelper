@@ -1,7 +1,10 @@
 package com.twx.module_videoediting.ui.activity
 
-import android.Manifest
 import android.view.KeyEvent
+import com.example.module_ad.ad.ad_help.AdController
+import com.example.module_ad.advertisement.AdType
+import com.example.module_ad.utils.Contents
+import com.twx.module_base.base.BaseApplication
 import com.twx.module_base.base.BasePopup
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.utils.Constants
@@ -12,17 +15,22 @@ import com.twx.module_base.widget.popup.AgreementPopup
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.ActivityBeginBinding
 import com.twx.module_videoediting.viewmodel.BeginViewModel
+import com.umeng.analytics.MobclickAgent
 
 class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>() {
 
-    val askAllPermissionLis= arrayListOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-    )
-    private var showConut = 0
-   /* private val mSplashHelper by lazy {
-        SplashHelper(this, binding.mAdContainer, MainViewActivity::class.java)
-    }*/
+
+    private var showCount = 0
+
+    private val mAdController by lazy {
+        AdController.Builder(this)
+            .setPage(AdType.START_PAGE)
+            .setContainer(hashMapOf(AdController.ContainerType.TYPE_SPLASH to  binding.mAdContainer))
+            .create()
+            .setSplashAction { toOtherActivity<MainViewActivity>(this,true){} }
+    }
+
+
     private val mAgreementPopup by lazy {
         AgreementPopup(this)
     }
@@ -34,22 +42,22 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
     override fun getLayoutView(): Int = R.layout.activity_begin
 
     override fun initView() {
-     /*   sp.putBoolean(Contents.NO_BACK, true)
-       viewModel.loadAdMsg()*/
+        sp.putBoolean(Contents.NO_BACK, true)
+       viewModel.loadAdMsg()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         MyStatusBarUtil.fullScreenWindow(hasFocus, this)
-        if (showConut < 1) {
+        if (showCount < 1) {
             if (hasFocus) {
                 sp.apply {
                     if (getBoolean(Constants.IS_FIRST, true)) {
                         mAgreementPopup?.showPopupView(binding.mAdContainer)
-                        showConut++
+                        showCount++
                     } else {
-                    //   mSplashHelper.showAd()
-                        goHome()
+                      mAdController.show()
+                     //   goHome()
                     }
                 }
             }
@@ -61,8 +69,10 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
         mAgreementPopup.setOnActionClickListener(object : BasePopup.OnActionClickListener {
             override fun sure() {
                 sp.putBoolean(Constants.SP_AGREE,true)
-                initUm(this@BeginActivity)
-                goHome()
+                initUm(BaseApplication.application)
+                MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+                // goHome()
+                mAdController.show()
             }
 
             override fun cancel() {
@@ -82,7 +92,7 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
 
 
     override fun release() {
-      //  sp.putBoolean(Contents.NO_BACK, false)
+       sp.putBoolean(Contents.NO_BACK, false)
         mAgreementPopup.dismiss()
     }
 

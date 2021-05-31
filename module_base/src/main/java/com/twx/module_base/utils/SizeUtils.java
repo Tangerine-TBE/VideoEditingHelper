@@ -7,7 +7,9 @@ import android.view.WindowManager;
 public class SizeUtils {
 
 
-
+    public static final float expressHeight(int height){
+        return  height/18f;
+    }
     public static int dip2px1(Context context, float dpValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

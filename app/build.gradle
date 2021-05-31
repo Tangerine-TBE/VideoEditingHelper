@@ -78,14 +78,14 @@ android {
     }
 
     //    只在打包提测时改apk文件名，开发时记得注释掉
-    applicationVariants.all { variant ->
+/*    applicationVariants.all { variant ->
         variant.getPackageApplication().outputDirectory = new File("F:/视频剪辑专家")
         variant.outputs.all {
             outputFileName = "${variant.productFlavors[0].manifestPlaceholders.get("app_name_channel")}" +
                     "_${variant.productFlavors[0].name}" +
                     "_${variant.versionName}.apk"
         }
-    }
+    }*/
 
     productFlavors {
         _anzhi {
@@ -107,7 +107,7 @@ android {
         _vivo {
 
             manifestPlaceholders = [
-                    app_name_channel: "视频高清剪辑专家",
+                    app_name_channel: "爱剪辑视频大师",
                     CHANNEL_VALUE:"_vivo"]
         }
         _360 {

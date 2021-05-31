@@ -1,6 +1,7 @@
 package com.twx.module_videoediting.ui.activity
 
 import android.content.Intent
+import android.text.TextUtils
 import com.tencent.qcloud.ugckit.module.record.MusicInfo
 import com.twx.module_base.base.BaseViewActivity
 import com.twx.module_base.utils.*
@@ -58,13 +59,15 @@ class MusicActivity : BaseViewActivity<ActivityMusicBinding>(){
         if (requestCode==SelectMediaActivity.REQUEST_CODE) {
             data?.getStringExtra(Constants.KEY_AUDIO_INFO)?.let {
                 gsonHelper<MediaInformation>(it)?.let {
-                    val musicInfo = MusicInfo().apply {
-                        name = it.name
-                        path = it.path
-                        duration = it.duration
+                    if (!TextUtils.isEmpty(it.path)) {
+                        val musicInfo = MusicInfo().apply {
+                            name = it.name
+                            path = it.path
+                            duration = it.duration
+                        }
+                        binding.mTWVideoMusicContainer.setMusicInfo(musicInfo)
+                        binding.mTWVideoMusicContainer.showMusicEditor()
                     }
-                    binding.mTWVideoMusicContainer.setMusicInfo(musicInfo)
-                    binding.mTWVideoMusicContainer.showMusicEditor()
                 }
             }
 

@@ -18,14 +18,14 @@ import kotlinx.coroutines.launch
 object VideoFileLiveData:BaseLiveData<MutableList<MediaInformation>>() {
 
 
-    override fun onActive() {
-        super.onActive()
+    fun getVideoInfo(){
         mScope.launch (Dispatchers.IO){
             if (lacksPermissions()) {
                 postValue(FileUtils.getAllVideo())
             }
         }
     }
+
 
 
 }

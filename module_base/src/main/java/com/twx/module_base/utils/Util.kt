@@ -37,7 +37,7 @@ import java.util.*
  */
 
 fun initUm(context: Context){
-    UMConfigure.init(context, UMConfigure.DEVICE_TYPE_PHONE,"601a1119aa055917f8816f3a")
+    UMConfigure.init(context, UMConfigure.DEVICE_TYPE_PHONE,"609b9d5c53b6726499fab726")
 }
 
 

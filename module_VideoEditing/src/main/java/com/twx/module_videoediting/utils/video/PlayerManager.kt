@@ -33,15 +33,18 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
      */
     fun startPlay() {
         mVideoEditerSDK.apply {
-            if (mCurrentState == PlayState.STATE_NONE || mCurrentState == PlayState.STATE_STOP) {
-                if (editer != null) {
-                    addPreviewListener()
-                    editer?.startPlayFromTime(0, txVideoInfo.duration)
-                    mCurrentState = PlayState.STATE_PLAY
-                    notifyPlayerState(PlayState.STATE_PLAY)
+            txVideoInfo?.let {
+                if (mCurrentState == PlayState.STATE_NONE || mCurrentState == PlayState.STATE_STOP) {
+                    if (editer != null) {
+                        addPreviewListener()
+                        editer?.startPlayFromTime(0, it.duration)
+                        mCurrentState = PlayState.STATE_PLAY
+                        notifyPlayerState(PlayState.STATE_PLAY)
+                    }
+                    isPreviewFinish = false
                 }
-                isPreviewFinish = false
             }
+
         }
     }
 
@@ -68,12 +71,15 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
      */
     fun startPlayCutTime() {
         mVideoEditerSDK.apply {
-            addPreviewListener()
-            if (editer != null) {
-                editer.startPlayFromTime(0, txVideoInfo.duration)
-                 notifyPlayerState(PlayState.STATE_PLAY)
+            txVideoInfo?.let {
+                addPreviewListener()
+                if (editer != null) {
+                    editer.startPlayFromTime(0, it.duration)
+                    notifyPlayerState(PlayState.STATE_PLAY)
+                }
+                mCurrentState = PlayState.STATE_PLAY
             }
-            mCurrentState = PlayState.STATE_PLAY
+
         }
 
     }
@@ -191,23 +197,26 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
 
     fun playVideo(isMotionFilter: Boolean) {
         mVideoEditerSDK.apply {
-            if (mCurrentState == PlayState.STATE_NONE || mCurrentState == PlayState.STATE_STOP) {
-                startPlay()
-            } else if ((mCurrentState == PlayState.STATE_RESUME || mCurrentState == PlayState.STATE_PLAY) && !isMotionFilter) {
-                pausePlay()
-            } else if (mCurrentState == PlayState.STATE_PAUSE) {
-                resumePlay()
-            } else if (mCurrentState == PlayState.STATE_PREVIEW_AT_TIME) {
-                val totalDuration = txVideoInfo.duration
-                if (mPreviewAtTime >=totalDuration) {
-                    startPlay(0, totalDuration)
-                }else if (!isReverse)
-                    startPlay(mPreviewAtTime, totalDuration)
-                else {
-                    startPlay(0, mPreviewAtTime)
+            txVideoInfo?.let {
+                if (mCurrentState == PlayState.STATE_NONE || mCurrentState == PlayState.STATE_STOP) {
+                    startPlay()
+                } else if ((mCurrentState == PlayState.STATE_RESUME || mCurrentState == PlayState.STATE_PLAY) && !isMotionFilter) {
+                    pausePlay()
+                } else if (mCurrentState == PlayState.STATE_PAUSE) {
+                    resumePlay()
+                } else if (mCurrentState == PlayState.STATE_PREVIEW_AT_TIME) {
+                    val totalDuration = it.duration
+                    if (mPreviewAtTime >=totalDuration) {
+                        startPlay(0, totalDuration)
+                    }else if (!isReverse)
+                        startPlay(mPreviewAtTime, totalDuration)
+                    else {
+                        startPlay(0, mPreviewAtTime)
+                    }
                 }
             }
-        }
+            }
+
 
     }
 

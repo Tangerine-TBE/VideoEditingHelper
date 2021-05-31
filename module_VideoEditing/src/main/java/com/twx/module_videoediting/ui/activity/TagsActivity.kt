@@ -38,4 +38,6 @@ class TagsActivity : BaseViewActivity<ActivityTagsBinding>() {
 
         }
     }
+
+
 }

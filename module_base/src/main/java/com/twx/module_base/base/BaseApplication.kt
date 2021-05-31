@@ -9,6 +9,7 @@ import com.twx.module_base.utils.Constants
 import com.twx.module_base.utils.PackageUtil
 import com.twx.module_base.utils.SPUtil
 import com.twx.module_base.utils.initUm
+import com.umeng.analytics.MobclickAgent
 
 import com.umeng.commonsdk.UMConfigure
 import kotlinx.coroutines.GlobalScope
@@ -48,12 +49,14 @@ open class BaseApplication : Application() {
         //友盟 609b9d5c53b6726499fab726
         UMConfigure.preInit(
             this,
-            "601a1119aa055917f8816f3a",
+            "09b9d5c53b6726499fab726",
             PackageUtil.getAppMetaData(this, Constants.CHANNEL)
         )
         if (SPUtil.getInstance().getBoolean(Constants.SP_AGREE)) {
             initUm(this)
+            MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
         }
+
         initData()
 
     }
