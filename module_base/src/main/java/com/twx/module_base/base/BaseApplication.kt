@@ -49,7 +49,7 @@ open class BaseApplication : Application() {
         //友盟 609b9d5c53b6726499fab726
         UMConfigure.preInit(
             this,
-            "09b9d5c53b6726499fab726",
+            "609b9d5c53b6726499fab726",
             PackageUtil.getAppMetaData(this, Constants.CHANNEL)
         )
         if (SPUtil.getInstance().getBoolean(Constants.SP_AGREE)) {
