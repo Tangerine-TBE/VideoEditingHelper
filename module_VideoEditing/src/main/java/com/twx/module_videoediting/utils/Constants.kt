@@ -14,6 +14,9 @@ object Constants {
     const val SP_THEME_STATE="SP_THEME_STATE"
 
 
+    const val SP_VIDEO_LIST="SP_VIDEO_LIST"
+
+
     //------------------request code------------
     const val REQUEST_VIDEO_CODE=511
 

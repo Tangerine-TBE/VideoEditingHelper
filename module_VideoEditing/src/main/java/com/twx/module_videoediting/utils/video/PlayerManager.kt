@@ -140,7 +140,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
         mVideoEditerSDK?.apply {
             pausePlay()
             isPreviewFinish = false
-            editer.previewAtTime(timeMs)
+            editer?.previewAtTime(timeMs)
             mPreviewAtTime = timeMs
             LogUtils.i("------previewAtTime-------playmanager----------$timeMs------")
             mCurrentState = PlayState.STATE_PREVIEW_AT_TIME
@@ -151,7 +151,7 @@ object PlayerManager : TXVideoEditer.TXVideoPreviewListener {
     fun previewAtTime2(timeMs:Long){
         mVideoEditerSDK?.apply {
             isPreviewFinish = false
-            editer.previewAtTime(timeMs)
+            editer?.previewAtTime(timeMs)
             mPreviewAtTime = timeMs
             LogUtils.i("------previewAtTime-------playmanager----------$timeMs------")
             mCurrentState = PlayState.STATE_PREVIEW_AT_TIME

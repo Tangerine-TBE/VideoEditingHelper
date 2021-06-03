@@ -1,5 +1,6 @@
 package com.twx.module_videoediting.repository
 
+import android.Manifest
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.domain.ItemBean
 import com.twx.module_videoediting.domain.PasterInfo
@@ -16,6 +17,12 @@ object DataProvider {
 
     const val STATIC_PASTER = 1
     const val DYNAMIC_PASTER = 2
+
+
+    val askAllPermissionLis = arrayListOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    )
 
 
     val navigationList = arrayListOf(

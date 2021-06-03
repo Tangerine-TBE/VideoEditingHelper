@@ -1,6 +1,5 @@
 package com.twx.module_videoediting.ui.fragment
 
-import android.Manifest
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,10 +94,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
         const val CUT_COUNT = 6
 
-       val askAllPermissionLis = arrayListOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        )
+
 
     }
 
@@ -107,7 +103,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
 
 
     private fun checkPermission(block: () -> Unit) {
-        checkAppPermission(askAllPermissionLis, {
+        checkAppPermission(DataProvider.askAllPermissionLis, {
             block()
         }, {
             showToast("权限不足，无法为您读取视频信息")

@@ -73,11 +73,8 @@ open class BasePopup<T:ViewDataBinding>(val activity: FragmentActivity?, layout:
    open fun showPopupView(view: View,gravity:Int=Gravity.CENTER,x:Int=0,y:Int=0){
        activity?.let {
            if (!it.isFinishing) {
-               if (!it.isDestroyed) {
                    mInValueAnimator.start()
                    showAtLocation(view,gravity,x,y)
-               }
-
            }
        }
     }

@@ -79,7 +79,7 @@ class FileFragment : BaseVmFragment<FragmentFileBinding, MainViewModel>() {
 
 
     private fun getVideoInfo() {
-        checkAppPermission(HomeFragment.askAllPermissionLis, {
+        checkAppPermission(DataProvider.askAllPermissionLis, {
             VideoFileLiveData.getVideoInfo()
         }, {
             showToast("权限不足，无法为您读取视频信息")

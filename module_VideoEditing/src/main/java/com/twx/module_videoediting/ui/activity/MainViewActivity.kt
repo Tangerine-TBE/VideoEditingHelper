@@ -37,10 +37,9 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                                 }
         }
 
-        fun toAddJoinActivity(activity: FragmentActivity?,videoList:String){
+        fun toAddJoinActivity(activity: FragmentActivity?){
             toOtherActivity<MainViewActivity>(activity,true){
                 putExtra(Constants.KEY_FRAGMENT_ID,2)
-                putExtra(Constants.KEY_VIDEO_LIST,videoList)
             }
         }
 
@@ -161,7 +160,7 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                     showFragment(mFileFragment)
                 }
                 2 -> {
-                    val videoStr = getStringExtra(Constants.KEY_VIDEO_LIST)
+                    val videoStr = sp.getString(Constants.SP_VIDEO_LIST)
                     Gson().fromJson<List<ReadyJoinInfo>>(videoStr, object : TypeToken<List<ReadyJoinInfo>>() {}.type)?.let { it ->
                         mVideoList.clear()
                         if (it.isNotEmpty()) {

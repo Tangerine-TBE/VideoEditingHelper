@@ -173,7 +173,8 @@ class ReadyJoinActivity : BaseVmViewActivity<ActivityReadyJoinBinding,ReadyJoinV
             })
 
             addVideo.setOnClickListener {
-                MainViewActivity.toAddJoinActivity(this@ReadyJoinActivity,Gson().toJson(mJoinCutAdapter.getReadyJoinList()))
+                MainViewActivity.toAddJoinActivity(this@ReadyJoinActivity)
+                sp.putString(Constants.SP_VIDEO_LIST,Gson().toJson(mJoinCutAdapter.getReadyJoinList()))
             }
 
 
