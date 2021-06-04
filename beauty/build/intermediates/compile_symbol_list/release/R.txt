@@ -2547,6 +2547,7 @@ int mipmap icon_login_logo_true 0x0
 int mipmap icon_logo_hint 0x0
 int mipmap icon_no_agreement 0x0
 int mipmap icon_qdy_360 0x0
+int mipmap icon_qdy_xiaomi 0x0
 int mipmap icon_splash_bg 0x0
 int plurals mtrl_badge_content_description 0x0
 int string N_A 0x0
