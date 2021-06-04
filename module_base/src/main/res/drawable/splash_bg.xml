@@ -16,9 +16,9 @@
 
     </item>
 
-  <!--  <item  android:gravity="bottom|center" android:bottom="46dp">
+    <item  android:gravity="bottom|center" android:bottom="46dp">
         <bitmap android:src="@mipmap/icon_qdy_360"/>
-    </item>-->
+    </item>
 
 
 

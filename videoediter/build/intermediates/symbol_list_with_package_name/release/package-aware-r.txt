@@ -3581,6 +3581,7 @@ mipmap icon_login_logo_false
 mipmap icon_login_logo_true
 mipmap icon_logo_hint
 mipmap icon_no_agreement
+mipmap icon_qdy_360
 mipmap icon_splash_bg
 plurals mtrl_badge_content_description
 string N_A
