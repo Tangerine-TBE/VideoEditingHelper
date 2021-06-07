@@ -84,7 +84,7 @@ class TTSplashAd( activity: Activity,container:FrameLayout):Ad(activity,containe
                         override fun onDownloadActive(
                             totalBytes: Long,
                             currBytes: Long,
-                            fileName: String,
+                            fileName: String?,
                             appName: String
                         ) {
                             if (!hasShow) {
@@ -96,7 +96,7 @@ class TTSplashAd( activity: Activity,container:FrameLayout):Ad(activity,containe
                         override fun onDownloadPaused(
                             totalBytes: Long,
                             currBytes: Long,
-                            fileName: String,
+                            fileName: String?,
                             appName: String
                         ) {
                             LogUtils.i("下载暂停------------------>")
@@ -105,7 +105,7 @@ class TTSplashAd( activity: Activity,container:FrameLayout):Ad(activity,containe
                         override fun onDownloadFailed(
                             totalBytes: Long,
                             currBytes: Long,
-                            fileName: String,
+                            fileName: String?,
                             appName: String
                         ) {
                             LogUtils.i("下载失败------------------>")
@@ -113,13 +113,13 @@ class TTSplashAd( activity: Activity,container:FrameLayout):Ad(activity,containe
 
                         override fun onDownloadFinished(
                             totalBytes: Long,
-                            fileName: String,
+                            fileName: String?,
                             appName: String
                         ) {
                             LogUtils.i("下载完成------------------>")
                         }
 
-                        override fun onInstalled(fileName: String, appName: String) {
+                        override fun onInstalled(fileName: String?, appName: String) {
                             LogUtils.i("安装完成------------------>")
                         }
                     })

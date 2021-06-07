@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.tencent.qcloud.ugckit.module.effect.bgm.view.IEditMusicPannel
 import com.tencent.qcloud.ugckit.module.effect.utils.DraftEditer
 import com.tencent.qcloud.ugckit.module.record.MusicInfo
-import com.tencent.qcloud.ugckit.utils.DialogUtil
+import com.twx.module_base.utils.showToast
 import com.twx.module_videoediting.R
 import com.twx.module_videoediting.databinding.LayoutVideoMusiceContainerBinding
 import com.twx.module_videoediting.ui.widget.video.ganeral.BaseVideoEditUi
@@ -96,12 +96,7 @@ class VideoEditMusicContainer @JvmOverloads constructor(
         videoEditor.let {
             val result =it.setBGM(musicInfo.path)
             if (result != 0) {
-                DialogUtil.showDialog(
-                    context,
-                    resources.getString(R.string.tc_bgm_setting_fragment_video_edit_failed),
-                    resources.getString(R.string.tc_bgm_setting_fragment_background_sound_only_supports_mp3_or_m4a_format),
-                    null
-                )
+                showToast("视频编辑失败或不支持此格式")
             }
             try {
                 val mediaPlayer = MediaPlayer()

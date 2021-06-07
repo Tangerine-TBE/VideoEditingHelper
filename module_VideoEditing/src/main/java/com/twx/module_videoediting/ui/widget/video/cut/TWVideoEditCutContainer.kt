@@ -5,17 +5,9 @@ import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
-import com.tencent.qcloud.ugckit.UGCKitImpl
-import com.tencent.qcloud.ugckit.basic.JumpActivityMgr
-import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener
-import com.tencent.qcloud.ugckit.basic.UGCKitResult
 import com.tencent.qcloud.ugckit.component.slider.RangeSlider
-import com.tencent.qcloud.ugckit.module.ProcessKit
-import com.tencent.qcloud.ugckit.module.VideoGenerateKit
-import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
 import com.tencent.qcloud.ugckit.module.effect.utils.Edit
 import com.tencent.qcloud.ugckit.module.effect.utils.PlayState
-import com.tencent.qcloud.ugckit.utils.DialogUtil
 import com.tencent.qcloud.ugckit.utils.TelephonyUtil
 import com.twx.module_base.utils.LogUtils
 import com.twx.module_base.utils.showToast
@@ -128,12 +120,7 @@ class TWVideoEditCutContainer @JvmOverloads constructor(
         // 加载视频信息
         val info = mVideoEditorHelper.txVideoInfo
         if (info == null) {
-            DialogUtil.showDialog(
-                UGCKitImpl.getAppContext(),
-                resources.getString(R.string.tc_video_cutter_activity_video_main_handler_edit_failed),
-                resources.getString(R.string.ugckit_does_not_support_android_version_below_4_3),
-                null
-            )
+            showToast("视频编辑失败或不支持此格式")
         } else {
             // 初始化缩略图列表，裁剪缩略图
             val interval = videoTimeInterval(info.duration)

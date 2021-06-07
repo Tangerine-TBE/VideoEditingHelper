@@ -160,19 +160,20 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
                     showFragment(mFileFragment)
                 }
                 2 -> {
-                    val videoStr = sp.getString(Constants.SP_VIDEO_LIST)
-                    Gson().fromJson<List<ReadyJoinInfo>>(videoStr, object : TypeToken<List<ReadyJoinInfo>>() {}.type)?.let { it ->
-                        mVideoList.clear()
-                        if (it.isNotEmpty()) {
-                            it.forEach {
-                                mVideoList.add(MediaInformation(path = it.videoPath))
+                    try {
+                        val videoStr = sp.getString(Constants.SP_VIDEO_LIST)
+                        Gson().fromJson<List<ReadyJoinInfo>>(videoStr, object : TypeToken<List<ReadyJoinInfo>>() {}.type)?.let { it ->
+                            mVideoList.clear()
+                            if (it.isNotEmpty()) {
+                                it.forEach {
+                                    mVideoList.add(MediaInformation(path = it.videoPath))
+                                }
+                                openMediaSelect(maxSelectNum = 5 - it.size)
+                            } else {
+                                openMediaSelect(minSelectNum = 2, maxSelectNum = 5 - it.size)
                             }
-                            openMediaSelect(maxSelectNum = 5 - it.size)
-                        } else {
-                            openMediaSelect(minSelectNum = 2, maxSelectNum = 5 - it.size)
                         }
-                    }
-
+                    }catch (e:Exception){ }
                 }
             }
             putExtra(Constants.KEY_FRAGMENT_ID, -1)

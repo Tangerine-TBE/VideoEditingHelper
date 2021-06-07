@@ -20,7 +20,6 @@ import com.twx.module_videoediting.domain.MediaInformation
 import com.twx.module_videoediting.domain.ValueJoinList
 import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.video.cut.ExportAdapter
-import com.twx.module_videoediting.ui.fragment.FileFragment
 import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.utils.Constants
 import com.twx.module_videoediting.utils.cancelMake
@@ -162,7 +161,7 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
             if (it.size > 0) {
             val mediaInfo = ArrayList<MediaInformation>()
             val txVideoInfo = TXVideoInfoReader.getInstance(this).getVideoFileInfo(mVideoPath)
-            mediaInfo.add(MediaInformation(path = mVideoPath, duration = txVideoInfo.duration))
+            mediaInfo.add(MediaInformation(path = mVideoPath, duration = txVideoInfo?.duration?:0))
             it.forEach {
                 mediaInfo.add(MediaInformation(path = it.path, duration = it.duration))
                 LogUtils.i("---ACTION_JOINT------${it.path}-----------------")
