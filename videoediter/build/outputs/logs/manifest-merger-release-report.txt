@@ -1,113 +1,113 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:1-57:12
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:1-57:12
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:1-57:12
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:1-57:12
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:1-57:12
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:1-57:12
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:1-57:12
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:1-57:12
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:1-57:12
 	package
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:3:5-50
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:3:5-50
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:5:5-30
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:5:5-30
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:2:11-69
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:4:5-28
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:4:5-28
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
 application
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:7:5-55:19
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:7:5-55:19
 activity#com.tencent.liteav.demo.videoediter.TCVideoPickerActivity
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:8:9-10:52
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:8:9-10:52
 	android:screenOrientation
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:10:13-49
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:10:13-49
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:9:13-50
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:9:13-50
 activity#com.tencent.liteav.demo.videoediter.TCVideoEditerActivity
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:12:9-23:20
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:12:9-23:20
 	android:screenOrientation
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:15:13-49
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:15:13-49
 	android:launchMode
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:14:13-43
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:14:13-43
 	android:theme
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:16:13-55
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:16:13-55
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:13:13-50
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:13:13-50
 intent-filter#action:name:android.intent.action.MAIN+action:name:com.tencent.liteav.demo.videoediter+category:name:android.intent.category.DEFAULT
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:17:13-22:29
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:17:13-22:29
 action#com.tencent.liteav.demo.videoediter
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:18:17-78
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:18:17-78
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:18:25-75
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:18:25-75
 action#android.intent.action.MAIN
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:17-69
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:19:17-69
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:19:25-66
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:19:25-66
 category#android.intent.category.DEFAULT
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:17-76
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:21:17-76
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:21:27-73
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:21:27-73
 activity#com.tencent.liteav.demo.videoediter.TCVideoCutActivity
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:24:9-35:20
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:24:9-35:20
 	android:screenOrientation
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:26:13-49
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:26:13-49
 	android:launchMode
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:27:13-43
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:27:13-43
 	android:theme
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:28:13-55
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:28:13-55
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:25:13-47
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:25:13-47
 intent-filter#action:name:android.intent.action.MAIN+action:name:com.tencent.liteav.demo.videocut+category:name:android.intent.category.DEFAULT
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:29:13-34:29
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:29:13-34:29
 action#com.tencent.liteav.demo.videocut
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:30:17-75
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:30:17-75
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:30:25-72
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:30:25-72
 activity#com.tencent.liteav.demo.videoediter.TCVideoEffectActivity
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:36:9-39:58
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:36:9-39:58
 	android:screenOrientation
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:38:13-49
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:38:13-49
 	android:theme
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:39:13-55
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:39:13-55
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:37:13-50
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:37:13-50
 activity#com.tencent.liteav.demo.videoediter.TCPictureJoinActivity
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:41:9-51:20
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:41:9-51:20
 	android:screenOrientation
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:43:13-49
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:43:13-49
 	android:theme
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:44:13-66
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:44:13-66
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:42:13-50
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:42:13-50
 intent-filter#action:name:android.intent.action.MAIN+action:name:com.tencent.liteav.demo.picturejoin+category:name:android.intent.category.DEFAULT
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:45:13-50:29
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:45:13-50:29
 action#com.tencent.liteav.demo.picturejoin
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:46:17-78
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:46:17-78
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:46:25-75
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:46:25-75
 activity#com.tencent.liteav.demo.videoediter.TCEditPreviewActivity
-ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:52:9-54:61
+ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:52:9-54:61
 	android:screenOrientation
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:54:13-49
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:54:13-49
 	android:name
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml:53:13-50
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml:53:13-50
 uses-sdk
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-		ADDED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
-		INJECTED from D:\myProject\VideoEditingHelper\videoediter\src\main\AndroidManifest.xml
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+		ADDED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml
+		INJECTED from E:\Git_Project\video-clip\videoediter\src\main\AndroidManifest.xml

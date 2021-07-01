@@ -11,8 +11,8 @@ ext {
 
             applicationId    : "com.twx.videoclip",   //应用ID
             applicationName  : "视频剪辑专家",                  //应用名称
-            versionCode      : 10005,                    //版本号
-            versionName      : "1.5",              //版本名称
+            versionCode      : 10006,                    //版本号
+            versionName      : "1.6",              //版本名称
             buildToolsVersion :"30.0.0",
             compileSdkVersion: 30,
             minSdkVersion    : 21,

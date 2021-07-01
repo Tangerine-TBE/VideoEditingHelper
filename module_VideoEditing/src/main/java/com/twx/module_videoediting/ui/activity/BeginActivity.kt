@@ -13,6 +13,7 @@ import com.twx.module_base.utils.initUm
 import com.twx.module_base.utils.toOtherActivity
 import com.twx.module_base.widget.popup.AgreementPopup
 import com.twx.module_videoediting.R
+import com.twx.module_videoediting.base.VideoApplication
 import com.twx.module_videoediting.databinding.ActivityBeginBinding
 import com.twx.module_videoediting.viewmodel.BeginViewModel
 import com.umeng.analytics.MobclickAgent
@@ -53,10 +54,13 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
             if (hasFocus) {
                 sp.apply {
                     if (getBoolean(Constants.IS_FIRST, true)) {
-                        mAgreementPopup?.showPopupView(binding.mAdContainer)
+                        mAgreementPopup.showPopupView(binding.mAdContainer)
                         showCount++
                     } else {
                       mAdController.show()
+                        initUm(BaseApplication.application)
+                        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+                        VideoApplication.initSdk()
                      //   goHome()
                     }
                 }
@@ -71,6 +75,7 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
                 sp.putBoolean(Constants.SP_AGREE,true)
                 initUm(BaseApplication.application)
                 MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+                VideoApplication.initSdk()
                 // goHome()
                 mAdController.show()
             }

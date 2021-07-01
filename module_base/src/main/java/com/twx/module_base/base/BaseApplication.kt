@@ -52,10 +52,10 @@ open class BaseApplication : Application() {
             "609b9d5c53b6726499fab726",
             PackageUtil.getAppMetaData(this, Constants.CHANNEL)
         )
-        if (SPUtil.getInstance().getBoolean(Constants.SP_AGREE)) {
-            initUm(this)
-            MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
-        }
+//        if (SPUtil.getInstance().getBoolean(Constants.SP_AGREE)) {
+//            initUm(this)
+//            MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+//        }
 
         initData()
 

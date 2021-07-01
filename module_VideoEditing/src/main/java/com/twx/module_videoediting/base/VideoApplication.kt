@@ -20,14 +20,21 @@ class VideoApplication : BaseApplication() {
     //测试
 /*    var ugcLicenceUrl = "http://license.vod2.myqcloud.com/license/v1/1b592d2799a3f2883bf67909d7c618aa/TXUgcSDK.licence"
     var ugcKey = "ddabc6115bdc625158612c14d21b8b28" */
-    private val ugcLicenceUrl ="http://license.vod2.myqcloud.com/license/v1/ee93025d2f28dc7c5dca86eb2ed5cb5d/TXUgcSDK.licence"
-    private val ugcKey = "05c3c10f87249f6f775ca9d9bfbbf927"
+
 
     override fun initData() {
-        TTAdManagerHolder.init(applicationContext)
-        PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
-        TXUGCBase.getInstance().setLicence(this, ugcLicenceUrl, ugcKey)
-        TXUGCBase.getInstance().getLicenceInfo(this)
-        UGCKit.init(this);
+
+    }
+
+    companion object{
+        private val ugcLicenceUrl ="http://license.vod2.myqcloud.com/license/v1/ee93025d2f28dc7c5dca86eb2ed5cb5d/TXUgcSDK.licence"
+        private val ugcKey = "05c3c10f87249f6f775ca9d9bfbbf927"
+        fun initSdk(){
+            TTAdManagerHolder.init(application)
+            PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)
+            TXUGCBase.getInstance().setLicence(application, ugcLicenceUrl, ugcKey)
+            TXUGCBase.getInstance().getLicenceInfo(application)
+            UGCKit.init(application);
+        }
     }
 }
