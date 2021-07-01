@@ -57,10 +57,10 @@ class BeginActivity : BaseVmViewActivity<ActivityBeginBinding, BeginViewModel>()
                         mAgreementPopup.showPopupView(binding.mAdContainer)
                         showCount++
                     } else {
-                      mAdController.show()
                         initUm(BaseApplication.application)
                         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
                         VideoApplication.initSdk()
+                      mAdController.show()
                      //   goHome()
                     }
                 }
