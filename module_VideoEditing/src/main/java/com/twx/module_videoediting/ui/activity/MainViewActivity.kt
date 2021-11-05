@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.config.PictureMimeType
 import com.twx.module_base.base.BaseVmViewActivity
 import com.twx.module_base.livedata.MakeBackLiveData
 import com.twx.module_base.utils.*
@@ -25,6 +26,7 @@ import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.ui.fragment.SetFragment
 import com.twx.module_videoediting.ui.popup.ExitPoPupWindow
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.GlideEngine
 
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
@@ -190,12 +192,12 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
             selectionMode: Int = PictureConfig.MULTIPLE,
     ) {
         PictureSelector.create(this)
-                .openGallery(PictureConfig.TYPE_VIDEO)
+            .openGallery(PictureMimeType.ofVideo())
+            .imageEngine(GlideEngine.createGlideEngine())
+            .isPreviewVideo(false)
                 .imageSpanCount(3)// 每行显示个数 int
                 .maxSelectNum(maxSelectNum)
                 .minSelectNum(minSelectNum)
-                .previewVideo(false)
-                .previewImage(false)
                 .videoMaxSecond(600)
                 .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                 .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
@@ -211,7 +213,8 @@ class MainViewActivity : BaseVmViewActivity<ActivityHomeBinding, MainViewModel>(
             PictureSelector.obtainMultipleResult(data)?.let { it ->
                if (it.size>0){
                    it.forEach {
-                       mVideoList.add(MediaInformation(path = it .path))
+                       val realPath = if (it.realPath.isNullOrEmpty())it.path else it.realPath
+                       mVideoList.add(MediaInformation(path = realPath))
                    }
                    toOtherActivity<ReadyJoinActivity>(this) {
                        putExtra(

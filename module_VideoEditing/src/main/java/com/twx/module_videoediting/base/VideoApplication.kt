@@ -27,8 +27,8 @@ class VideoApplication : BaseApplication() {
     }
 
     companion object{
-        private val ugcLicenceUrl ="http://license.vod2.myqcloud.com/license/v1/ee93025d2f28dc7c5dca86eb2ed5cb5d/TXUgcSDK.licence"
-        private val ugcKey = "05c3c10f87249f6f775ca9d9bfbbf927"
+        private val ugcLicenceUrl ="https://license.vod2.myqcloud.com/license/v2/1305741322_1/v_cube.license"
+        private val ugcKey = "5ebd5f4adf8aeb086ca0d565117b7549"
         fun initSdk(){
             TTAdManagerHolder.init(application)
             PlayerFactory.setPlayManager(Exo2PlayerManager::class.java)

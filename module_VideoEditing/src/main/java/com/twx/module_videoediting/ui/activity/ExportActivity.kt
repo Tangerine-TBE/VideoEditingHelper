@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.config.PictureMimeType
 import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
@@ -22,6 +23,7 @@ import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.adapter.recycleview.video.cut.ExportAdapter
 import com.twx.module_videoediting.ui.fragment.HomeFragment
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.GlideEngine
 import com.twx.module_videoediting.utils.cancelMake
 import com.twx.module_videoediting.utils.setBarEventAction
 import java.io.File
@@ -142,11 +144,12 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
         selectionMode: Int = PictureConfig.SINGLE
     ) {
         PictureSelector.create(this)
-            .openGallery(PictureConfig.TYPE_VIDEO)
+            .openGallery(PictureMimeType.ofVideo())
+            .imageEngine(GlideEngine.createGlideEngine())
+            .isPreviewVideo(false)
             .imageSpanCount(3)// 每行显示个数 int
             .maxSelectNum(maxSelectNum)
             .minSelectNum(minSelectNum)
-                .previewVideo(false)
             .videoMaxSecond(600)
             .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
             .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
@@ -163,8 +166,9 @@ class ExportActivity : BaseViewActivity<ActivityExportBinding>(),
             val txVideoInfo = TXVideoInfoReader.getInstance(this).getVideoFileInfo(mVideoPath)
             mediaInfo.add(MediaInformation(path = mVideoPath, duration = txVideoInfo?.duration?:0))
             it.forEach {
-                mediaInfo.add(MediaInformation(path = it.path, duration = it.duration))
-                LogUtils.i("---ACTION_JOINT------${it.path}-----------------")
+                val realPath = if (it.realPath.isNullOrEmpty())it.path else it.realPath
+                mediaInfo.add(MediaInformation(path = realPath, duration = it.duration))
+                LogUtils.i("---ACTION_JOINT------${realPath}-----------------")
             }
             toOtherActivity<ReadyJoinActivity>(this,true) {
                 putExtra(

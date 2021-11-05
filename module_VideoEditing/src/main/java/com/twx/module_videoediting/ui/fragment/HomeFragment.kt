@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
+import com.luck.picture.lib.config.PictureMimeType
 import com.tencent.qcloud.ugckit.basic.OnUpdateUIListener
 import com.tencent.qcloud.ugckit.module.ProcessKit
 import com.tencent.qcloud.ugckit.module.effect.VideoEditerSDK
@@ -22,6 +23,7 @@ import com.twx.module_videoediting.repository.DataProvider
 import com.twx.module_videoediting.ui.activity.*
 import com.twx.module_videoediting.ui.adapter.recycleview.HomeBottomAdapter
 import com.twx.module_videoediting.utils.Constants
+import com.twx.module_videoediting.utils.GlideEngine
 import com.twx.module_videoediting.utils.cancelMake
 import com.twx.module_videoediting.viewmodel.MainViewModel
 
@@ -160,12 +162,12 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
     ) {
         openAction = action
         PictureSelector.create(this@HomeFragment)
-            .openGallery(PictureConfig.TYPE_VIDEO)
+            .openGallery(PictureMimeType.ofVideo())
+            .imageEngine(GlideEngine.createGlideEngine())
+            .isPreviewVideo(false)
             .imageSpanCount(3)// 每行显示个数 int
             .maxSelectNum(maxSelectNum)
             .minSelectNum(minSelectNum)
-            .previewVideo(false)
-            .previewImage(false)
             .videoMaxSecond(1200)
             .selectionMode(selectionMode)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
             .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
@@ -180,7 +182,7 @@ class HomeFragment : BaseVmFragment<FragmentHomeBinding, MainViewModel>(), OnUpd
         // 结果回调
         PictureSelector.obtainMultipleResult(data)?.let { it ->
             if (it.size > 0) {
-                val path = it[0].path
+                val path = if (it[0].realPath.isNullOrEmpty())it[0].path else it[0].realPath
                 when (requestCode) {
                     ACTION_CUT -> preVideo(path, true, CUT_COUNT)
                     ACTION_REVERSE, ACTION_TAGS -> preVideo(path, true)
