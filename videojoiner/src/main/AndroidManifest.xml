@@ -7,7 +7,8 @@
     <application>
         <activity
             android:name=".TCVideoJoinerActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.tencent.liteav.demo.videojoiner" />
                 <action android:name="android.intent.action.MAIN" />

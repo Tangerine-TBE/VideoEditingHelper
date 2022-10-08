@@ -234,7 +234,7 @@ fun checkAppPermission(
 ) {
     try {
         val permissionCollection = if (activity == null) {
-            PermissionX.init(fragment)
+            PermissionX.init(fragment?:return)
         } else {
             PermissionX.init(activity)
         }

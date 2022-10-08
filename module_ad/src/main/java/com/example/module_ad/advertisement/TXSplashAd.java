@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import com.example.module_ad.utils.Contents;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
-import com.qq.e.comm.managers.GDTADManager;
+import com.qq.e.comm.managers.GDTAdSdk;
 import com.qq.e.comm.util.AdError;
 import com.twx.module_base.base.BaseApplication;
 import com.twx.module_base.utils.LogUtils;
@@ -33,7 +33,7 @@ public class TXSplashAd extends AdWatcher{
         this.mIsClose=isClose;
         this.mClass=aClass;
         mAction=action;
-        GDTADManager.getInstance().initWith(activity, mKgdtMobSDKAppKey);
+        GDTAdSdk.init(activity, mKgdtMobSDKAppKey);
     }
 
 

@@ -1,23 +1,23 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.versions.compileSdkVersion
+    buildToolsVersion rootProject.ext.versions.buildToolsVersion
 
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        minSdkVersion rootProject.ext.versions.minSdkVersion
+        targetSdkVersion rootProject.ext.versions.targetSdkVersion
+        versionCode rootProject.ext.versions.versionCode
+        versionName rootProject.ext.versions.versionName
 
         renderscriptTargetApi = 14
         renderscriptSupportModeEnabled = true
         multiDexEnabled = true
 
-        ndk {
-            abiFilters rootProject.ext.ndkAbi
-        }
+//        ndk {
+//            abiFilters rootProject.ext.ndkAbi
+//        }
     }
 
     buildFeatures{
@@ -54,8 +54,8 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: "libs", include: ["*.jar"])
-    api fileTree(dir: "libs", include: ["*.aar"])
+//    api fileTree(dir: "libs", include: ["*.jar"])
+//    api fileTree(dir: "libs", include: ["*.aar"])
     implementation 'com.android.support:multidex:1.0.0'
     api 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.castorflex.verticalviewpager:library:19.0.1'

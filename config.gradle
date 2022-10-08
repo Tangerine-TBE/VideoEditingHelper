@@ -14,9 +14,9 @@ ext {
             versionCode      : 10009,                    //版本号
             versionName      : "1.9",              //版本名称
             buildToolsVersion :"30.0.0",
-            compileSdkVersion: 30,
+            compileSdkVersion: 31,
             minSdkVersion    : 21,
-            targetSdkVersion : 29,
+            targetSdkVersion : 31,
 
             //open version control
             androidSupportVersion         : "27.0.2",

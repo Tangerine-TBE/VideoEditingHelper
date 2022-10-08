@@ -40,7 +40,17 @@ public class TTAdManagerHolder {
     //step1:接入网盟广告sdk的初始化操作，详情见接入文档和穿山甲平台说明
     private static void doInit(Context context) {
         if (!sInit) {
-            TTAdSdk.init(context, buildConfig(context));
+            TTAdSdk.init(context, buildConfig(context), new TTAdSdk.InitCallback() {
+                @Override
+                public void success() {
+
+                }
+
+                @Override
+                public void fail(int i, String s) {
+
+                }
+            });
             sInit = true;
         }
     }
